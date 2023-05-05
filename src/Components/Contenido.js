@@ -26,7 +26,7 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
     useEffect(() =>{
         if(sizeActual > 0.25){
             const currentTextHeight = document.getElementById("title" + postId).scrollHeight;
-            if(currentTextHeight > 40){
+            if(currentTextHeight > 31){
                 setSizeActual(prevState => prevState-0.25)
             }
         }
@@ -45,7 +45,7 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
         return (
             <div style={{marginTop:"1rem"}}>
                 <div id={"iframeBottom" + postId} className={styles.iframeBottom}>
-                    <a href={url} id={"title" + postId} style={{textDecoration:"none", fontSize:sizeActual+"rem"}} target="_blank" className={styles.displayTitle}>Cargando...</a>
+                    <a href={url} id={"title" + postId} style={{textDecoration:"none", fontSize:sizeActual+"rem", minHeight:"30px"}} target="_blank" className={styles.displayTitle}>Cargando...</a>
                     <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: postsLikes.indexOf(postId)>-1?"green":"red", fontSize:"0.8rem"}}>{likes}</p>
                 </div>
             </div>
@@ -89,7 +89,11 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
                 : ""
             }
             <div id={"iframeBottom" + postId}  className={styles.iframeBottom}>
-                <Link to={"/post/"+postId} style={{textDecoration:"none", width:"100%"}}><p id={"title" + postId} rel="noreferrer" style={{fontSize:sizeActual+"rem"}} className={styles.displayTitle}>{titulo}</p></Link>
+                    <Link to={"/post/"+postId} style={{textDecoration:"none", width:"100%", lineHeight:"31px"}}>
+                        <p id={"title" + postId} rel="noreferrer" style={{fontSize:sizeActual+"rem", minHeight:"31px"}}
+                           className={styles.displayTitle}>{titulo}</p>
+                    </Link>
+
                 <div className={styles.izq}>
                     <p id={"materia" + postId} style={{fontSize:sizeMateria+"rem"}}>{materia}</p>
                     <p>por <b>{usuario}</b></p>

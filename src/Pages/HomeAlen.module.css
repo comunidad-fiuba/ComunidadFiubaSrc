@@ -261,14 +261,6 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.contentWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    min-height: 500px;
-    padding-bottom: 100px;
-}
-
 .content {
     border: 1px solid #ccc;
     padding: 10px;

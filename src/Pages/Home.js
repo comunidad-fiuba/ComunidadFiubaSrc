@@ -230,7 +230,7 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
                 { preview?<button className={styles.previewButton} onClick={() => setPreviewAndSave(false)}><AiFillEye size={22}/></button>
                     :<button className={styles.previewButton} onClick={() => setPreviewAndSave(true)}><AiFillEyeInvisible size={22}/></button>}
             </div>
-             <div className={styles.contentWrapper}>
+             <div>
                 {!isLoading
                     ? archivosFiltered.length>0
                         ? <Archivos archivosSubidos={archivosFiltered} setInteracciones={setInteracciones} archivosRef={archivosRef}
