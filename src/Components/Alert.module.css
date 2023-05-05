@@ -1,0 +1,55 @@
+
+.alert {
+    position: relative;
+    top: 0;
+    display: none;
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+    z-index: 30;
+    animation-name: apareciendo;
+    animation-duration: 3.5s;
+}
+
+@keyframes apareciendo {
+    0%{
+        top:-40px
+    }
+    10%{
+        top:0
+    }
+    80%{
+        top:0
+    }
+    100%{
+        top:-200px
+    }
+}
+
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+.unloadBar{
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    animation: unload 3s linear;
+}
+
+@keyframes unload {
+    100%{width: 0}
+}

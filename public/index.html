@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <script>
+      (function(){
+        let redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Comunidad Fiuba</title>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://kit.fontawesome.com/7dfd85fbb7.js" crossOrigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href="/CoFi.png">
+  </head>
+  <body style="background-color: rgb(210,210,210)">
+    <noscript>Se necesita Javascript para ver esta pagina web</noscript>
+    <div id="root"></div>
+  </body>
+</html>

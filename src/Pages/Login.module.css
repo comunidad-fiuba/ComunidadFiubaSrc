@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+.mainDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: url("fiubaRojo.jpg") center;
+    background-size: cover;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+}
+
+.contenedor{
+    font-family: 'poppins',sans-serif;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    height: 450px;
+    border-radius: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 0;
+    backdrop-filter: blur(7px);
+    background-color: rgba(255, 255, 255, 0.164);
+}
+
+
+.titulo{
+    font-weight: bolder;
+    font-size: 2em;
+    color: var(--blanco);
+    text-align: center;
+    margin: 10px 10px 20px;
+    letter-spacing: 2px;
+}
+
+.descripcion {
+    color: var(--blanco);
+    text-align: center;
+    width: 80%;
+    font-size: 1.1em;
+    margin: 0 0 10px;
+}
+.descripcionDos {
+    color: var(--blanco);
+    text-align: center;
+    font-weight: lighter;
+    width: 80%;
+    font-size: 0.9em;
+    margin: 0px
+}
+
+.fieldset{
+    left: 50%;
+    transform: translate(-50%,0);
+    position: relative;
+    margin: 30px 0;
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid var(--blanco);
+    padding: 0;
+
+
+}
+
+.fieldset input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding:0 0 0 10px;
+    color: var(--blanco);
+    font-family: 'poppins',sans-serif;
+}
+
+
+.fieldset ion-icon{
+    position: absolute;
+    right: 8px;
+    color: var(--blanco);
+    font-size: 1.2em;
+    top: 20px;
+
+}
+
+.fieldset ::placeholder {
+    opacity: 1;
+    color: #c9c6c6;
+    font-family: 'poppins',sans-serif;
+}
+
+.submit{
+    display: flex;
+    width: 85%;
+    max-width: 400px;
+    height: 50px;
+    border-radius: 40px;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 5px;
+    transition: all 0.2s ease-in-out;
+    font-family: 'poppins',sans-serif;
+}
+
+.submit:hover {
+    background-color: var(--blanco);
+    transform: scale(1.05);
+}
+
+.registrarse{
+    font-size: .9em;
+    text-align: center;
+    margin: 25px 0 35px;
+}
+
+.registrarse a{
+    text-decoration: none;
+    color: var(--blanco);
+}
+.registrarse a:hover{
+    text-decoration: underline;
+}
+
+.alertDiv{
+    position: absolute;
+    top: 0;
+}
+
+.alert {
+    position: relative;
+    top: 0;
+    display: none;
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    z-index: 10;
+    animation-name: apareciendo;
+    animation-duration: 0.5s;
+}
+
+@keyframes apareciendo {
+    from{
+        top:-40px
+    }
+    to{
+        top:0
+    }
+}
+
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
+.form{
+    width: 90%;
+}
+.contacto{
+    position: relative;
+    left:50%;
+    transform: translate(-50%,0);
+    color:white;
+    user-select:all;
+    width:fit-content;
+    text-align:center;
+    backdrop-filter: blur(7px);
+    background-color: rgba(255, 255, 255, 0.164);
+    padding: 3px 10px 6px;
+    border-radius: 12px;
+}
