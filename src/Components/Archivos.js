@@ -37,23 +37,16 @@ export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,l
         setLoadIndex(2)
     };
 
-    function array_move(arr) {
-        const old_index = arr.findIndex(archivo => archivo.postId === POSTDESTACADO)
-        if(old_index === -1){
+    function moverDestacado(arr) {
+        const indexDestacado = arr.findIndex(archivo => archivo.postId === POSTDESTACADO)
+        if(indexDestacado === -1){
             return
         }
-        const new_index = 0
-        if (new_index >= arr.length) {
-            let k = new_index - arr.length + 1;
-            while (k--) {
-                arr.push(undefined);
-            }
-        }
-        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        arr.splice(0, 0, arr.splice(indexDestacado, 1)[0]);
     };
 
     const mapped = (actuales) =>{
-        array_move(actuales)
+        moverDestacado(actuales)
         return actuales.map((archivo, index) =>
         {
             return <Archivo key={archivo.postId + "file"} showAlert={showAlert} archivo={archivo} fileIndex={index} loadIndex={loadIndex} setLoadIndex={setLoadIndex}
