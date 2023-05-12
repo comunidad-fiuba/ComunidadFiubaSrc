@@ -4,6 +4,7 @@ import {FaRegCommentDots} from "react-icons/fa";
 import {BiHeart} from "react-icons/bi";
 import {Link} from "react-router-dom";
 import {FiShare2} from "react-icons/fi";
+import {POSTDESTACADO} from "../Utilidad/Constantes";
 
 export function Contenido({archivo, disabledButton, setDisabledButton, setVerComentarios, fileIndex, verComentarios,
                               loadIndex, setLoadIndex, preview, archivosRef, showAlert, postsLikes ,likesQuery}){
@@ -91,33 +92,36 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
         navigator.clipboard.writeText(window.location.host + "/post/" + postId).then(a => showAlert()).catch(e => console.log(e))
     }
     return (
-        <div className={styles.contentWrap} style={{marginTop:"1rem", height:preview||verComentarios?"320px":"unset"}}>
-           {preview
-                ? <embed id={titulo+"embed"} className={styles.archivo} src={url} onLoad={e => fileIndex===loadIndex?setLoadIndex(fileIndex+4):true}/>
-                : ""
-            }
-            <div id={"iframeBottom" + postId}  className={styles.iframeBottom}>
+        <div>
+            <div className={`${styles.contentWrap} ${postId===POSTDESTACADO?styles.destacado:""}`} style={{marginTop:"1rem", height:preview||verComentarios?"320px":"unset"}}>
+                {preview
+                    ? <embed id={titulo+"embed"} className={styles.archivo} src={url} onLoad={e => fileIndex===loadIndex?setLoadIndex(fileIndex+4):true}/>
+                    : ""
+                }
+                <div id={"iframeBottom" + postId}  className={styles.iframeBottom}>
                     <Link to={"/post/"+postId} style={{textDecoration:"none", width:"100%", lineHeight:"31px"}}>
                         <p id={"title" + postId} rel="noreferrer" style={{fontSize:sizeActual+"rem", minHeight:"31px"}}
                            className={styles.displayTitle}>{titulo}</p>
                     </Link>
 
-                <div className={styles.izq}>
-                    <p id={"materia" + postId} style={{fontSize:sizeMateria+"rem"}}>{materia}</p>
-                    <p id={"nombre"+postId} style={{fontSize:sizeNombre+"rem"}}>por <b>{usuario}</b></p>
-                    <p>{anio}</p>
-                </div>
-                <div className={styles.der}>
-                    <button  disabled={disabledButton} className={styles.like} onClick={e => setVerComentarios(true)}>
-                        {archivo.comentarios.length>0?<FaRegCommentDots className={styles.liked} style={{color:"white"}} size={20} />:<FaRegCommentDots className={styles.toLike} style={{color:"white"}} size={20}/>}</button>
-                    <button  disabled={disabledButton} className={styles.like} onClick={likePost}>
-                        {postsLikes.indexOf(postId)>-1?<BiHeart className={styles.liked} style={{color:disabledButton?"rgb(100,100,220)":"rgb(255,60,60)"}} size={22}/>:<BiHeart className={styles.toLike} size={22} style={{color:disabledButton?"rgb(100,100,220)":"white"}} />}</button>
-                    <button className={styles.like}><FiShare2 style={{color:"white"}} size={20} onClick={copyLink}/></button>
-                    <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{archivo.comentarios.length}</p>
-                    <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{likes}</p>
+                    <div className={styles.izq}>
+                        <p id={"materia" + postId} style={{fontSize:sizeMateria+"rem"}}>{materia}</p>
+                        <p id={"nombre"+postId} style={{fontSize:sizeNombre+"rem"}}>por <b>{usuario}</b></p>
+                        <div className={styles.anioContainer}><span>{anio}</span> {postId===POSTDESTACADO?<span className={styles.textoDestacado}>Destacado</span>:""}</div>
+                    </div>
+                    <div className={styles.der}>
+                        <button  disabled={disabledButton} className={styles.like} onClick={e => setVerComentarios(true)}>
+                            {archivo.comentarios.length>0?<FaRegCommentDots className={styles.liked} style={{color:"white"}} size={20} />:<FaRegCommentDots className={styles.toLike} style={{color:"white"}} size={20}/>}</button>
+                        <button  disabled={disabledButton} className={styles.like} onClick={likePost}>
+                            {postsLikes.indexOf(postId)>-1?<BiHeart className={styles.liked} style={{color:disabledButton?"rgb(100,100,220)":"rgb(255,60,60)"}} size={22}/>:<BiHeart className={styles.toLike} size={22} style={{color:disabledButton?"rgb(100,100,220)":"white"}} />}</button>
+                        <button className={styles.like}><FiShare2 style={{color:"white"}} size={20} onClick={copyLink}/></button>
+                        <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{archivo.comentarios.length}</p>
+                        <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{likes}</p>
 
+                    </div>
                 </div>
             </div>
         </div>
+
     )
 }

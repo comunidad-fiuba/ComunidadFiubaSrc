@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Archivo} from "./Archivo";
 import {STORAGE} from "../Utilidad/Storage";
+import {POSTDESTACADO} from "../Utilidad/Constantes";
 export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,likesQuery, archivosRef, userName}){
     const [loadIndex, setLoadIndex] = useState(2)
     const archivosPorPagina = STORAGE.get("preview") === "false"?16:12;
@@ -36,7 +37,23 @@ export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,l
         setLoadIndex(2)
     };
 
+    function array_move(arr) {
+        const old_index = arr.findIndex(archivo => archivo.postId === POSTDESTACADO)
+        if(old_index === -1){
+            return
+        }
+        const new_index = 0
+        if (new_index >= arr.length) {
+            let k = new_index - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    };
+
     const mapped = (actuales) =>{
+        array_move(actuales)
         return actuales.map((archivo, index) =>
         {
             return <Archivo key={archivo.postId + "file"} showAlert={showAlert} archivo={archivo} fileIndex={index} loadIndex={loadIndex} setLoadIndex={setLoadIndex}

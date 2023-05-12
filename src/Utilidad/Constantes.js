@@ -11,6 +11,8 @@ export const FIREBASECONFIG ={
 }
 export const ACCEPTEDFILES = ["image/png", "image/jpg", "image/jpeg", "application/pdf"]
 
+export const POSTDESTACADO = 98
+
 export const MATERIAS = [
    "Analisis Matematico II",
    "Probabilidad y Estadistica",
