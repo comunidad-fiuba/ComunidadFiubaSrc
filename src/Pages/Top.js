@@ -32,7 +32,7 @@ export function Top({archivos}){
         const topList = [...topUsers]
         return(<section className={styles.topSection} style={{userSelect:"none"}}>
             <div className={styles.topSectionHeader}>
-                <h2>Top creadores más likeados</h2>
+                <h2>Top Creadores</h2>
             </div>
                 <ol className={styles.topList}>
                 <li>
@@ -74,7 +74,7 @@ export function Top({archivos}){
         return(
             <section className={styles.topSection}>
                 <div className={styles.topSectionHeader}>
-                    <h2>Top creadores más likeados</h2>
+                    <h2>Top creadores</h2>
                 </div>
                 <ol className={styles.topList}>
                     <li>
