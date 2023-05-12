@@ -9,6 +9,7 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
                               loadIndex, setLoadIndex, preview, archivosRef, showAlert, postsLikes ,likesQuery}){
     const [sizeActual, setSizeActual] = useState(1.25)
     const [sizeMateria, setSizeMateria] = useState(1)
+    const [sizeNombre, setSizeNombre] = useState(0.75);
     const titulo = archivo.titulo
     const url = archivo.url
     const titleUrl = "https://drive.google.com/uc?id=" + archivo.url.split("/")[5]
@@ -37,8 +38,15 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
                 setSizeMateria(prevState => prevState-0.1)
             }
         }
+        if(sizeNombre > 0.2){
+            const nombreText = document.getElementById("nombre" + postId);
+            const currentTextNombreHeight = nombreText? nombreText.scrollHeight:""
+            if(currentTextNombreHeight > 18){
+                setSizeNombre(prevState => prevState-0.1)
+            }
+        }
 
-    },[loadIndex, sizeActual, sizeMateria])
+    },[loadIndex, sizeActual, sizeMateria,sizeNombre])
 
     if(fileIndex > loadIndex){
 
@@ -96,7 +104,7 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
 
                 <div className={styles.izq}>
                     <p id={"materia" + postId} style={{fontSize:sizeMateria+"rem"}}>{materia}</p>
-                    <p>por <b>{usuario}</b></p>
+                    <p id={"nombre"+postId} style={{fontSize:sizeNombre+"rem"}}>por <b>{usuario}</b></p>
                     <p>{anio}</p>
                 </div>
                 <div className={styles.der}>
