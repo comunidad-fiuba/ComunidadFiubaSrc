@@ -110,12 +110,16 @@ export function Contenido({archivo, disabledButton, setDisabledButton, setVerCom
                         <div className={styles.anioContainer}><span>{anio}</span> {postId===POSTDESTACADO?<span className={styles.textoDestacado}>Destacado</span>:""}</div>
                     </div>
                     <div className={styles.der}>
+                        {/*
                         <button  disabled={disabledButton} className={styles.like} onClick={e => setVerComentarios(true)}>
                             {archivo.comentarios.length>0?<FaRegCommentDots className={styles.liked} style={{color:"white"}} size={20} />:<FaRegCommentDots className={styles.toLike} style={{color:"white"}} size={20}/>}</button>
+                        */}
                         <button  disabled={disabledButton} className={styles.like} onClick={likePost}>
                             {postsLikes.indexOf(postId)>-1?<BiHeart className={styles.liked} style={{color:disabledButton?"rgb(100,100,220)":"rgb(255,60,60)"}} size={22}/>:<BiHeart className={styles.toLike} size={22} style={{color:disabledButton?"rgb(100,100,220)":"white"}} />}</button>
                         <button className={styles.like}><FiShare2 style={{color:"white"}} size={20} onClick={copyLink}/></button>
+                        {/*
                         <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{archivo.comentarios.length}</p>
+                        */}
                         <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: "white", fontSize:"0.8rem"}}>{likes}</p>
 
                     </div>

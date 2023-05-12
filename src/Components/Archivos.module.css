@@ -63,7 +63,7 @@
 .der{
     text-align: center;
     display: grid;
-    grid-template-columns: 1fr min-content max-content;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr min-content;
     column-gap: 6px;
 }

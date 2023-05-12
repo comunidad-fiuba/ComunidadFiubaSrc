@@ -79,11 +79,12 @@ export function DetallesArchivo({archivosSubidos, postsLikes, likesQuery, archiv
                 <div style={{color: "white", width:"25%",overflow:"hidden", display:"flex"}}>
                     <span style={{height:"45px", display:"flex", alignItems:"center"}}>{likes}</span>
                     <button className={styles.boton} disabled={disabledButton} onClick={likePost}><BiHeart className={styles.botonIcon} style={{color:disabledButton?"lightblue":"rgb(255,60,60)",transform:"translate(0,10%)", opacity:postsLikes.indexOf(postId)>-1?1:0.5}}/></button>
-                    <span style={{height:"45px", display:"flex", alignItems:"center"}}>{comentarios}</span>
+                    {/*<span style={{height:"45px", display:"flex", alignItems:"center"}}>{comentarios}</span>
                     <button className={styles.boton} onClick={() =>setVerComentarios(true)}><FaRegCommentDots className={styles.botonIcon} style={{color:"white", fontSize:"0.9em",transform:"translate(0,10%)"}}/></button>
+                    */}
                 </div>
             </div>
-            <DetallesComentarios verComentarios={verComentarios} setVerComentarios={setVerComentarios} comentarios={archivo.comentarios} comentariosRef={archivo.comentariosRef} userName={userName} uid={uid} fileIndex={postId} />
+            {/*<DetallesComentarios verComentarios={verComentarios} setVerComentarios={setVerComentarios} comentarios={archivo.comentarios} comentariosRef={archivo.comentariosRef} userName={userName} uid={uid} fileIndex={postId} />*/}
 
             <embed id={titulo+"embed"} className={styles.archivo} src={url}/>
         </div>
