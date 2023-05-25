@@ -12,7 +12,7 @@ import {Alerts} from "../Components/Alerts";
 import {FaRegCommentDots} from "react-icons/fa";
 import {BiHeart} from "react-icons/bi";
 
-export function Perfil({archivosSubidos, isLoading, auth, archivosRef, myUsername, setArchivosSubidos}){
+export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos}){
     const[misArchivos, setMisArchivos] = useState([]);
     const [showNiceAlert, setShowNiceAlert] = useState(null)
     const [showBadAlert, setShowBadAlert] = useState(null)
@@ -23,19 +23,19 @@ export function Perfil({archivosSubidos, isLoading, auth, archivosRef, myUsernam
     useEffect(() =>{
         const archivos = []
         let misLikes = 0;
-        const logged = auth.currentUser.uid
+        const logged = userData.slug
         for( let i=0; i<archivosSubidos.length;i++){
-            const user = archivosSubidos[i].usuario
+            const user = archivosSubidos[i].username
             const likes = archivosSubidos[i].likes
             const url = archivosSubidos[i].url
-            const id = archivosSubidos[i].postId
-            const uid = archivosSubidos[i].uid
-            const titulo = archivosSubidos[i].titulo
+            const id = archivosSubidos[i].id
+            const slug = archivosSubidos[i].userslug
+            const titulo = archivosSubidos[i].title
             const comments = archivosSubidos[i].comentarios?archivosSubidos[i].comentarios.length:0
             if(!user.length>0){
                 continue
             }
-            if (uid === logged){
+            if (slug === logged){
                 archivos.push({titulo:titulo, likes:likes, url:url, id:id, comments:comments})
                 misLikes += likes
             }
@@ -76,6 +76,16 @@ export function Perfil({archivosSubidos, isLoading, auth, archivosRef, myUsernam
 
     const deleteFile = () =>{
         const id = aBorrar.id, url = aBorrar.url, titulo = aBorrar.titulo
+        fetch(process.env.REACT_APP_POST_DELETE, {
+            method:"POST",
+            body:JSON.stringify({token:userData.token,uid:userData.uid,id:id})
+        }).then(result =>{
+           result.json().then(resultJson=>{
+               setArchivosSubidos(prevstate =>{
+                   return prevstate.filter(archivo => archivo.id !== id)
+               })
+           }).catch(error=>alert(error))
+        }).catch(error =>alert(error))
         let originalUrl = url.replace("preview", "view?usp=drivesdk")
         const callback = (tipo) =>{
             if(tipo === "succes"){
@@ -86,12 +96,6 @@ export function Perfil({archivosSubidos, isLoading, auth, archivosRef, myUsernam
             closeBorrar()
         }
         httpPostDelete(id, originalUrl, titulo, callback)
-        archivosRef.where("postId","==",id).get().then(querySnapshot => querySnapshot.forEach(doc => {
-            doc.ref.delete();
-        }))
-        setArchivosSubidos(prevstate =>{
-            return prevstate.filter(archivo => archivo.postId !== id)
-        })
     }
 
     const openBorrar = (archivo) =>{
@@ -119,7 +123,7 @@ export function Perfil({archivosSubidos, isLoading, auth, archivosRef, myUsernam
             <div className={styles.pagina}>
                 <div className={styles.contenedor}>
                     <BsPerson className={styles.bigIcon}/>
-                    <h2 className={styles.usuarioNombre}>{myUsername}</h2>
+                    <h2 className={styles.usuarioNombre}>{userData.name}</h2>
                     <div className={styles.usuarioDato}>
                         <FcLike size={20} className={styles.heartIcon}/>
                         <span><b className={styles.likes}>{likesTotales}</b> Likes</span>

@@ -1,9 +1,19 @@
 import styles from "./Login.module.css"
 import firebase from 'firebase/compat/app';
 import {FcGoogle} from "react-icons/fc";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 
 export function Login({auth}){
+    useEffect(() =>{
+        console.log(sessionStorage.mailError)
+        if(sessionStorage.mailError){
+            alert("Solo aceptamos correos de @fi.uba.ar")
+            delete sessionStorage.mailError;
+        }
+    },[])
+
     const signInWithGoogle = () =>{
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.setCustomParameters({
@@ -12,6 +22,7 @@ export function Login({auth}){
         });
         auth.signInWithPopup(provider).then(result => {
             if(!result.additionalUserInfo.profile.email.includes("@fi.uba.ar")){
+                sessionStorage.mailError = true;
                 auth.signOut()
             }
         })

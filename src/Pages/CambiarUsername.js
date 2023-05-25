@@ -5,7 +5,7 @@ import {BsPerson} from "react-icons/bs";
 import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 
-export function CambiarUsername({archivosRef, userRef, userData, auth}){
+export function CambiarUsername({userData,setUserData}){
     const [isDisabled, setIsDisabled] = useState(false)
     const [showBadAlert, setShowBadAlert] = useState(null)
     const [showNiceAlert, setShowNiceAlert] = useState(null)
@@ -16,29 +16,30 @@ export function CambiarUsername({archivosRef, userRef, userData, auth}){
         e.preventDefault()
         const newUser = document.getElementById("newUserName").value
         const userVerification = document.getElementById("userNameVerification").value
-        if(userData.cambios <= 0){
+        if(userData.changes <= 0){
             showSinCambiosAlert()
             return
         }
-        if(newUser === userData.userName){
+        if(newUser === userData.name){
             showSameNameAlert()
             return
         }
         if(newUser === userVerification){
-            archivosRef.where("uid", "==", auth.currentUser.email).get()
-                .then(result =>{
-                result.forEach(docSnap =>
-                    docSnap.ref.set({usuario: newUser}, { merge: true })
-                )
-                    userData.userName = newUser;
-                    userData.cambios = userData.cambios-1
-                    userRef.set(userData)
-                    setIsDisabled(true)
-                    showNiceAlert()
-                    const submitButton = document.getElementById("submitPass")
-                    submitButton.classList.remove(styles.submit)
-                    submitButton.classList.add(styles.submitDisabled)
-                }).catch(error => alert(error))
+            fetch(process.env.REACT_APP_USERNAME, {
+                method:"POST",
+                body:JSON.stringify({token:userData.token,uid:userData.uid,newName:newUser})
+            }).then(result =>{
+                setIsDisabled(true)
+                showNiceAlert()
+                const submitButton = document.getElementById("submitPass")
+                submitButton.classList.remove(styles.submit)
+                submitButton.classList.add(styles.submitDisabled)
+                setUserData((prevState) =>{
+                    prevState.name = newUser;
+                    prevState.changes = prevState.changes-1;
+                    return prevState;
+                })
+            }).catch(error =>alert(error))
         }else{
             showBadAlert()
         }
@@ -70,7 +71,7 @@ export function CambiarUsername({archivosRef, userRef, userData, auth}){
                         ?<input type="submit" id="submitPass" value="Aplicar Cambios" className={styles.submit}/>
                         :<input type="submit" id="submitPass" value="Recargar" className={styles.submitDisabled}/>
                     }
-                    <p style={{color:"white"}}>Cambios disponibles: {userData.cambios}</p>
+                    <p style={{color:"white"}}>Cambios disponibles: {userData.changes}</p>
                 </form>
             </div>
         </div>

@@ -6,47 +6,58 @@ import {FaRegCommentDots} from "react-icons/fa";
 import {DetallesComentarios} from "./DetallesComentarios";
 import {ImSpinner8} from "react-icons/im";
 
-export function DetallesArchivo({archivosSubidos, postsLikes, likesQuery, archivosRef, userName, uid}){
-    const {postIdParam} = useParams();
-    const postId = Number(postIdParam)
+export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes}){
+    const {postSlug} = useParams();
+    const postId = archivosSubidos.find(post => post.slug===postSlug)?.id
     const [archivo, setArchivo] = useState(null)
     const [disabledButton, setDisabledButton] = useState(false)
     const [verComentarios, setVerComentarios] = useState(false)
-    const likePost = async() =>{
+    const likePost = (postId) =>{
         setDisabledButton(true)
-        let like;
-        if(postsLikes.includes(postId)){
-            const index = postsLikes.indexOf(postId);
-            postsLikes.splice(index, 1);
-            like = -1
-        }else{
-            postsLikes.push(postId)
-            like = 1
-        }
-        try {
-            await likesQuery.set({
-                postsLikeados: postsLikes
-            }, {merge:true})
-            const algo =  await archivosRef.where("postId", "==", postId).get()
-            const data = algo.docs[0].data()
-            data.likes = data.likes + like
-            await archivosRef.doc(algo.docs[0].id).set(data)
-            archivo.likes = archivo.likes + like
-            setTimeout(() => {
-                setDisabledButton(false);
-            }, 500);
-        }catch (e) {
-            console.log(e)
-        }
+        fetch(process.env.REACT_APP_LIKE,{
+            method:"POST",
+            body: JSON.stringify({token:userData.token,uid:userData.uid,postId:postId})
+        }).then(result =>
+            result.json()
+                .then(resultJson=>{
+                    if(resultJson.error === 'Usuario invalido'){
+                        alert("Error Usuario invalido,Intenta reiniciar la pagina o contactar a un administrador")
+                    }else{
+                        if(resultJson.action==='dislike'){
+                            setPostsLikes(prevState=>{
+                                const index = prevState.indexOf(postId);
+                                prevState.splice(index, 1);
+                                return prevState
+                            })
+                            archivo.likes = resultJson.likes
+                        }else if(resultJson.action==='like'){
+                            setPostsLikes(prevState=>{
+                                prevState.push(postId)
+                                return prevState
+                            })
+                            archivo.likes = resultJson.likes
+                        }else{
+                            alert("Error desconocido,Intenta reiniciar la pagina o contactar a un administrador")
+                        }
+                    }
+
+                    setTimeout(() => {
+                        setDisabledButton(false);
+                    }, 500);
+                }).catch(e=>alert(e))
+        ).catch(e =>alert(e))
     }
     useEffect(() =>{
+        if(isLoading){
+            return
+        }
         for(let i =0; i<archivosSubidos.length;i++){
-            if(archivosSubidos[i].postId ===postId){
+            if(archivosSubidos[i].id ===postId){
                 setArchivo(archivosSubidos[i])
                 return
             }
         }
-    },[archivosSubidos])
+    },[isLoading])
     if(archivosSubidos.length === 0){
         return(
             <div>
@@ -61,11 +72,10 @@ export function DetallesArchivo({archivosSubidos, postsLikes, likesQuery, archiv
             </div>
         )
     }
-    const titulo = archivo.titulo
+    const titulo = archivo.title
     const url = archivo.url
     const likes = archivo.likes
-    const comentarios = archivo.comentarios.length
-    console.log(postsLikes)
+    const comentarios = archivo.comentarios?.length
     return(
         <div className={styles.mainDiv}>
             <div className={styles.navBar}>
@@ -78,7 +88,7 @@ export function DetallesArchivo({archivosSubidos, postsLikes, likesQuery, archiv
                 <span style={{overflow:"hidden", width:"50%"}}>{titulo}</span>
                 <div style={{color: "white", width:"25%",overflow:"hidden", display:"flex"}}>
                     <span style={{height:"45px", display:"flex", alignItems:"center"}}>{likes}</span>
-                    <button className={styles.boton} disabled={disabledButton} onClick={likePost}><BiHeart className={styles.botonIcon} style={{color:disabledButton?"lightblue":"rgb(255,60,60)",transform:"translate(0,10%)", opacity:postsLikes.indexOf(postId)>-1?1:0.5}}/></button>
+                    <button className={styles.boton} disabled={disabledButton} onClick={() =>likePost(postId)}><BiHeart className={styles.botonIcon} style={{color:disabledButton?"lightblue":"rgb(255,60,60)",transform:"translate(0,10%)", opacity:postsLikes.indexOf(postId)>-1?1:0.5}}/></button>
                     {/*<span style={{height:"45px", display:"flex", alignItems:"center"}}>{comentarios}</span>
                     <button className={styles.boton} onClick={() =>setVerComentarios(true)}><FaRegCommentDots className={styles.botonIcon} style={{color:"white", fontSize:"0.9em",transform:"translate(0,10%)"}}/></button>
                     */}

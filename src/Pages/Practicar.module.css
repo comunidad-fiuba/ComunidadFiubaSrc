@@ -37,6 +37,7 @@
     left: 50%;
     transform: translate(-50%,0);
     margin-top: 10px;
+    margin-bottom: 1rem;
 }
 .header{
     background: url('fiubaH3.png') center;

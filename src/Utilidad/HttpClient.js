@@ -2,7 +2,7 @@ import {APPURL} from "./Constantes";
 
 
 
-export const httpPostArchive = (form, callback, auth, userData) =>{
+export const httpPostArchive = (form, callback, auth, username) =>{
     const file = form.file.files[0];
     const fr = new FileReader();
     fr.readAsArrayBuffer(file);
@@ -11,7 +11,7 @@ export const httpPostArchive = (form, callback, auth, userData) =>{
         const url = APPURL;
         const qs = new URLSearchParams({filename: form.filename.value || file.name, tipo:hijos[5].value,
             materia: hijos[2].value, anio:hijos[4].children[0].value, cuatri:"",
-            mimeType: file.type, mail:auth.currentUser.email, userName:userData.userName});
+            mimeType: file.type, mail:auth.currentUser.email, userName:username});
         fetch(`${url}?${qs}`, {method: "POST", body: JSON.stringify([...new Int8Array(f.target.result)])})
             .then(res => res.json())
             .then(e => {

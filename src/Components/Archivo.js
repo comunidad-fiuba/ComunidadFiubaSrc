@@ -3,17 +3,52 @@ import {Comentarios} from "./Comentarios";
 import {Contenido} from "./Contenido";
 
 export function Archivo({archivo, fileIndex,loadIndex,setLoadIndex,disabledButton,setDisabledButton,
-                            postsLikes,archivosRef,likesQuery,preview, uid, showAlert, userName}){
+                            postsLikes,preview, showAlert, userData, setPostsLikes}){
 
     const [verComentarios,setVerComentarios] = useState(false)
+    const likePost = (postId) =>{
+        setDisabledButton(true)
+        fetch(process.env.REACT_APP_LIKE,{
+            method:"POST",
+            body: JSON.stringify({token:userData.token,uid:userData.uid,postId:postId})
+        }).then(result =>
+            result.json()
+                .then(resultJson=>{
+                    if(resultJson.error === 'Usuario invalido'){
+                        alert("Error Usuario invalido,Intenta reiniciar la pagina o contactar a un administrador")
+                    }else{
+                        if(resultJson.action==='dislike'){
+                            setPostsLikes(prevState=>{
+                                const index = prevState.indexOf(postId);
+                                prevState.splice(index, 1);
+                                return prevState
+                            })
+                            archivo.likes = resultJson.likes
+                        }else if(resultJson.action==='like'){
+                            setPostsLikes(prevState=>{
+                                prevState.push(postId)
+                                return prevState
+                            })
+                            archivo.likes = resultJson.likes
+                        }else{
+                            alert("Error desconocido,Intenta reiniciar la pagina o contactar a un administrador")
+                        }
+                    }
+
+                    setTimeout(() => {
+                        setDisabledButton(false);
+                    }, 500);
+            }).catch(e=>alert(e))
+        ).catch(e =>alert(e))
+    }
 
     return(
         <div>
-            <Comentarios setVerComentarios={setVerComentarios} verComentarios={verComentarios} comentarios={archivo.comentarios}
-                         comentariosRef={archivo.comentariosRef} userName={userName} uid={uid} fileIndex={fileIndex}/>
+            {/*<Comentarios setVerComentarios={setVerComentarios} verComentarios={verComentarios} comentarios={archivo.comentarios}
+                         comentariosRef={archivo.comentariosRef} userName={userName} uid={uid} fileIndex={fileIndex}/>*/}
             <Contenido archivo={archivo} fileIndex={fileIndex} loadIndex={loadIndex} setLoadIndex={setLoadIndex} verComentarios={verComentarios}
-                       disabledButton={disabledButton} setDisabledButton={setDisabledButton} postsLikes={postsLikes} showAlert={showAlert}
-                       archivosRef={archivosRef} likesQuery={likesQuery} preview={preview} setVerComentarios={setVerComentarios}/>
+                       disabledButton={disabledButton} postsLikes={postsLikes} showAlert={showAlert}
+                       preview={preview} likePost={likePost}/>
         </div>
     )
 }

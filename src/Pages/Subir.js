@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 import firebase from 'firebase/compat/app';
 
 
-export function Subir({archivosRef, auth, userData, setArchivosSubidos}){
+export function Subir({auth, user, setArchivosSubidos}){
     const [loading, setLoading] = useState(false)
     const [fileInput, setFileInput] = useState(null)
     const [showNiceAlert, setShowNiceAlert] = useState(null)
@@ -105,25 +105,29 @@ export function Subir({archivosRef, auth, userData, setArchivosSubidos}){
                 if(fileUrl.includes("view?usp=drivesdk")){
                     fileUrl = fileUrl.replace("view?usp=drivesdk","preview")
                 }
-                const newFileObject = {
-                    fecha:firebase.firestore.FieldValue.serverTimestamp(),
-                    likes:0,
+                let newFileObject = {
                     materia:hijos[2].value,
                     tipo:hijos[5].value,
                     titulo:form.filename.value || file.name,
-                    uid:auth.currentUser.uid,
+                    uid:user.uid,
+                    token:user.token,
                     url:fileUrl,
-                    usuario:userData.userName,
+                    usuario:user.name,
                     year:Number(hijos[4].children[0].value),
-                    postId:e.postId,
-                    comentarios:[],
-                    comentariosRef:null
                 }
-                archivosRef.add(newFileObject)
-                setArchivosSubidos(prevstate =>{
-                    prevstate.push(newFileObject)
-                    return prevstate
-                })
+                fetch(process.env.REACT_APP_POST,{
+                    method:"POST",
+                    body:JSON.stringify(newFileObject)
+                }).then(result=>result.json().then(resJson=>{
+                    if(!resJson.error){
+                        setArchivosSubidos(prevstate =>{
+                            prevstate.push(resJson)
+                            return prevstate
+                        })
+                    }else{
+                        console.log(resJson.error)
+                    }
+                })).catch(e =>alert(e))
             }else{
                 showBadAlert()
                 console.log(result)
@@ -136,7 +140,7 @@ export function Subir({archivosRef, auth, userData, setArchivosSubidos}){
             let fileList = document.getElementById('fileList');
             fileList.innerHTML = '';
         }
-        httpPostArchive(form, callback,auth, userData)
+        httpPostArchive(form, callback,auth, user.name)
     };
 
     const onclickButton = ()=>{

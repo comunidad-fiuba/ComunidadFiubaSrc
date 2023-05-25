@@ -57,23 +57,6 @@ export const  PREGUNTAS_ANALISIS_2=
                   ejercicioNumero={3}/>,
         <Pregunta enunciado={
             <>
-                <p>Sea <InlineMath renderError={errorFunc}>{"\\Sigma \\subset \\Reals^3"}</InlineMath> la superficie descripta por la ecuación vectorial</p>
-                <BlockMath renderError={errorFunc}>{"\\vec{X}=(u+v ,v,uv), \\; (u,v)\\; \\epsilon\\; \\Reals^2"}</BlockMath>
-                <p>Encuentre todos los <InlineMath renderError={errorFunc}>{"P \\;\\epsilon \\;\\Sigma"}</InlineMath> para los cuales el plano tangente a <InlineMath renderError={errorFunc}>{"\\Sigma \\; en\\; P"}</InlineMath> resulta ortogonal a la recta
-                    normal a la superficie de nivel 6 de <InlineMath renderError={errorFunc}>{"f(x,y,z) = x^2 + 4y + z^2"}</InlineMath> en el punto
-                    <InlineMath renderError={errorFunc}>{"\\;(x_0,1,1), \\; x_0<0"}</InlineMath> Para los puntos P hallados, dé una ecuación cartesiana del plano tangente correpondiente.</p>
-            </>
-        }  solucion={
-            <>
-                <p>Solucion:</p>
-                <BlockMath renderError={errorFunc}>{"P=\\vec{\\phi}(-1,1)=(0,1,-1)"}</BlockMath>
-                <BlockMath renderError={errorFunc}>{"-2x + 4y + 2z = 2"}</BlockMath>
-            </>
-        }
-                  verMas={"https://campusgrado.fi.uba.ar/pluginfile.php/2216/mod_page/content/42/P1_221022_resuelto.pdf"}
-                  ejercicioNumero={3}/>,
-        <Pregunta enunciado={
-            <>
                 <p>Justifique, mediante el teorema de la función implícita, que existe <InlineMath renderError={errorFunc}>{"z_0\\; \\epsilon\\; \\Reals"}</InlineMath> tal que
                     en un entorno del punto <InlineMath renderError={errorFunc}>{"(x_0, y_0) = (0, −1)"}</InlineMath> la ecuación</p>
                 <BlockMath renderError={errorFunc}>{"e^x z + y z^2 + z^3 = 1"}</BlockMath>

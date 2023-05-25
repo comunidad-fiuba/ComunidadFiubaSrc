@@ -14,8 +14,8 @@ import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 
 
-export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes, likesQuery,
-                         isLoading, auth, firestore, archivosRef ,userData}){
+export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes,
+                         isLoading, auth, firestore, cuota, userData, setPostsLikes}){
     const query = new URLSearchParams(useLocation().search);
     const navigate = useNavigate()
     const [showAlert, setShowAlert] = useState(null)
@@ -88,7 +88,7 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
 
     }
     const ordenarFecha = (e) =>{
-        setArchivosOrdenados(prevState => prevState.sort((a, b) => b.postId - a.postId))
+        setArchivosOrdenados(prevState => prevState.sort((a, b) => b.id - a.id))
         setReset(true)
     }
 
@@ -109,11 +109,11 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
         if(debounceMateriaElegida && archivo.materia.toLowerCase() !== debounceMateriaElegida.toLowerCase()){
             return false;
         }
-        if(anioElegido && archivo.year !== Number(anioElegido)){
+        if(anioElegido && archivo.year !== anioElegido){
             return false;
         }
 
-        if(debounceTituloElegido && !archivo.titulo.toLowerCase().includes(debounceTituloElegido.toLowerCase())){
+        if(debounceTituloElegido && !archivo.title.toLowerCase().includes(debounceTituloElegido.toLowerCase())){
             return false;
         }
 
@@ -147,7 +147,6 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
         setPreview(value)
         STORAGE.set("preview", value?"true":"false")
     }
-
     return(
         <div className={styles.container}>
             <Alerts>
@@ -233,10 +232,10 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
              <div>
                 {!isLoading
                     ? archivosFiltered.length>0
-                        ? <Archivos archivosSubidos={archivosFiltered} setInteracciones={setInteracciones} archivosRef={archivosRef}
-                                    interacciones={interacciones} showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes} likesQuery={likesQuery}
-                                    userName={userData.userName}/>
-                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>No hay resultados, intentá reajustar los filtros</p></div>
+                        ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData} setInteracciones={setInteracciones}
+                                    interacciones={interacciones} showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes}
+                                    />
+                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{cuota?"Cuota de usuarios excedida, te esperamos mañana":"No hay resultados!, intentá reajustar los filtros"}</p></div>
                     :<ImSpinner8 size={60} className={styles.spinner}/>}
             </div>
             <Top archivos={archivosSubidos}/>

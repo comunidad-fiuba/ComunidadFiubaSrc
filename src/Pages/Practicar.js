@@ -1,16 +1,22 @@
 import 'katex/dist/katex.min.css';
 import {PREGUNTAS_ANALISIS_2} from "../Utilidad/Preguntas";
 import styles from "./Practicar.module.css"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import {Link} from "react-router-dom";
+import {STORAGE} from "../Utilidad/Storage";
 
 
 export function  Practicar(){
-    const [preguntaActual, setPreguntaActual] = useState(Math.floor((Math.random()*(PREGUNTAS_ANALISIS_2.length-1))+0.5))
+    const [preguntaActual, setPreguntaActual] = useState(STORAGE.get("pregunta")?STORAGE.get("pregunta"):0)
 
     const siguientePregunta = () =>{
-        setPreguntaActual(Math.floor((Math.random()*(PREGUNTAS_ANALISIS_2.length-1))+0.5))
+        let siguientePregunta = preguntaActual + 1
+        if(siguientePregunta >= PREGUNTAS_ANALISIS_2.length){
+            siguientePregunta = 0
+        }
+        STORAGE.set("pregunta", siguientePregunta)
+        setPreguntaActual(siguientePregunta)
     }
     return(
         <div className={styles.mainDiv}>

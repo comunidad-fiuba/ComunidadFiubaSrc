@@ -1,4 +1,4 @@
-export const APPURL = "https://script.google.com/macros/s/AKfycbzmEdEii_ZDulRHpzP0O6KIiZ3i36iwchg3UIrwcMyBxxgGegG-QIfcz8YaCct_ZUkj/exec"
+export const APPURL = process.env.REACT_APP_DRIVE_POST
 
 export const FIREBASECONFIG ={
    apiKey: "AIzaSyDimftwPf8BJQKgRPs8kpYYol_ul59K3WA",
@@ -11,7 +11,7 @@ export const FIREBASECONFIG ={
 }
 export const ACCEPTEDFILES = ["image/png", "image/jpg", "image/jpeg", "application/pdf"]
 
-export const POSTDESTACADO = 98
+export const POSTDESTACADO = []
 
 export const MATERIAS = [
    "Analisis Matematico II",

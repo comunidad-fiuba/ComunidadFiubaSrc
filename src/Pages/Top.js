@@ -11,17 +11,17 @@ export function Top({archivos}){
         }
         const top = new Map()
         for( let i=0; i<archivos.length;i++){
-            const user = archivos[i].usuario
+            const user = archivos[i].username
             const likes = archivos[i].likes
-            const uid = archivos[i].uid
+            const slug = archivos[i].userslug
             if(!user.length>0){
                 continue
             }
-            if(top.get(uid)){
-                const objeto = top.get(uid)
-                top.set(uid,{user:user, likes:objeto.likes+likes})
+            if(top.get(slug)){
+                const objeto = top.get(slug)
+                top.set(slug,{user:user, likes:objeto.likes+likes})
             }else{
-                top.set(uid, {user:user, likes:likes})
+                top.set(slug, {user:user, likes:likes})
             }
         }
         const topSort = new Map([...top.entries()].sort((a, b) => b[1].likes - a[1].likes));

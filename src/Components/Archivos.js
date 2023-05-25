@@ -6,7 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Archivo} from "./Archivo";
 import {STORAGE} from "../Utilidad/Storage";
 import {POSTDESTACADO} from "../Utilidad/Constantes";
-export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,likesQuery, archivosRef, userName}){
+export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPostsLikes, userData}){
     const [loadIndex, setLoadIndex] = useState(2)
     const archivosPorPagina = STORAGE.get("preview") === "false"?16:12;
     const [disabledButton, setDisabledButton] = useState(true);
@@ -37,8 +37,8 @@ export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,l
         setLoadIndex(2)
     };
 
-    function moverDestacado(arr) {
-        const indexDestacado = arr.findIndex(archivo => archivo.postId === POSTDESTACADO)
+    function moverDestacado(arr, indexFind) {
+        const indexDestacado = arr.findIndex(archivo => archivo.id === indexFind)
         if(indexDestacado === -1){
             return
         }
@@ -46,12 +46,14 @@ export function Archivos({archivosSubidos,showAlert, preview, auth, postsLikes,l
     };
 
     const mapped = (actuales) =>{
-        moverDestacado(actuales)
+        for(let index in POSTDESTACADO){
+            moverDestacado(actuales, POSTDESTACADO[index])
+        }
         return actuales.map((archivo, index) =>
         {
-            return <Archivo key={archivo.postId + "file"} showAlert={showAlert} archivo={archivo} fileIndex={index} loadIndex={loadIndex} setLoadIndex={setLoadIndex}
-                              disabledButton={disabledButton} setDisabledButton={setDisabledButton} postsLikes={postsLikes} uid={auth.currentUser.uid}
-                              archivosRef={archivosRef} likesQuery={likesQuery} preview={preview} userName={userName}/>
+            return <Archivo key={archivo.id + "file"} showAlert={showAlert}  setPostsLikes={setPostsLikes} userData={userData} archivo={archivo} fileIndex={index} loadIndex={loadIndex} setLoadIndex={setLoadIndex}
+                              disabledButton={disabledButton} setDisabledButton={setDisabledButton} postsLikes={postsLikes}
+                               preview={preview} />
         })}
 
     return(
