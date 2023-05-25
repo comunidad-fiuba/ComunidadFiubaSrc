@@ -1,26 +1,30 @@
 import styles from "./Login.module.css"
 import firebase from 'firebase/compat/app';
 import {FcGoogle} from "react-icons/fc";
-import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 
 
 export function Login({auth}){
     useEffect(() =>{
-        console.log(sessionStorage.mailError)
+        //esto esta en el useEffect porque auth.signout() provoca que la pagina recarge y asi no se pierde...
+        //...el mensaje en la recarga
         if(sessionStorage.mailError){
             alert("Solo aceptamos correos de @fi.uba.ar")
             delete sessionStorage.mailError;
         }
     },[])
 
+    //iniciar sesion en google con firebase
     const signInWithGoogle = () =>{
+        //proveedor de inicio de sesion de google
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.setCustomParameters({
             hd: 'fi.uba.ar',
             prompt: 'select_account'
         });
+        //iniciar sesion con una ventana nueva a modo de popup
         auth.signInWithPopup(provider).then(result => {
+            //si el mail ingresado no es de la fiuba se desconecta al usuario
             if(!result.additionalUserInfo.profile.email.includes("@fi.uba.ar")){
                 sessionStorage.mailError = true;
                 auth.signOut()

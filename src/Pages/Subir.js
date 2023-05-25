@@ -10,14 +10,20 @@ import firebase from 'firebase/compat/app';
 
 
 export function Subir({auth, user, setArchivosSubidos}){
+    //declarar variables
     const [loading, setLoading] = useState(false)
     const [fileInput, setFileInput] = useState(null)
+    //alertas
     const [showNiceAlert, setShowNiceAlert] = useState(null)
     const [showBadAlert, setShowBadAlert] = useState(null)
     const [showBadSubjectAlert, setShowBadSubjectAlert] = useState(null)
+    //arrastrando archivo sobre la dropbox
     const [arrastrando, setArrastrando] = useState(false)
     const addFileAndShowSubmit = (file) =>{
+        //tamaño del archivo
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+        //cosas de interfaz
         let listItem = document.createElement('li');
         listItem.innerHTML = file.name + ' (' + fileSizeMB + ' MB)';
         let fileList = document.getElementById("fileList")
@@ -32,16 +38,18 @@ export function Subir({auth, user, setArchivosSubidos}){
 
     const fileChange = (e) =>{
         let fileList = document.getElementById('fileList');
-        // Remove any existing items from the list
+        // remover elementos existentes en al lista
         fileList.innerHTML = '';
-        // Add the new file to the list
+        // agregar el nuevo archivo a la lista
         let file = e.target.files[0];
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        //archivo muy pesado
         if(fileSizeMB > 12){
             alert("Tamaño maximo 12mb, si querés subir un archivo mas pesado contactanos")
             e.target.value = null;
             return;
         }
+        //chequear que sea del tipo correcto
         if( !file.type || !ACCEPTEDFILES.join(",").includes(file.type)){
             alert("tipo de archivo incorrecto")
             e.target.value = null;
@@ -51,35 +59,40 @@ export function Subir({auth, user, setArchivosSubidos}){
     };
 
     const dragoverArea = (e)=>{
+        //arrastrando archivo sobre la dropbox
         e.preventDefault(); //preventing from default behaviour
         setArrastrando(true)
     };
 
     const dragleaveArea = (e)=>{
+        //saliendo de la dropbox
         setArrastrando(false)
     };
 
     const dropOnArea = (e)=>{
+        //dropear archivo sobre la dropbox
         e.preventDefault();
+        //obtener el archivo dropeado (solo el primero, no se pueden dropear varios)
         let file = e.dataTransfer.files[0];
         let fileList = document.getElementById('fileList');
+        // remover elementos existentes en al lista
         fileList.innerHTML = '';
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        //archivo muy pesado
         if(fileSizeMB > 12){
             alert("Tamaño maximo 12mb, si querés subir un archivo mas pesado contactanos")
             setArrastrando(false)
             return;
         }
+        //chequear que sea del tipo correcto
         if(!file.type || !ACCEPTEDFILES.join(",").includes(file.type)){
             alert("tipo de archivo incorrecto")
             setArrastrando(false)
             return
         }
+        //esto es raro, no se por que pero esto funciona
         let archivoCargado = document.getElementById('archivoCargado');
-
-        // Remove any existing items from the list
-
-        // Add the new file to the list
+        //no asutarse si el usuario dropea mas de un archivo, solo se usa el primero
         archivoCargado.files = e.dataTransfer.files;
 
         addFileAndShowSubmit(file);
@@ -88,17 +101,22 @@ export function Subir({auth, user, setArchivosSubidos}){
     const submitNew = (e) => {
         e.preventDefault();
         const form = e.target
+        //chequear que la materia este incluida en las nuestras
         if(!MATERIAS.includes(form.children[2].value)){
             showBadSubjectAlert()
             return
         }
+        //desactivar el boton para que el usuario no toque dos veces
         setLoading(true)
         const submit = document.getElementById("submitFile");
         submit.classList.remove(styles.visible)
         submit.classList.add(styles.disabled)
+        //callback de la request para subir el archivo a drive (no es lo mismo que subir la info a la base de datos)
         const  callback = (result, e) =>{
             if(result === "succes"){
+                //archivo subido a drive
                 showNiceAlert()
+                //crear un objecto de informacion de archivo
                 const file = form.file.files[0];
                 const hijos = form.children;
                 let fileUrl = e.fileUrl
@@ -115,31 +133,40 @@ export function Subir({auth, user, setArchivosSubidos}){
                     usuario:user.name,
                     year:Number(hijos[4].children[0].value),
                 }
+                //subir la info del archivo a la base de datos
                 fetch(process.env.REACT_APP_POST,{
                     method:"POST",
                     body:JSON.stringify(newFileObject)
                 }).then(result=>result.json().then(resJson=>{
                     if(!resJson.error){
+                        //no hay error captado en el servidor de la api
                         setArchivosSubidos(prevstate =>{
                             prevstate.push(resJson)
                             return prevstate
                         })
                     }else{
-                        console.log(resJson.error)
+                        //error captado en el servidor de la api
+                        alert(resJson.error)
                     }
-                })).catch(e =>alert(e))
+                })
+                    //error no captado en el servidor de la api
+                ).catch(e =>alert(e))
             }else{
+                //no se pudo subir el archivo a drive
                 showBadAlert()
                 console.log(result)
             }
+            //reactivar el boton
             setLoading(false)
             submit.classList.remove(styles.disabled)
             submit.classList.add(styles.visible)
+            //resetear valores
             let archivoCargado = document.getElementById('archivoCargado');
             archivoCargado.value = null
             let fileList = document.getElementById('fileList');
             fileList.innerHTML = '';
         }
+        //subir el archivo, lo anterior era el callback de esto
         httpPostArchive(form, callback,auth, user.name)
     };
 

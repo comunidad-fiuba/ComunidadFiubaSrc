@@ -14,8 +14,8 @@ import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 
 
-export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes,
-                         isLoading, auth, firestore, cuota, userData, setPostsLikes}){
+export function Home({archivosSubidos, postsLikes,
+                         isLoading, auth, userData, setPostsLikes}){
     const query = new URLSearchParams(useLocation().search);
     const navigate = useNavigate()
     const [showAlert, setShowAlert] = useState(null)
@@ -232,10 +232,10 @@ export function Home({archivosSubidos,setInteracciones,interacciones, postsLikes
              <div>
                 {!isLoading
                     ? archivosFiltered.length>0
-                        ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData} setInteracciones={setInteracciones}
-                                    interacciones={interacciones} showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes}
+                        ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData}
+                                    showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes}
                                     />
-                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{cuota?"Cuota de usuarios excedida, te esperamos mañana":"No hay resultados!, intentá reajustar los filtros"}</p></div>
+                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{"No hay resultados!, intentá reajustar los filtros"}</p></div>
                     :<ImSpinner8 size={60} className={styles.spinner}/>}
             </div>
             <Top archivos={archivosSubidos}/>
