@@ -7,7 +7,8 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {Login} from "./Pages/Login";
 import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
 import Pusher from 'pusher-js';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {LoadingPage} from "./Pages/LoadingPage";
 firebase.initializeApp(FIREBASECONFIG)
 
 
@@ -15,8 +16,8 @@ firebase.initializeApp(FIREBASECONFIG)
 export default function App(){
     //inicializar autenticacion y usuario
     const auth = firebase.auth()
-    const [user] = useAuthState(auth)
-
+    const [user,loading,error] = useAuthState(auth)
+    const [waiting, setWaiting] = useState(true)
     //WEBSOCKETS CODIGO DE PRUEBA
     useEffect(() =>{
         //crear pusher
@@ -29,6 +30,8 @@ export default function App(){
         channel.bind('App\\Events\\PruebaNotification', data => {
             alert(data.message)
         });
+        setTimeout(() => setWaiting(false), 1000);
+
     },[])
 
     //redireccion desde 404.html, permite que la pagina funcione en github
@@ -56,6 +59,9 @@ export default function App(){
     }
 
     //Los componentes estan separados en Main y Login, login para loggear si no hay user y Main es el resto
+    if(loading || waiting){
+        return <LoadingPage/>
+    }
     if(user){
         return(
             <Main auth={auth}/>

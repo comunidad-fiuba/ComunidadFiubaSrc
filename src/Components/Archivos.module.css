@@ -261,3 +261,32 @@
 .confirmationBox .cancelButton:hover{
     background-color:rgb(255,150,150);
 }
+
+.loadingRow{
+}
+.loadBackground{
+    width:200%;
+    background:linear-gradient(90deg, #dedede, var(--fondo-dark), #dedede);
+    height:10px;
+    transform: translate(-25%,0);
+    animation: loadRow 1.5s linear infinite;
+}
+
+
+@keyframes loadRow {
+    0%{
+        transform: translate(-25%,0);
+    }
+    25%{
+        transform: translate(-50%,0);
+    }
+    50%{
+        transform: translate(-25%,0);
+    }
+    75%{
+        transform: translate(0,0);
+    }
+    100%{
+        transform: translate(-25%,0);
+    }
+}

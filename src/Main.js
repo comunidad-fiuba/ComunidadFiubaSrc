@@ -25,7 +25,6 @@ export default function Main({auth}) {
         if(!auth.currentUser){
             return;
         }
-
         //obtiene los posts y la info del usuario a la vez
         const fetchData = async () =>{
             //fetch a la api que da info del usuario

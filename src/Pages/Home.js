@@ -12,6 +12,7 @@ import {FcLike} from "react-icons/fc";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
+import {CargandoArchivos} from "../Components/CargandoArchivos";
 
 
 export function Home({archivosSubidos, postsLikes,
@@ -236,7 +237,7 @@ export function Home({archivosSubidos, postsLikes,
                                     showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes}
                                     />
                         : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{"No hay resultados!, intentá reajustar los filtros"}</p></div>
-                    :<ImSpinner8 size={60} className={styles.spinner}/>}
+                    :<CargandoArchivos size={60} />}
             </div>
             <Top archivos={archivosSubidos}/>
             <footer id="top" className={styles.footer}>
