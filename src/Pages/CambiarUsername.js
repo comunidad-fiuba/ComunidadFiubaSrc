@@ -6,6 +6,7 @@ import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 
 export function CambiarUsername({userData,setUserData}){
+    //declarar variables
     const [isDisabled, setIsDisabled] = useState(false)
     const [showBadAlert, setShowBadAlert] = useState(null)
     const [showNiceAlert, setShowNiceAlert] = useState(null)
@@ -13,24 +14,30 @@ export function CambiarUsername({userData,setUserData}){
     const [showSinCambiosAlert, setShowSinCambiosAlert] = useState(null)
 
     const changeNombre = (e) =>{
+        //cambir nombre de usuarios
         e.preventDefault()
         const newUser = document.getElementById("newUserName").value
         const userVerification = document.getElementById("userNameVerification").value
+        //verificar que el usuario tenga cambios disponibles
         if(userData.changes <= 0){
             showSinCambiosAlert()
             return
         }
+        //verificar que el nombre nuevo no sea el mismo que ya tiene
         if(newUser === userData.name){
             showSameNameAlert()
             return
         }
         if(newUser === userVerification){
+            //fetch a la api para cambiar el nombre
             fetch(process.env.REACT_APP_USERNAME, {
                 method:"POST",
                 body:JSON.stringify({token:userData.token,uid:userData.uid,newName:newUser})
             }).then(result =>{
+                //deberia chequear errores, queda para otro dia
                 setIsDisabled(true)
                 showNiceAlert()
+                //cambiar el boton por el boton de recargar
                 const submitButton = document.getElementById("submitPass")
                 submitButton.classList.remove(styles.submit)
                 submitButton.classList.add(styles.submitDisabled)

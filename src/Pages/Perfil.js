@@ -13,6 +13,7 @@ import {FaRegCommentDots} from "react-icons/fa";
 import {BiHeart} from "react-icons/bi";
 
 export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos}){
+    //declarar variables
     const[misArchivos, setMisArchivos] = useState([]);
     const [showNiceAlert, setShowNiceAlert] = useState(null)
     const [showBadAlert, setShowBadAlert] = useState(null)
@@ -23,7 +24,9 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
     useEffect(() =>{
         const archivos = []
         let misLikes = 0;
+        //el slug de cada usuario es unico y seguro de compartir
         const logged = userData.slug
+        //buscar archivos solo del usuario
         for( let i=0; i<archivosSubidos.length;i++){
             const user = archivosSubidos[i].username
             const likes = archivosSubidos[i].likes
@@ -46,12 +49,17 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
 
 
     const scrollListDown =() => {
+        //mover una posicion de la lista hacia abajo
         setActual(prevState => {
             if(prevState < misArchivos.length-1){
+                //guardo la posicion actual
                 const inicial = document.getElementById("misArchivosLista").scrollTop
+                //scroll
                 document.getElementsByTagName("li")[prevState+1].scrollIntoView()
+                //guardo la posicion final
                 const final = document.getElementById("misArchivosLista").scrollTop
                 if(inicial === final){
+                    //si inicial y final son iguales entonces la lista no se movio, significa que no habia mas lugar para mover
                     return prevState
                 }
                 return prevState+1
@@ -60,12 +68,17 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
         })
     }
     const scrollListUp =() => {
+        //mover una posicion de la lista hacia arriba
         setActual(prevState => {
             if(prevState > 0){
+                //guardo la posicion actual
                 const inicial = document.getElementById("misArchivosLista").scrollTop
+                //scroll
                 document.getElementById(misArchivos[prevState-1].id + "miArchivo").scrollIntoView();
+                //guardo la posicion final
                 const final = document.getElementById("misArchivosLista").scrollTop
                 if(inicial === final){
+                    //si inicial y final son iguales entonces la lista no se movio, significa que no habia mas lugar para mover
                     return prevState
                 }
                 return prevState-1
@@ -75,13 +88,17 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
     }
 
     const deleteFile = () =>{
+        //borrar archivo
         const id = aBorrar.id, url = aBorrar.url, titulo = aBorrar.titulo
+        //fetch a la api para borrar el archivo
         fetch(process.env.REACT_APP_POST_DELETE, {
             method:"POST",
             body:JSON.stringify({token:userData.token,uid:userData.uid,id:id})
         }).then(result =>{
            result.json().then(resultJson=>{
+               //deberia chequear errores aca, queda para otro dia
                setArchivosSubidos(prevstate =>{
+                   //quitar de la lista local el archivo recien borrado de la base de datos
                    return prevstate.filter(archivo => archivo.id !== id)
                })
            }).catch(error=>alert(error))
@@ -95,14 +112,17 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
             }
             closeBorrar()
         }
+        //borrar archivo del drive
         httpPostDelete(id, originalUrl, titulo, callback)
     }
 
     const openBorrar = (archivo) =>{
+        //abrir menu de borrar
         document.getElementById("confirmacionBox").style.display="flex"
         setABorrar(archivo)
     }
     const closeBorrar = () =>{
+        //cerrar menu de borrar
         document.getElementById("confirmacionBox").style.display="none"
         setABorrar(null)
     }

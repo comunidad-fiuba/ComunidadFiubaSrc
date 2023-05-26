@@ -40,7 +40,7 @@ export default function Main({auth}) {
                     }else{
                         //si hay error checkear el tipo
                         if(resJson.error==='Usuario no encontrado'){
-                            //Este error Surge cuando el usuario aun no fue creado
+                            //Este error surge cuando el usuario aun no fue creado
                             //Crear el usuario
                             fetch(process.env.REACT_APP_USER,{
                                 method:"POST",

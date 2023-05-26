@@ -17,7 +17,9 @@ import {CargandoArchivos} from "../Components/CargandoArchivos";
 
 export function Home({archivosSubidos, postsLikes,
                          isLoading, auth, userData, setPostsLikes}){
+    //obtener la query desde el link
     const query = new URLSearchParams(useLocation().search);
+    //declarar variables
     const navigate = useNavigate()
     const [showAlert, setShowAlert] = useState(null)
     const [archivosFiltered, setArchivosFiltered] = useState([])
@@ -27,10 +29,12 @@ export function Home({archivosSubidos, postsLikes,
     const [tituloElegido, setTituloElegido] = useState("")
     const [preview, setPreview] = useState(STORAGE.get("preview") !== "false")
     const [reset, setReset] = useState(false)
+    const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
+    //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
     const debounceMateriaElegida = useDebounce(materiaElegida,400)
     const debounceTituloElegido = useDebounce(tituloElegido,400)
-    const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
 
+    //obtener datos de la query
     if(query.get("materia") && materiaElegida !== query.get("materia")){
         setMateriaElegida(query.get("materia"))
     }
@@ -38,31 +42,38 @@ export function Home({archivosSubidos, postsLikes,
         setTituloElegido(query.get("titulo"))
     }
     useEffect(() =>{
+        //cuando pas algo en los archivos subidos se ordenan por likes
         setArchivosOrdenados(archivosSubidos.sort((a, b) => b.likes - a.likes))
     },[archivosSubidos])
 
     useEffect(() =>{
+        //permite recargar el componente cuando se cambia el valor de un debounce
         setReset(true)
     },[debounceMateriaElegida, archivosSubidos, debounceTituloElegido])
 
     useEffect(() =>{
+        //si hay query poner esos valores en los filtros
         document.getElementById("tipo").value = tipoElegido?tipoElegido.charAt(0).toUpperCase() + tipoElegido.slice(1):""
         document.getElementById("materia").value = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):""
         document.getElementById("anio").value = anioElegido?anioElegido:""
         document.getElementById("search").value = tituloElegido?tituloElegido:""
     },[])
     const changeTipo = (e) =>{
+        //cambiar el tipo de post buscado
         if(e.target.value){
+            //poner el valor en la query
             query.set("tipo",e.target.value)
         }else{
             query.delete("tipo")
         }
         setTipoElegido(e.target.value)
         setReset(true)
+        //ir a la pagina con la query
         navigate("/?" + query)
 
     }
     const changeMateria = (e) =>{
+        //cambiar el tipo de materia buscada
         if(e.target.value){
             query.set("materia",e.target.value)
         }else{
@@ -104,6 +115,7 @@ export function Home({archivosSubidos, postsLikes,
     }
 
     const filterFunc = (archivo) =>{
+        //funcion filtro, devuelve true si el elemento cumple con los filtros activos
         if(tipoElegido && archivo.tipo.toLowerCase() !== tipoElegido.toLowerCase()){
             return false;
         }
@@ -122,6 +134,7 @@ export function Home({archivosSubidos, postsLikes,
     }
 
     const changed = () =>{
+        //aplica los filtros activados
         setArchivosFiltered(prevstate => {
             prevstate = []
             for(let i =0; i<archivosOrdenados.length;i++){
@@ -135,6 +148,7 @@ export function Home({archivosSubidos, postsLikes,
 
     useEffect(() =>{
         if(reset){
+            //si hay algun cambio aplicar los filtros
             changed()
             setReset(false)
         }
@@ -145,7 +159,9 @@ export function Home({archivosSubidos, postsLikes,
     }
 
     const setPreviewAndSave = (value) =>{
+        //activar o desactivar la preview
         setPreview(value)
+        //guardar el valor en el local storage
         STORAGE.set("preview", value?"true":"false")
     }
     return(

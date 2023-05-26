@@ -7,13 +7,18 @@ import {DetallesComentarios} from "./DetallesComentarios";
 import {ImSpinner8} from "react-icons/im";
 
 export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes}){
+    //obtener el slug del archivo pasado por el link
     const {postSlug} = useParams();
+    //obtener el id usando el slug
     const postId = archivosSubidos.find(post => post.slug===postSlug)?.id
+    //declarar variables
     const [archivo, setArchivo] = useState(null)
     const [disabledButton, setDisabledButton] = useState(false)
     const [verComentarios, setVerComentarios] = useState(false)
     const likePost = (postId) =>{
+        //likear post
         setDisabledButton(true)
+        //fetch a la api de likear
         fetch(process.env.REACT_APP_LIKE,{
             method:"POST",
             body: JSON.stringify({token:userData.token,uid:userData.uid,postId:postId})
@@ -21,20 +26,27 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
             result.json()
                 .then(resultJson=>{
                     if(resultJson.error === 'Usuario invalido'){
+                        //probablemente alguien intentando dar like desde otra cuenta
                         alert("Error Usuario invalido,Intenta reiniciar la pagina o contactar a un administrador")
                     }else{
                         if(resultJson.action==='dislike'){
+                            //el server marcó la accion como un dislike
                             setPostsLikes(prevState=>{
+                                //guardar el like localmente
                                 const index = prevState.indexOf(postId);
                                 prevState.splice(index, 1);
                                 return prevState
                             })
+                            //cambiar los likes del archivo localmente
                             archivo.likes = resultJson.likes
                         }else if(resultJson.action==='like'){
+                            //el server marcó la accion como un likes
                             setPostsLikes(prevState=>{
+                                //guardar el like localmente
                                 prevState.push(postId)
                                 return prevState
                             })
+                            //cambiar los likes del archivo localmente
                             archivo.likes = resultJson.likes
                         }else{
                             alert("Error desconocido,Intenta reiniciar la pagina o contactar a un administrador")
@@ -43,7 +55,7 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
 
                     setTimeout(() => {
                         setDisabledButton(false);
-                    }, 500);
+                    }, 300);
                 }).catch(e=>alert(e))
         ).catch(e =>alert(e))
     }
@@ -51,6 +63,7 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
         if(isLoading){
             return
         }
+        //buscar el archivo por el id, podria hacerse sin el for
         for(let i =0; i<archivosSubidos.length;i++){
             if(archivosSubidos[i].id ===postId){
                 setArchivo(archivosSubidos[i])
@@ -58,7 +71,9 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
             }
         }
     },[isLoading])
+    //no cargaron los archivos
     if(archivosSubidos.length === 0){
+        //NOTA cambiar el spinner por algo mejor
         return(
             <div>
                 <ImSpinner8 size={60} className={styles.spinner}/>

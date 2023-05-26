@@ -26,30 +26,41 @@ export function Subir({auth, user, setArchivosSubidos}){
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
     const startLoading = () =>{
+        //desactivar el boton para que el usuario no toque dos veces
         setLoading(true)
         const submit = document.getElementById("submitFile");
         submit.classList.remove(styles.visible)
         submit.classList.add(styles.disabled)
+        //timer que aumenta la barra de carga en tiempos y cantidades irregulares
         const setTimer = () =>{
+            //guardar el timer en una variable para poder limpiarlo
             const timer = setTimeout(() => {
                 setBarWidth(prevState => {
+                    //parar antes de llegar a 100
                     if(prevState < 90){
                         setTimer()
+                        //limpiar el timer anterior,(no estoy seguro de que sea necesario, pero por las dudas)
                         clearTimeout(timerBar)
+                        //aumentar el valor de la barra
                         return prevState + randomIntFromInterval(0,6)
                     }else{
+                        //limpiar el timer anterior,(no estoy seguro de que sea necesario, pero por las dudas)
                         clearTimeout(timerBar)
                         return prevState
                     }
                 })
+                //setear el proximo timer con un tiempo random
             },randomIntFromInterval(2,6)*100)
             setTimerBar(timer)
         }
         setTimer()
     }
     const stopLoading = () =>{
+        //detener la carga, primero mostrando el 100
         setBarWidth(100)
+        //pequeño delay antes de volver a activar el boton, para tener tiempo de ver el 100
         setTimeout(() =>{
+            //reactivar el boton
             setLoading(false)
             const submit = document.getElementById("submitFile");
             submit.classList.remove(styles.disabled)
