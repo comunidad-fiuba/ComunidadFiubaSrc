@@ -1,24 +1,63 @@
 import styles from "./Subir.module.css"
 import {ACCEPTEDFILES, MATERIAS} from "../Utilidad/Constantes";
 import {httpPostArchive} from "../Utilidad/HttpClient";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Alerts} from "../Components/Alerts";
 import {Alert} from "../Components/Alert";
 import {ImSpinner8} from "react-icons/im";
 import {Link} from "react-router-dom";
 import firebase from 'firebase/compat/app';
+import {LoadingBar} from "../Components/LoadingBar";
 
 
 export function Subir({auth, user, setArchivosSubidos}){
     //declarar variables
     const [loading, setLoading] = useState(false)
     const [fileInput, setFileInput] = useState(null)
+    const [barWidth, setBarWidth] = useState(0)
+    const [timerBar, setTimerBar] = useState(null)
     //alertas
     const [showNiceAlert, setShowNiceAlert] = useState(null)
     const [showBadAlert, setShowBadAlert] = useState(null)
     const [showBadSubjectAlert, setShowBadSubjectAlert] = useState(null)
     //arrastrando archivo sobre la dropbox
     const [arrastrando, setArrastrando] = useState(false)
+    const randomIntFromInterval = (min, max) =>{ // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    const startLoading = () =>{
+        setLoading(true)
+        const submit = document.getElementById("submitFile");
+        submit.classList.remove(styles.visible)
+        submit.classList.add(styles.disabled)
+        const setTimer = () =>{
+            const timer = setTimeout(() => {
+                setBarWidth(prevState => {
+                    if(prevState < 90){
+                        setTimer()
+                        clearTimeout(timerBar)
+                        return prevState + randomIntFromInterval(0,6)
+                    }else{
+                        clearTimeout(timerBar)
+                        return prevState
+                    }
+                })
+            },randomIntFromInterval(2,6)*100)
+            setTimerBar(timer)
+        }
+        setTimer()
+    }
+    const stopLoading = () =>{
+        setBarWidth(100)
+        setTimeout(() =>{
+            setLoading(false)
+            const submit = document.getElementById("submitFile");
+            submit.classList.remove(styles.disabled)
+            submit.classList.add(styles.visible)
+            setBarWidth(0)
+            clearTimeout(timerBar)
+        },200)
+    }
     const addFileAndShowSubmit = (file) =>{
         //tamaño del archivo
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
@@ -107,10 +146,7 @@ export function Subir({auth, user, setArchivosSubidos}){
             return
         }
         //desactivar el boton para que el usuario no toque dos veces
-        setLoading(true)
-        const submit = document.getElementById("submitFile");
-        submit.classList.remove(styles.visible)
-        submit.classList.add(styles.disabled)
+        startLoading()
         //callback de la request para subir el archivo a drive (no es lo mismo que subir la info a la base de datos)
         const  callback = (result, e) =>{
             if(result === "succes"){
@@ -157,9 +193,7 @@ export function Subir({auth, user, setArchivosSubidos}){
                 console.log(result)
             }
             //reactivar el boton
-            setLoading(false)
-            submit.classList.remove(styles.disabled)
-            submit.classList.add(styles.visible)
+            stopLoading()
             //resetear valores
             let archivoCargado = document.getElementById('archivoCargado');
             archivoCargado.value = null
@@ -232,8 +266,12 @@ export function Subir({auth, user, setArchivosSubidos}){
                     <option value="Parcial Resuelto">Parcial Resuelto</option>
                     <option value="Ejercicios">Ejercicios</option>
                 </select>
-
-                <button type="submit" disabled={loading} id="submitFile" className={styles.submit}>{loading?<ImSpinner8 className={styles.spinner}/>:"Subir"}</button>
+                <div>
+                    { loading?<p  style={{position:"relative",width:"100%", textAlign:"center",
+                        padding:"0",marginTop:"-10px",
+                        color:"rgb(169,169,169)"}}>{barWidth}%</p>:""}
+                    <button type="submit" disabled={loading} id="submitFile" className={styles.submit}>{loading?<LoadingBar width={barWidth}/>:"Subir"}</button>
+                </div>
             </form>
         </section>
             <a href={"https://www.ilovepdf.com/es/jpg_a_pdf"} target="_blank" className={styles.conversor}>Imagenes a Pdf</a>

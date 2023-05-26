@@ -1,0 +1,11 @@
+.container{
+    width: 100%;
+    height: 20px;
+    background: rgb(161, 161, 161,1);
+    border-radius: 2px;
+}
+
+.bar{
+    height: 100%;
+    background: rgba(105,80,160,0.55);
+}
