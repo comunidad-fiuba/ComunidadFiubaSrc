@@ -72,7 +72,8 @@ export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPos
                 nextClassName={styles.fastMove}
                 onPageChange={handlePageClick}
                 activeClassName={styles.activePage}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
                 pageCount={pageCount}
                 renderOnZeroPageCount={null}
                 forcePage={page-1}
