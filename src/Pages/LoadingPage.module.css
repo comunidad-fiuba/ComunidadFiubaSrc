@@ -1,7 +1,7 @@
 .fondoCarga{
     background: url('waveStack.svg') center;
     background-size: cover;
-    height:100vh;
+    height:100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
