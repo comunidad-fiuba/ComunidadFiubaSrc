@@ -9,12 +9,14 @@ import {ImSpinner8} from "react-icons/im";
 export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes}){
     //obtener el slug del archivo pasado por el link
     const {postSlug} = useParams();
+    
     //obtener el id usando el slug
     const postId = archivosSubidos.find(post => post.slug===postSlug)?.id
     //declarar variables
     const [archivo, setArchivo] = useState(null)
     const [disabledButton, setDisabledButton] = useState(false)
     const [verComentarios, setVerComentarios] = useState(false)
+    document.title = `${(postSlug.charAt(0).toUpperCase() + postSlug.slice(1)).replace(/-/g, " ")} - Comunidad Fiuba`;
     const likePost = (postId) =>{
         //likear post
         setDisabledButton(true)

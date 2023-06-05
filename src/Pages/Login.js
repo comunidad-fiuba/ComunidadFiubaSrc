@@ -5,6 +5,7 @@ import {useEffect} from "react";
 
 
 export function Login({auth}){
+    document.title = "Comunidad Fiuba - Login";
     useEffect(() =>{
         //esto esta en el useEffect porque auth.signout() provoca que la pagina recarge y asi no se pierde...
         //...el mensaje en la recarga

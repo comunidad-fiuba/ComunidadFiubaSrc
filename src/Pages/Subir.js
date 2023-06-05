@@ -11,6 +11,7 @@ import {LoadingBar} from "../Components/LoadingBar";
 
 
 export function Subir({auth, user, setArchivosSubidos}){
+    document.title = "Comunidad Fiuba - Subir";
     //declarar variables
     const [loading, setLoading] = useState(false)
     const [fileInput, setFileInput] = useState(null)

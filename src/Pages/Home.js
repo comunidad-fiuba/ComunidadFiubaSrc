@@ -34,6 +34,7 @@ export function Home({archivosSubidos, postsLikes,
     const debounceMateriaElegida = useDebounce(materiaElegida,400)
     const debounceTituloElegido = useDebounce(tituloElegido,400)
 
+    document.title = "Comunidad Fiuba";
     //obtener datos de la query
     if(query.get("materia") && materiaElegida !== query.get("materia")){
         setMateriaElegida(query.get("materia"))
