@@ -199,14 +199,16 @@ export function Home({archivosSubidos, postsLikes,
                 </div>
                 <div className={styles.der}>
                     <Link to="/subir" className={styles.linkContainer}>
-                        <p>Subir un archivo</p>
-                        
+                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                        <p>Subir</p>
                     </Link>
                     <Link to="/perfil" className={styles.linkContainer}> 
                         <ion-icon name="person-outline"></ion-icon>
+                        <p>Perfil</p>
                     </Link>
                     <Link to="/" className={styles.linkContainer} onClick={logOut}>
-                        <ion-icon name="log-out-outline" style={{margin: "0 -2px 0 2px"}}></ion-icon>
+                        <ion-icon name="log-out-outline" ></ion-icon>
+                        <p>Salir</p>
                     </Link>
                 </div>
             </nav>
