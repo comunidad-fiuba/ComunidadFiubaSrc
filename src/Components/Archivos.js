@@ -86,7 +86,7 @@ export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPos
                     }
                 }}
             />
-            <p style={{textAlign:"center", padding:"0 20px"}}>Sumáte a la Comunidad compartiendo los examenes y resumenes que tengas para que todos los puedan aprovechar</p>
+            <p style={{textAlign:"center", padding:"0 20px"}}>Sumáte a la Comunidad compartiendo los examenes y resumenes para que todos los puedan aprovechar</p>
         </div>
 
     )

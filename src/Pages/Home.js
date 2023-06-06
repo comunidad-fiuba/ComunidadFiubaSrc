@@ -10,7 +10,6 @@ import {Top} from "./Top";
 import {useDebounce} from "../hooks/useDebounce";
 import {FcLike} from "react-icons/fc";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
-import {GrFormClose} from "react-icons/gr";
 import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 import {CargandoArchivos} from "../Components/CargandoArchivos";
@@ -265,10 +264,11 @@ export function Home({archivosSubidos, postsLikes,
                     <input type="text" id="search" onChange={changeTitulo} placeholder="Buscar por titulo..."/>
                 </div>
             </div>
-            <div style={{display:"flex",justifyContent:"center", gap:"10px"}}>
+
+            {/* <div style={{display:"flex",justifyContent:"center", gap:"10px"}}>
                 { preview?<button className={styles.previewButton} onClick={() => setPreviewAndSave(false)}><AiFillEye size={22}/></button>
                     :<button className={styles.previewButton} onClick={() => setPreviewAndSave(true)}><AiFillEyeInvisible size={22}/></button>}
-            </div>
+            </div> */}
              <div>
                 {!isLoading
                     ? archivosFiltered.length>0
