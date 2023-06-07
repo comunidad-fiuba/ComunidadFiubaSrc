@@ -13,12 +13,24 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import {DetallesArchivo} from "./Pages/DetallesArchivo";
 import {Practicar} from "./Pages/Practicar";
+import {MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "./Utilidad/Constantes";
+import {MateriaArchivos} from "./Pages/MateriaArchivos";
 export default function Main({auth}) {
     //declarar los datos importantes
     const [archivosSubidos, setArchivosSubidos] = useState([])
     const [userData, setUserData] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [postsLikes, setPostsLikes] = useState([])
+
+    const filtrarMaterias = (archivos) =>{
+        for(let index in archivos){
+            const indexReemplazo = MATERIASREMPLAZABLES.indexOf(archivos[index].materia)
+            if(indexReemplazo !== -1){
+                archivos[index].materia = MATERIASREMPLAZO[indexReemplazo]
+            }
+        }
+        return archivos
+    }
 
     useEffect(() =>{
         //no intentar nada si no hay usuario loggeado
@@ -74,7 +86,7 @@ export default function Main({auth}) {
                 method:"GET"
             }).then(result=>result.json().then(resJson=>{
                 //guardar los posts
-                setArchivosSubidos(resJson)
+                setArchivosSubidos(filtrarMaterias(resJson))
             }).catch(e =>{
                 //error en el json, no deberia entrar nunca
                 alert(e)

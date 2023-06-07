@@ -1,29 +1,18 @@
 import styles from "./Archivos.module.css"
-import {Contenido} from "./Contenido";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ReactPaginate from "react-paginate";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Archivo} from "./Archivo";
-import {STORAGE} from "../Utilidad/Storage";
 import {POSTDESTACADO} from "../Utilidad/Constantes";
-export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPostsLikes, userData}){
-    const [loadIndex, setLoadIndex] = useState(2)
-    const archivosPorPagina = STORAGE.get("preview") === "false"?16:12;
-    const [disabledButton, setDisabledButton] = useState(true);
+export function Archivos({archivosSubidos,showAlert, postsLikes, setPostsLikes, userData}){
+    const archivosPorPagina = 16;
+    const [disabledButton, setDisabledButton] = useState(false);
     const navigate = useNavigate();
     const query = new URLSearchParams(useLocation().search);
     const pageCount = Math.ceil(archivosSubidos.length / archivosPorPagina);
     const page =  query.get("page") && Number(query.get("page")) > 0 && Number(query.get("page")) <= pageCount
         ? Number(query.get("page"))
         : 1
-
-    useEffect(() =>{
-        if(!preview){
-            setDisabledButton(false)
-        }else{
-            setDisabledButton(true)
-        }
-    },[preview])
 
     if(archivosSubidos.length === 0) {
         return;
@@ -34,7 +23,6 @@ export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPos
         const newOffset = (event.selected * archivosPorPagina) % archivosSubidos.length;
         query.set("page",((newOffset/archivosPorPagina)+1).toString())
         navigate("/?" + query)
-        setLoadIndex(2)
     };
 
     function moverDestacado(arr, indexFind) {
@@ -49,16 +37,15 @@ export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPos
         for(let index in POSTDESTACADO){
             moverDestacado(actuales, POSTDESTACADO[index])
         }
-        return actuales.map((archivo, index) =>
+        return actuales.map((archivo) =>
         {
-            return <Archivo key={archivo.id + "file"} showAlert={showAlert}  setPostsLikes={setPostsLikes} userData={userData} archivo={archivo} fileIndex={index} loadIndex={loadIndex} setLoadIndex={setLoadIndex}
-                              disabledButton={disabledButton} setDisabledButton={setDisabledButton} postsLikes={postsLikes}
-                               preview={preview} />
+            return <Archivo key={archivo.id + "file"} showAlert={showAlert}  setPostsLikes={setPostsLikes} userData={userData} archivo={archivo}
+                              disabledButton={disabledButton} setDisabledButton={setDisabledButton} postsLikes={postsLikes}/>
         })}
 
     return(
         <div>
-            <div className={styles.archivosContainer} onLoad={() =>setDisabledButton(false)}>
+            <div className={styles.archivosContainer}>
                 {archivosActuales && mapped(archivosActuales)}
             </div>
             <ReactPaginate
@@ -81,7 +68,6 @@ export function Archivos({archivosSubidos,showAlert, preview, postsLikes, setPos
                     if(clickEvent.nextSelectedPage){
                         query.set("page",(clickEvent.nextSelectedPage+1).toString())
                         navigate("/?" + query)
-                        setLoadIndex(2)
                     }
                 }}
             />

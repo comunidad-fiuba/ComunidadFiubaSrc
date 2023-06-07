@@ -11,7 +11,10 @@ export const FIREBASECONFIG ={
 }
 export const ACCEPTEDFILES = ["image/png", "image/jpg", "image/jpeg", "application/pdf"]
 
-export const POSTDESTACADO = []
+export const POSTDESTACADO = [12,29,43]
+
+export const MATERIASREMPLAZABLES = ["Fisica I A"]
+export const MATERIASREMPLAZO = ["Fisica I"]
 
 export const MATERIAS = [
    "Analisis Matematico II",
@@ -26,7 +29,6 @@ export const MATERIAS = [
    "Ecuaciones Diferenciales Ordinarias",
    "Analisis Funcional",
    "Algebra II C",
-   "Fisica I A",
    "Fisica II A",
    "Fisica II B",
    "Mecanica I",

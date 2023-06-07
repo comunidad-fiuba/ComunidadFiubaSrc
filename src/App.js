@@ -31,7 +31,6 @@ export default function App(){
             alert(data.message)
         });
         setTimeout(() => setWaiting(false), 1000);
-
     },[])
 
     //redireccion desde 404.html, permite que la pagina funcione en github

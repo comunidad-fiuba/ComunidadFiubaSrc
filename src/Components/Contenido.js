@@ -1,13 +1,11 @@
 import styles from "./Archivos.module.css";
 import {useEffect, useState} from "react";
-import {FaRegCommentDots} from "react-icons/fa";
 import {BiHeart} from "react-icons/bi";
 import {Link} from "react-router-dom";
 import {FiShare2} from "react-icons/fi";
 import {POSTDESTACADO} from "../Utilidad/Constantes";
 
-export function Contenido({archivo, disabledButton, fileIndex, verComentarios,
-                              loadIndex, setLoadIndex, preview, showAlert, postsLikes, likePost}){
+export function Contenido({archivo, disabledButton, verComentarios,showAlert, postsLikes, likePost}){
     const [sizeActual, setSizeActual] = useState(1.25)
     const [sizeMateria, setSizeMateria] = useState(1)
     const [sizeNombre, setSizeNombre] = useState(0.75);
@@ -19,11 +17,6 @@ export function Contenido({archivo, disabledButton, fileIndex, verComentarios,
     const postId = archivo.id
     const usuario = archivo.username
     const slug = archivo.slug
-    useEffect(() =>{
-        if(!preview && fileIndex===loadIndex){
-            setLoadIndex(fileIndex+16)
-        }
-    },[preview])
 
     useEffect(() =>{
         if(sizeActual > 0.25){
@@ -47,30 +40,14 @@ export function Contenido({archivo, disabledButton, fileIndex, verComentarios,
             }
         }
 
-    },[loadIndex, sizeActual, sizeMateria,sizeNombre])
-
-    if(fileIndex > loadIndex){
-
-        return (
-            <div style={{marginTop:"1rem"}}>
-                <div id={"iframeBottom" + postId} className={styles.iframeBottom}>
-                    <a href={url} id={"title" + postId} style={{textDecoration:"none", fontSize:sizeActual+"rem", minHeight:"30px"}} target="_blank" className={styles.displayTitle}>Cargando...</a>
-                    <p style={{position:"relative", margin:"2px 0 0 0", width:"100%",textAlign:"center", color: postsLikes.indexOf(postId)>-1?"green":"red", fontSize:"0.8rem"}}>{likes}</p>
-                </div>
-            </div>
-        )
-    }
+    },[sizeActual, sizeMateria,sizeNombre])
 
     const copyLink = () =>{
         navigator.clipboard.writeText(window.location.host + "/post/" + slug).then(a => showAlert()).catch(e => console.log(e))
     }
     return (
         <div>
-            <div className={`${styles.contentWrap} ${POSTDESTACADO.includes(postId)?styles.destacado:""}`} style={{marginTop:"1rem", height:preview||verComentarios?"320px":"unset"}}>
-                {preview
-                    ? <embed id={titulo+"embed"} className={styles.archivo} src={url} onLoad={e => fileIndex===loadIndex?setLoadIndex(fileIndex+4):true}/>
-                    : ""
-                }
+            <div className={`${styles.contentWrap} ${POSTDESTACADO.includes(postId)?styles.destacado:""}`} style={{marginTop:"1rem"}}>
                 <div id={"iframeBottom" + postId}  className={styles.iframeBottom}>
                     <Link to={"/post/"+slug} style={{textDecoration:"none", width:"100%", lineHeight:"31px"}}>
                         <p id={"title" + postId} rel="noreferrer" style={{fontSize:sizeActual+"rem", minHeight:"31px"}}

@@ -1,8 +1,6 @@
 import styles from "./HomeAlen.module.css"
 import {useEffect, useState} from "react";
-import {Archivos} from "../Components/Archivos";
-import {ImSpinner8} from "react-icons/im";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {STORAGE} from "../Utilidad/Storage";
 import {MATERIAS, MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "../Utilidad/Constantes";
 import {MdDateRange, MdFilterAlt} from "react-icons/md";
@@ -14,11 +12,13 @@ import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 import {CargandoArchivos} from "../Components/CargandoArchivos";
 import {ArchivosPorMateria} from "../Components/ArchivosPorMateria";
+import {Archivos} from "../Components/Archivos";
 
 
-export function Home({archivosSubidos, postsLikes,
+export function MateriaArchivos({archivosSubidos, postsLikes,
                          isLoading, auth, userData, setPostsLikes}){
     //obtener la query desde el link
+    const {materiaSlug} = useParams();
     const query = new URLSearchParams(useLocation().search);
     //declarar variables
     const navigate = useNavigate()
@@ -28,22 +28,30 @@ export function Home({archivosSubidos, postsLikes,
     const [materiaElegida, setMateriaElegida] = useState("")
     const [anioElegido, setAnioElegido] = useState("")
     const [tituloElegido, setTituloElegido] = useState("")
+    const [preview, setPreview] = useState(STORAGE.get("preview") !== "false")
     const [reset, setReset] = useState(false)
-    const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
+    const slugify = (materia) =>{
+        return materia.toLowerCase()
+            .replace(/[^\w ]+/g, '')
+            .replace(/ +/g, '-');
+    }
+    const archivosFiltrados = archivosSubidos.filter((archivo) =>slugify(archivo.materia) === materiaSlug)
+    const [archivosOrdenados, setArchivosOrdenados] = useState(archivosFiltrados)
     //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
     const debounceMateriaElegida = useDebounce(materiaElegida,400)
     const debounceTituloElegido = useDebounce(tituloElegido,400)
+    useEffect(() =>{
+        setArchivosOrdenados(archivosFiltrados)
+    },[archivosFiltrados])
+
 
     //obtener datos de la query
-    if(query.get("materia") && materiaElegida !== query.get("materia")){
-        setMateriaElegida(query.get("materia"))
-    }
     if(query.get("titulo") && tituloElegido !== query.get("titulo")){
         setTituloElegido(query.get("titulo"))
     }
     useEffect(() =>{
         //cuando pas algo en los archivos subidos se ordenan por likes
-        setArchivosOrdenados(archivosSubidos.sort((a, b) => b.likes - a.likes))
+        setArchivosOrdenados(archivosFiltrados.sort((a, b) => b.likes - a.likes))
     },[archivosSubidos])
 
     useEffect(() =>{
@@ -54,7 +62,6 @@ export function Home({archivosSubidos, postsLikes,
     useEffect(() =>{
         //si hay query poner esos valores en los filtros
         document.getElementById("tipo").value = tipoElegido?tipoElegido.charAt(0).toUpperCase() + tipoElegido.slice(1):""
-        document.getElementById("materia").value = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):""
         document.getElementById("anio").value = anioElegido?anioElegido:""
         document.getElementById("search").value = tituloElegido?tituloElegido:""
     },[])
@@ -69,26 +76,28 @@ export function Home({archivosSubidos, postsLikes,
         setTipoElegido(e.target.value)
         setReset(true)
         //ir a la pagina con la query
-
         navigate("/?" + query)
 
     }
     const changeMateria = (e) =>{
         //cambiar el tipo de materia buscada
         let materia = e.target.value
-
-        const indexReemplazo = MATERIASREMPLAZABLES.indexOf(materia)
-        if(indexReemplazo !== -1){
-            materia = MATERIASREMPLAZO[indexReemplazo]
-        }
-
         if(materia){
             query.set("materia",materia)
         }else{
             query.delete("materia")
         }
+        const indexReemplazo = MATERIASREMPLAZABLES.indexOf(materia)
+        if(indexReemplazo !== -1){
+            materia = MATERIASREMPLAZO[indexReemplazo]
+        }
+        const slugify = (materiaa) =>{
+            return materiaa.toLowerCase()
+                .replace(/[^\w ]+/g, '')
+                .replace(/ +/g, '-');
+        }
         setMateriaElegida(materia)
-        navigate("/?" + query)
+        navigate("/" + slugify(materia))
     }
     const changeAnio = (e) =>{
         if(e.target.value){
@@ -165,6 +174,13 @@ export function Home({archivosSubidos, postsLikes,
     const logOut = () =>{
         auth.signOut()
     }
+
+    const setPreviewAndSave = (value) =>{
+        //activar o desactivar la preview
+        setPreview(value)
+        //guardar el valor en el local storage
+        STORAGE.set("preview", value?"true":"false")
+    }
     return(
         <div className={styles.container}>
             <Alerts>
@@ -198,7 +214,7 @@ export function Home({archivosSubidos, postsLikes,
             <div className={styles.fiubaImagen}  id="inicio">
                 <h1 className={styles.mainTitulo}
                     onClick={e =>{ navigate("/")
-                    window.location.reload()}}>Comunidad Fiuba</h1>
+                        window.location.reload()}}>Comunidad Fiuba</h1>
                 <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Esta página <b>no</b> es oficial, su contenido es manejado por alumnos de la FIUBA, <b>valoralo</b> y sumate a compartir</h3>
                 <div className={styles.subrrayado}></div>
             </div>
@@ -218,9 +234,9 @@ export function Home({archivosSubidos, postsLikes,
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
                     <input id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria} className={styles.filterInput}/>
-                        <datalist id="materias">
-                            {MATERIAS.map(materia =>(<option key={materia + "filter"} value ={materia}/>))}
-                        </datalist>
+                    <datalist id="materias">
+                        {MATERIAS.map(materia =>(<option key={materia + "filter"} value ={materia}/>))}
+                    </datalist>
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
@@ -243,12 +259,16 @@ export function Home({archivosSubidos, postsLikes,
                     <input type="text" id="search" onChange={changeTitulo} placeholder="Buscar por titulo..."/>
                 </div>
             </div>
-             <div>
+            <div style={{display:"flex",justifyContent:"center", gap:"10px"}}>
+                { preview?<button className={styles.previewButton} onClick={() => setPreviewAndSave(false)}><AiFillEye size={22}/></button>
+                    :<button className={styles.previewButton} onClick={() => setPreviewAndSave(true)}><AiFillEyeInvisible size={22}/></button>}
+            </div>
+            <div>
                 {!isLoading
                     ? archivosFiltered.length>0
                         ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData}
-                                    showAlert={showAlert} auth={auth} postsLikes={postsLikes}
-                                    />
+                                              showAlert={showAlert} preview={preview} auth={auth} postsLikes={postsLikes}
+                        />
                         : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{"No hay resultados!, intentá reajustar los filtros"}</p></div>
                     :<CargandoArchivos size={60} />}
             </div>

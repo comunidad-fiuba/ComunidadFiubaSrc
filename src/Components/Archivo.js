@@ -2,8 +2,8 @@ import {useState} from "react";
 import {Comentarios} from "./Comentarios";
 import {Contenido} from "./Contenido";
 
-export function Archivo({archivo, fileIndex,loadIndex,setLoadIndex,disabledButton,setDisabledButton,
-                            postsLikes,preview, showAlert, userData, setPostsLikes}){
+export function Archivo({archivo,disabledButton,setDisabledButton,
+                            postsLikes, showAlert, userData, setPostsLikes}){
 
     const [verComentarios,setVerComentarios] = useState(false)
     const likePost = (postId) =>{
@@ -46,9 +46,9 @@ export function Archivo({archivo, fileIndex,loadIndex,setLoadIndex,disabledButto
         <div>
             {/*<Comentarios setVerComentarios={setVerComentarios} verComentarios={verComentarios} comentarios={archivo.comentarios}
                          comentariosRef={archivo.comentariosRef} userName={userName} uid={uid} fileIndex={fileIndex}/>*/}
-            <Contenido archivo={archivo} fileIndex={fileIndex} loadIndex={loadIndex} setLoadIndex={setLoadIndex} verComentarios={verComentarios}
+            <Contenido archivo={archivo} verComentarios={verComentarios}
                        disabledButton={disabledButton} postsLikes={postsLikes} showAlert={showAlert}
-                       preview={preview} likePost={likePost}/>
+                       likePost={likePost}/>
         </div>
     )
 }

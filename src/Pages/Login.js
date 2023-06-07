@@ -33,9 +33,9 @@ export function Login({auth}){
     }
 
     return(
-        <div className={styles.mainDiv}>
-            <div className={styles.contenedor}>
-                <p className={styles.titulo}>¡Bienvenido!</p>
+        <div className={styles.mainDiv} style={{overflow:"hidden"}}>
+            <div className={styles.contenedor} style={{marginTop:"10px"}}>
+                <h1 className={styles.titulo} style={{marginBottom:"6px"}}>¡Bienvenido a Comunidad Fiuba!</h1>
                 <p className={styles.descripcion}>inicia sesión para tener acceso a una gran biblioteca de material didáctico para ayudarte a cursar en la <strong>FIUBA</strong></p>
                 <p className={styles.descripcionDos}>Utilizamos el inicio de sesión con google para guardar tus likes y como método de seguridad.<br/>Cualquier usuario que comparta contenido inadecuado será inhabilitado <strong>permanentemente</strong> del sitio web.</p>
                 <button onClick={signInWithGoogle} className={styles.submit}><FcGoogle size={48} style={{position:"absolute",float:"left"}}/><p style={{position:"relative",margin:"0px", top:"50%",left:"50%", transform:"translate(-50%,-50%)", fontSize:"1.25rem"}}>Iniciar Sesión</p></button>
@@ -44,6 +44,7 @@ export function Login({auth}){
                 <div style={{width:"50%",minWidth:"fit-content"}}><p className={styles.contacto} >andres.d.melnik@gmail.com</p></div>
                 <div style={{width:"50%",minWidth:"fit-content"}}><p className={styles.contacto}>montialen@gmail.com</p></div>
             </div>
+            <p style={{color:"white" ,width:"100%", textAlign:"center", fontSize:"0.8em"}}>Dedicado a los estudiantes de la Facultad de Ingeniería de la Universidad de Buenos Aires<br/><span style={{color:"black"}}>Github Pages</span></p>
         </div>
     )
 }
