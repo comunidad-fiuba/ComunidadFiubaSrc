@@ -20,6 +20,7 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
     const [aBorrar, setABorrar] = useState(null)
     const[actual, setActual] = useState(0)
     const[likesTotales, setLikesTotales] = useState(0)
+    document.title = "Comunidad Fiuba - Perfil";
 
     useEffect(() =>{
         const archivos = []
