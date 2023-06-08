@@ -125,6 +125,7 @@
     z-index: 100;
 }
 
+
 .subrrayado {
     border-bottom: 1px solid var(--blanco);
     width: 0vw;
@@ -272,6 +273,22 @@
     color: var(--blanco);
     font-size: 1.2em;
     transition: transform 0.3s ease-in-out;
+}
+
+.closeMateria {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    right: 6px;
+    z-index: 200;
+    cursor: pointer;
+}
+
+.closeMateria ion-icon {
+    position: relative;
+    right: 0;
 }
 
 .content {
