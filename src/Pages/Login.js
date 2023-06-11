@@ -38,7 +38,7 @@ export function Login({auth}){
             <div className={styles.contenedor} style={{marginTop:"10px"}}>
                 <h1 className={styles.titulo} style={{marginBottom:"6px"}}>¡Bienvenido a Comunidad Fiuba!</h1>
                 <p className={styles.descripcion}>inicia sesión para tener acceso a una gran biblioteca de material didáctico para ayudarte a cursar en la <strong>FIUBA</strong></p>
-                <p className={styles.descripcionDos}>Utilizamos el inicio de sesión con google para guardar tus likes y como método de seguridad.<br/>Cualquier usuario que comparta contenido inadecuado será inhabilitado <strong>permanentemente</strong> del sitio web.</p>
+                <p className={styles.descripcionDos}>El inicio de sesion con google es manejado exclusivamente por google, solamente nos permite saber tu nombre y dirección de correo electrónico.</p>
                 <button onClick={signInWithGoogle} className={styles.submit}><FcGoogle size={48} style={{position:"absolute",float:"left"}}/><p style={{position:"relative",margin:"0px", top:"50%",left:"50%", transform:"translate(-50%,-50%)", fontSize:"1.25rem"}}>Iniciar Sesión</p></button>
             </div>
             <div style={{bottom:"0",display:"flex", width:"100%", flexWrap:"wrap", justifyContent:"center"}}>

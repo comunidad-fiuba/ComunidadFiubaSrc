@@ -188,8 +188,25 @@
     background-color: var(--fondo-dark);
 }
 
-.selectContainer:hover ion-icon {
+.selectContainer:hover button {
     transform: translateY(2px);
+}
+.icono{
+    position: relative;
+    color: var(--blanco);
+    font-size: 1.2em;
+    transition: transform 0.3s ease-in-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.borrarIcono{
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+.borrarIcono:hover{
+    background-color: red;
 }
 
 .selectContainer {
@@ -197,7 +214,6 @@
     align-items: center;
     position: relative;
     width: 100px;
-    
 }
 
 .container option {
@@ -266,7 +282,7 @@
     border-radius: 0 20px 20px 0;
 }
 
-.filterWrapper ion-icon{
+.filterWrapper ion-icon, .borrarIcono{
     pointer-events: none;
     position: absolute;
     right: 6px;

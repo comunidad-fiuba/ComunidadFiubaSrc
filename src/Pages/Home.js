@@ -14,6 +14,7 @@ import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
 import {CargandoArchivos} from "../Components/CargandoArchivos";
 import {ArchivosPorMateria} from "../Components/ArchivosPorMateria";
+import {IoIosClose} from "react-icons/io";
 
 
 export function Home({archivosSubidos, postsLikes,
@@ -28,7 +29,6 @@ export function Home({archivosSubidos, postsLikes,
     const [materiaElegida, setMateriaElegida] = useState("")
     const [anioElegido, setAnioElegido] = useState("")
     const [tituloElegido, setTituloElegido] = useState("")
-    const [preview, setPreview] = useState(STORAGE.get("preview") !== "false")
     const [reset, setReset] = useState(false)
     const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
     //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
@@ -69,7 +69,6 @@ export function Home({archivosSubidos, postsLikes,
         }else{
             query.delete("tipo")
         }
-        activeInput(e)
         setTipoElegido(e.target.value)
         setReset(true)
         //ir a la pagina con la query
@@ -100,7 +99,7 @@ export function Home({archivosSubidos, postsLikes,
         }
         setMateriaElegida(materia)
         navigate("/?" + query)
-        
+
     }
     const changeAnio = (e) =>{
         if(e.target.value){

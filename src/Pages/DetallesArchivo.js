@@ -16,6 +16,10 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
     const [archivo, setArchivo] = useState(null)
     const [disabledButton, setDisabledButton] = useState(false)
     const [verComentarios, setVerComentarios] = useState(false)
+    const titulo = archivo?.title
+    const url = archivo?.url
+    const likes = archivo?.likes
+    const comentarios = archivo?.comentarios?.length
     document.title = `${(postSlug.charAt(0).toUpperCase() + postSlug.slice(1)).replace(/-/g, " ")} - Comunidad Fiuba`;
     const likePost = (postId) =>{
         //likear post
@@ -73,6 +77,17 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
             }
         }
     },[isLoading])
+    useEffect(() =>{
+        let headersList = {
+            "Accept": "*/*",
+        }
+        fetch(url,{
+            method:"GET",
+            headers:headersList
+        }).then(res =>res.text()).then(resData =>{
+            console.log(resData)
+        })
+    },[url])
     //no cargaron los archivos
     if(archivosSubidos.length === 0){
         //NOTA cambiar el spinner por algo mejor
@@ -89,10 +104,6 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
             </div>
         )
     }
-    const titulo = archivo.title
-    const url = archivo.url
-    const likes = archivo.likes
-    const comentarios = archivo.comentarios?.length
     return(
         <div className={styles.mainDiv}>
             <div className={styles.navBar}>
