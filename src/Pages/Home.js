@@ -28,6 +28,7 @@ export function Home({archivosSubidos, postsLikes,
     const [materiaElegida, setMateriaElegida] = useState("")
     const [anioElegido, setAnioElegido] = useState("")
     const [tituloElegido, setTituloElegido] = useState("")
+    const [preview, setPreview] = useState(STORAGE.get("preview") !== "false")
     const [reset, setReset] = useState(false)
     const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
     //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
@@ -60,10 +61,6 @@ export function Home({archivosSubidos, postsLikes,
         document.getElementById("search").value = tituloElegido?tituloElegido:""
     },[])
 
-    // resalta un input cuando esta activo
-    const activeInput = (e) =>{
-        e.target.value ? e.target.style.background = "rgb(0, 139, 130)" : e.target.style.background = ""
-    }
     const changeTipo = (e) =>{
         //cambiar el tipo de post buscado
         if(e.target.value){
@@ -79,14 +76,12 @@ export function Home({archivosSubidos, postsLikes,
         navigate("/?" + query)
 
     }
-    const materiaHandleClick = (e) =>{
-        //si se hace click en el input de materia, borrar el valor
-        if(e.target.value){
-            e.preventDefault()
-            e.target.value = ""
-            changeMateria(e);
-        }
-
+    const closeMateriaOnClick = (e) =>{
+        const materiaInput = document.getElementById("materia");
+        materiaInput.value = ""
+        query.delete("materia")
+        setMateriaElegida(materiaInput.value)
+        navigate("/?" + query)
     }
 
     const changeMateria = (e) =>{
@@ -103,9 +98,9 @@ export function Home({archivosSubidos, postsLikes,
         }else{
             query.delete("materia")
         }
-        activeInput(e)
         setMateriaElegida(materia)
         navigate("/?" + query)
+        
     }
     const changeAnio = (e) =>{
         if(e.target.value){
@@ -113,7 +108,6 @@ export function Home({archivosSubidos, postsLikes,
         }else{
             query.delete("año")
         }
-        activeInput(e)
         setAnioElegido(e.target.value)
         setReset(true)
         navigate("/?" + query)
@@ -222,18 +216,20 @@ export function Home({archivosSubidos, postsLikes,
             </div>
             <div className={styles.filterWrapper} id="contenido">
                 <div className={styles.selectContainer}>
-                    {!materiaElegida?
-                        <ion-icon name="chevron-down-outline"></ion-icon>
-                        :<ion-icon name="close-outline"></ion-icon>}
+                    {materiaElegida?
+                        <div className={styles.closeMateria} onClick={closeMateriaOnClick}>
+                            <ion-icon name="close-outline" ></ion-icon>
+                        </div>
+                        : <ion-icon name="chevron-down-outline"></ion-icon>}
 
-                    <input id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria} onClick={materiaHandleClick} className={styles.filterInput}/>
+                    <input id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria}  className={styles.filterInput} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}/>
                         <datalist id="materias">
                             {MATERIAS.map(materia =>(<option key={materia + "filter"} value ={materia}/>))}
                         </datalist>
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
-                    <select id="tipo" name="tipo" title="tipo" form="formArchivo" onChange={changeTipo} className={styles.filterInput}>
+                    <select id="tipo" name="tipo" title="tipo" form="formArchivo" onChange={changeTipo} className={styles.filterInput} style={tipoElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Tipo</option>
                         <option value="Resumen">Resumen</option>
                         <option value="Final">Final</option>
@@ -245,7 +241,7 @@ export function Home({archivosSubidos, postsLikes,
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
-                    <select id="anio" onChange={changeAnio} className={styles.filterInput}>
+                    <select id="anio" onChange={changeAnio} className={styles.filterInput} style={anioElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Año</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
