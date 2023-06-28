@@ -18,22 +18,6 @@ export default function App(){
     //inicializar autenticacion y usuario
     const auth = firebase.auth()
     const [user,loading,error] = useAuthState(auth)
-    const [waiting, setWaiting] = useState(true)
-    //WEBSOCKETS CODIGO DE PRUEBA
-    useEffect(() =>{
-        //crear pusher
-        const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-            cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
-            encrypted: true,
-        });
-        //configurar canal de escucha
-        const channel = pusher.subscribe('prueba');
-        channel.bind('App\\Events\\PruebaNotification', data => {
-            alert(data.message)
-        });
-        setTimeout(() => setWaiting(false), 1000);
-    },[])
-
     //redireccion desde 404.html, permite que la pagina funcione en github
     if(user && user.email.includes("@fi.uba.ar") && sessionStorage.redirect){
         //tomar el valor guardado previamente en 404
@@ -59,7 +43,7 @@ export default function App(){
     }
 
     //Los componentes estan separados en Main y Login, login para loggear si no hay user y Main es el resto
-    if(loading || waiting){
+    if(loading){
         return <LoadingPage/>
     }
     if(user){
