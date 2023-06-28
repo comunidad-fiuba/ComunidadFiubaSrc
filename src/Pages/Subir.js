@@ -227,7 +227,6 @@ export function Subir({auth, user, setArchivosSubidos}){
                 <Alert tipo="mala" texto="Error al subir el archivo" setShowAlert={setShowBadAlert}/>
                 <Alert tipo="mala" texto="Selecciona una materia de la lista" setShowAlert={setShowBadSubjectAlert}/>
             </Alerts>
-            <Link to="/"><ion-icon name="arrow-back-outline" style={{position: "absolute", color: "white", left: "10px", top :"10px", fontSize: "2em", cursor:"pointer"}}></ion-icon></Link>
             {!arrastrando
                 ?<div className={styles.dragArea} id ="dragArea" onDragOver={dragoverArea}
                       onDragLeave={dragleaveArea} onDrop={dropOnArea}>
@@ -287,6 +286,7 @@ export function Subir({auth, user, setArchivosSubidos}){
             </form>
         </section>
             <a href={"https://www.ilovepdf.com/es/jpg_a_pdf"} target="_blank" className={styles.conversor}>Imagenes a Pdf</a>
+            <Link to="/"><ion-icon name="arrow-back-outline" style={{position: "absolute", color: "white", left: "10px", top :"10px", fontSize: "2em", cursor:"pointer"}}></ion-icon></Link>
         </div>
     )
 }

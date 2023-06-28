@@ -26,16 +26,16 @@
     position: relative;
     width: 90%;
     max-width: 400px;
-    height: 460px;
-    margin: 45px 0 20px 0;
+    height: 76vh;
     border-radius: 20px;
+    margin: 10vh 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 0;
+    padding: 2vh 0;
     backdrop-filter: blur(7px);
-    background-color: rgba(255, 255, 255, 0.164);
+    background-color: rgba(0,80,75,0.05);
 }
 
 .form {
@@ -202,7 +202,7 @@
 }
 
 .listaMisArchivos li:hover {
-    background-color: rgba(102, 84, 150, 0.59);
+    background-color: rgba(0,80,75,0.5);
 }
 
 .listaMisArchivos .icono {

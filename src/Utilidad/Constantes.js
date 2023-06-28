@@ -11,7 +11,7 @@ export const FIREBASECONFIG ={
 }
 export const ACCEPTEDFILES = ["image/png", "image/jpg", "image/jpeg", "application/pdf"]
 
-export const POSTDESTACADO = [12,29,43]
+export const POSTDESTACADO = [61,96,42]
 
 export const MATERIASREMPLAZABLES = ["Fisica I A"]
 export const MATERIASREMPLAZO = ["Fisica I"]

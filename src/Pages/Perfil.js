@@ -158,7 +158,7 @@ export function Perfil({archivosSubidos, isLoading, userData, setArchivosSubidos
                         {!isLoading
                             ?misArchivos.map(archivo =>{
                             return (
-                                <li key={archivo.id + "miArchivo"} id={archivo.id + "miArchivo"}><a href={archivo.url} target="_blank">{archivo.titulo}<br/><span style={{color:"white"}}>{archivo.comments}<FaRegCommentDots style={{transform:"translate(2px,10%)"}}/> / {archivo.likes}<BiHeart style={{transform:"translate(2px,10%)"}}/></span></a>
+                                <li key={archivo.id + "miArchivo"} id={archivo.id + "miArchivo"}><a href={archivo.url} target="_blank">{archivo.titulo}<br/><span style={{color:"white"}}>{archivo.likes}<BiHeart style={{transform:"translate(2px,10%)"}}/></span></a>
                                     <button className={styles.deleteButton} onClick={() => openBorrar(archivo)}><HiOutlineTrash style={{marginRight:"4px"}} size={18}/></button></li>
                             )})
                             :<ImSpinner8 size={24} className={styles.spinner}/>}

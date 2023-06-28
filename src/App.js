@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom
 import Pusher from 'pusher-js';
 import {useEffect, useState} from "react";
 import {LoadingPage} from "./Pages/LoadingPage";
+import {LoginNuevo} from "./Pages/LoginNuevo";
 firebase.initializeApp(FIREBASECONFIG)
 
 
@@ -70,7 +71,7 @@ export default function App(){
             <Router>
                 <main>
                     <Routes>
-                        <Route path="/" element={<Login auth={auth}/>}/>
+                        <Route path="/" element={<LoginNuevo auth={auth}/>}/>
                         <Route path="*" element={<Navigate replace to="/" />}/>
                     </Routes>
                 </main>
