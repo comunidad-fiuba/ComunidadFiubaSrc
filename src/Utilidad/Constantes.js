@@ -16,7 +16,7 @@ export const POSTDESTACADO = [61,96,42]
 export const MATERIASREMPLAZABLES = ["Fisica I A"]
 export const MATERIASREMPLAZO = ["Fisica I"]
 
-export const FRASES_1 = ["¡Bienvenido!","¡Unite Ya!","¡Hola!","¡Alfin!","¡Llegaste!"]
+export const FRASES_1 = ["¡Bienvenido!","¡Unite Ya!","¡Hola!","¡Al fin!","¡Llegaste!"]
 export const FRASES_2 = ["Solo faltabas vos","Te estuvimos esperando","Te extrañamos",
    "Somos mas de 1000!","Esperamos que te guste"]
 
