@@ -17,7 +17,9 @@
 
 .dragArea{
     border: 2px dashed #fff;
-    height: 500px;
+    padding: 1em 0;
+    height: fit-content;
+    min-height: 90vh;
     width: 90%;
     max-width: 700px;
     border-radius: 5px;
@@ -213,11 +215,22 @@
     font-size: 1.4rem;
     border:1px solid white;
     padding: 2px 10px;
-    margin-top: 10px;
     cursor: pointer;
     text-decoration: none;
+    text-align: center;
 }
 .conversor:hover{
     background-color: rgba(2, 96, 90, 0.7);
 }
-
+.linkContainer{
+    display: grid;
+    place-content: center;
+    grid-template-columns: repeat(1,100%);
+}
+.compresorContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0 4px;
+}

@@ -96,7 +96,7 @@ export function Subir({auth, user, setArchivosSubidos}){
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
         //archivo muy pesado
         if(fileSizeMB > 12){
-            alert("Tamaño maximo 12mb, si querés subir un archivo mas pesado contactanos")
+            alert("Tamaño maximo 12mb, si querés subir un archivo pesado utiliza un compresor (se encuentran en la parte inferior de la pagina) o dividi el pdf")
             e.target.value = null;
             return;
         }
@@ -131,7 +131,7 @@ export function Subir({auth, user, setArchivosSubidos}){
         let fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
         //archivo muy pesado
         if(fileSizeMB > 12){
-            alert("Tamaño maximo 12mb, si querés subir un archivo mas pesado contactanos")
+            alert("Tamaño maximo 12mb, si querés subir un archivo pesado utiliza un compresor (se encuentran en la parte inferior de la pagina) o dividi el pdf")
             setArrastrando(false)
             return;
         }
@@ -236,7 +236,20 @@ export function Subir({auth, user, setArchivosSubidos}){
                     <header style={{pointerEvents:"none"}}>Arrastra y suelta para subir un archivo</header>
                     <p style={{pointerEvents:"none"}}>O</p>
                     <button id="buscarArchivo" onClick={onclickButton}>Buscar Contenido</button>
-                    <p style={{margin:"0", fontSize:"1rem"}}>Pdf o imagen</p>
+                    <p style={{margin:"0", fontSize:"1rem",marginBottom:"10px"}}>Pdf o imagen</p>
+                    <div className={styles.linkContainer}>
+
+                        <div className={styles.compresorContainer}>
+                            <p style={{margin:"0", fontSize:"1rem", textAlign:"center",padding:"0.2em 0", width:"100%"}}>Convertir</p>
+                            <a style={{flexGrow:"1"}} href={"https://www.ilovepdf.com/es/jpg_a_pdf"} target="_blank" className={styles.conversor}>Img a Pdf</a>
+                            <a style={{flexGrow:"1"}} href={"https://www.ilovepdf.com/es/dividir_pdf"} target="_blank" className={styles.conversor}>Dividir Pdf</a>
+                        </div>
+                        <div className={styles.compresorContainer}>
+                            <p style={{margin:"0", fontSize:"1rem", textAlign:"center",padding:"0.2em 0", width:"100%"}}>Comprimir</p>
+                            <a style={{flexGrow:"1"}} href={"https://www.ilovepdf.com/es/comprimir_pdf"} target="_blank" className={styles.conversor}>Pdf</a>
+                            <a style={{flexGrow:"1"}} href={"https://www.iloveimg.com/es/comprimir-imagen"} target="_blank" className={styles.conversor}>Img</a>
+                        </div>
+                    </div>
                 </div>
                 :<div className={styles.dragArea} id ="dragArea" onDragOver={dragoverArea}
                       onDragLeave={dragleaveArea} onDrop={dropOnArea}>
@@ -285,7 +298,6 @@ export function Subir({auth, user, setArchivosSubidos}){
                 </div>
             </form>
         </section>
-            <a href={"https://www.ilovepdf.com/es/jpg_a_pdf"} target="_blank" className={styles.conversor}>Imagenes a Pdf</a>
             <Link to="/"><ion-icon name="arrow-back-outline" style={{position: "absolute", color: "white", left: "10px", top :"10px", fontSize: "2em", cursor:"pointer"}}></ion-icon></Link>
         </div>
     )
