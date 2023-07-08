@@ -1,12 +1,18 @@
 import {useState} from "react";
 import {Comentarios} from "./Comentarios";
 import {Contenido} from "./Contenido";
+import {useNavigate} from "react-router-dom";
 
 export function Archivo({archivo,disabledButton,setDisabledButton,
                             postsLikes, showAlert, userData, setPostsLikes}){
 
     const [verComentarios,setVerComentarios] = useState(false)
+    const navigate = useNavigate();
     const likePost = (postId) =>{
+        if(!userData){
+            navigate("/login")
+            return
+        }
         setDisabledButton(true)
         fetch(process.env.REACT_APP_LIKE,{
             method:"POST",

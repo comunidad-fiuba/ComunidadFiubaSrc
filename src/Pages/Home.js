@@ -174,7 +174,8 @@ export function Home({archivosSubidos, postsLikes,
     },[reset])
 
     const logOut = () =>{
-        auth.signOut()
+        auth.signOut().then(res =>navigate("/login"))
+
     }
     return(
         <div className={styles.container}>
@@ -186,21 +187,21 @@ export function Home({archivosSubidos, postsLikes,
                     <a href="#inicio">Inicio</a>
                     <a href="#contenido">Explorar</a>
                     <a href="#top">Top</a>
-                    <a href="#recomendados">Más</a>
+                    <a href="#recomendados">Clases</a>
                 </div>
                 <div className={styles.der}>
-                    <Link to="/subir" className={styles.linkContainer}>
-                        <ion-icon name="cloud-upload-outline"></ion-icon>
-                        <p>Subir</p>
-                    </Link>
                     <Link to="/perfil" className={styles.linkContainer}>
                         <ion-icon name="person-outline"></ion-icon>
                         <p>Perfil</p>
                     </Link>
-                    <Link to="/" className={styles.linkContainer} onClick={logOut}>
+                    {auth.currentUser?<Link to="/login" className={styles.linkContainer} onClick={logOut}>
                         <ion-icon name="log-out-outline" ></ion-icon>
                         <p>Salir</p>
-                    </Link>
+                    </Link>:
+                    <Link to="/" className={styles.linkContainer} onClick={logOut}>
+                        <ion-icon name="log-in-outline"></ion-icon>
+                        <p>Entrar</p>
+                    </Link>}
                 </div>
             </nav>
             <a href="#inicio" className={styles.arriba}>
@@ -212,6 +213,10 @@ export function Home({archivosSubidos, postsLikes,
                     window.location.reload()}}>Comunidad Fiuba</h1>
                 <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Esta página <b>no</b> es oficial, su contenido es manejado por alumnos de la FIUBA, <b>valoralo</b> y sumate a compartir</h3>
                 <div className={styles.subrrayado}></div>
+                <Link to="/subir" className={styles.subir}>
+                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                    <p>Subir</p>
+                </Link>
             </div>
             <div className={styles.filterWrapper} id="contenido">
                 <div className={styles.selectContainer}>
@@ -277,7 +282,7 @@ export function Home({archivosSubidos, postsLikes,
                 <p style={{width:"50%", textAlign:"center", userSelect:"all"}}>montialen@gmail.com</p>
             </footer>
             <div id="recomendados" style={{width:"95%", display:"flex",marginLeft:"5%",  gap:"10px"}}>
-                <p style={{display:"inline"}}>Recomendamos:</p>
+                <p style={{display:"inline"}}>Clases con:</p>
                 <a href={"https://linktr.ee/lapizarraonline"} target="_blank" className={styles.pizarraLogo}></a>
             </div>
         </div>

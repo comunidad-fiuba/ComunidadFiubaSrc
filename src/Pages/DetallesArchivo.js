@@ -1,4 +1,4 @@
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import styles from "./DetallesArchivo.module.css";
 import {BiHeart} from "react-icons/bi";
@@ -9,6 +9,7 @@ import {ImSpinner8} from "react-icons/im";
 export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes}){
     //obtener el slug del archivo pasado por el link
     const {postSlug} = useParams();
+    const navigate = useNavigate();
     
     //obtener el id usando el slug
     const postId = archivosSubidos.find(post => post.slug===postSlug)?.id
@@ -25,6 +26,10 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
     }
     document.title = `${(postSlug.charAt(0).toUpperCase() + postSlug.slice(1)).replace(/-/g, " ")} - Comunidad Fiuba`;
     const likePost = (postId) =>{
+        if(!userData){
+            navigate("/login")
+            return
+        }
         //likear post
         setDisabledButton(true)
         //fetch a la api de likear

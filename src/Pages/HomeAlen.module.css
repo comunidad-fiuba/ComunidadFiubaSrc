@@ -108,6 +108,37 @@
     box-shadow: 2px 2px rgb(0 41 38);
 }
 
+.subir{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: url('waveStack.svg') center;
+    border-radius: 20px;
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+    margin: 1em;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    transition: transform 0.2s ease-in-out;
+    animation: expand 1s ease-in-out 0s infinite alternate;
+}
+@keyframes expand {
+    0%{
+        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+    100%{
+        box-shadow: 0 0 3px 2px rgb(255, 255, 255);
+
+    }
+}
+.subir p{
+    margin: 0;
+}
+.subir:hover{
+    transform: scale(1.1);
+}
+
 .arriba {
     display: flex;
     justify-content: center;

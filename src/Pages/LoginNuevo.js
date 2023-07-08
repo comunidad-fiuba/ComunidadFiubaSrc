@@ -4,8 +4,10 @@ import {FcGoogle} from "react-icons/fc";
 import styles from "./LoginNuevo.module.css";
 import {BsChevronDown, BsChevronLeft, BsChevronRight} from "react-icons/bs";
 import {FRASES_1, FRASES_2} from "../Utilidad/Constantes";
+import {useNavigate} from "react-router-dom";
 
 export function LoginNuevo({auth}){
+    const navigate = useNavigate();
     const flechaDer = useRef()
     const flechaIzq = useRef();
     const botonLogIn = useRef()
@@ -18,6 +20,9 @@ export function LoginNuevo({auth}){
         if(sessionStorage.mailError){
             alert("Solo aceptamos correos de @fi.uba.ar")
             delete sessionStorage.mailError;
+        }
+        if(auth.currentUser){
+            navigate("/")
         }
     },[])
 
@@ -35,6 +40,8 @@ export function LoginNuevo({auth}){
             if(!result.additionalUserInfo.profile.email.includes("@fi.uba.ar")){
                 sessionStorage.mailError = true;
                 auth.signOut()
+            }else{
+                navigate("/")
             }
         })
     }

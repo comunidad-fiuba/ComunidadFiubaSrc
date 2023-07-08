@@ -14,6 +14,16 @@
     <meta itemprop="description" content="En Comunidad Fiuba cientos de alumnos de la FIUBA comparten material de estudio para ayudarte a cursar ¡Unite a esta gran comunidad para compartir y encontrar nuevo material de estudio!" />
     <meta itemprop="image" content="CoFi.png" />
     <meta name="google-site-verification" content="Z8Vq9QtZr9KvV5CUb0T-jzS5AbPFjLiHKDWEKyz514M" />
+    <script>
+      if(sessionStorage.redirect){
+        //tomar el valor guardado previamente en 404
+        let redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== window.location.href) {
+          window.history.replaceState(null, null, redirect);
+        }
+      }
+    </script>
   </head>
   <body style="background-color: rgb(210,210,210)">
     <noscript>Se necesita Javascript para ver esta pagina web</noscript>
