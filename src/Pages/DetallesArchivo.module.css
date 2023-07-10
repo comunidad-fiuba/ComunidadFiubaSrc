@@ -1,10 +1,14 @@
 .archivo{
-    height: 100vh;
-    width: 100vw;
+    width: 100%;
+    flex-grow: 2;
 }
 .mainDiv{
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    place-content: start;
     overflow: hidden;
     font-family:'Poppins', sans-serif;
     user-select: none;
@@ -12,7 +16,6 @@
 .navBar{
     background-color: rgb(50, 54, 57);
     width: 96vw;
-    height: 45px;
     display: flex;
     align-items: center;
     justify-content: space-between;

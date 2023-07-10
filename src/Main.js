@@ -14,7 +14,6 @@ import 'firebase/compat/auth';
 import {DetallesArchivo} from "./Pages/DetallesArchivo";
 import {Practicar} from "./Pages/Practicar";
 import {MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "./Utilidad/Constantes";
-import {MateriaArchivos} from "./Pages/MateriaArchivos";
 import {LoginNuevo} from "./Pages/LoginNuevo";
 import {Login} from "./Pages/Login";
 export default function Main({auth}) {
