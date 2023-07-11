@@ -16,13 +16,13 @@ import {Practicar} from "./Pages/Practicar";
 import {MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "./Utilidad/Constantes";
 import {LoginNuevo} from "./Pages/LoginNuevo";
 import {Login} from "./Pages/Login";
+import data from "./json.json"
 export default function Main({auth}) {
     //declarar los datos importantes
-    const [archivosSubidos, setArchivosSubidos] = useState([])
+    //const [archivosSubidos, setArchivosSubidos] = useState([])
     const [userData, setUserData] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const [postsLikes, setPostsLikes] = useState([])
-
     const filtrarMaterias = (archivos) =>{
         for(let index in archivos){
             const indexReemplazo = MATERIASREMPLAZABLES.indexOf(archivos[index].materia)
@@ -32,15 +32,18 @@ export default function Main({auth}) {
         }
         return archivos
     }
+    const setArchivosSubidos = () =>{
+
+    }
+    //fix desesperado
+    const archivosSubidos = filtrarMaterias(data);
 
     useEffect(() =>{
-        //obtiene los posts y la info del usuario a la vez
+        /*
         const fetchData = async () =>{
             //fetch a la api que da info del usuario
             //fetch a la api que da los posts
-            await fetch(process.env.REACT_APP_POSTS,{
-                method:"GET"
-            }).then(result=>result.json().then(resJson=>{
+            await fetch("./json.json").then(result=>result.json().then(resJson=>{
                 //guardar los posts
                 setArchivosSubidos(filtrarMaterias(resJson))
             }).catch(e =>{
@@ -53,7 +56,9 @@ export default function Main({auth}) {
         }
         //realizar el fetch para obtener todos los datos y dejar de mostrar el icono de carga
         fetchData().then(res =>setIsLoading(false))
+         */
     },[])
+    /*
     useEffect(() =>{
         const fetchData = async () =>{
             if(auth.currentUser){
@@ -104,6 +109,7 @@ export default function Main({auth}) {
         }
         fetchData().then(res =>{})
     },[auth.currentUser])
+     */
     return (
         <Router>
             <main>

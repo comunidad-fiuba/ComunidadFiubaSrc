@@ -39,13 +39,14 @@
     border: none;
     color: var(--fondo);
     transition: opacity 0.4s ease-in-out;
+    opacity: 0.4;
 }
 .mainContainer button *{
     position: relative;
     margin: 0;
 }
 .mainContainer button:hover{
-    opacity: 0.85;
+    opacity: 0.4;
 }
 .botonWrap{
     display: flex;
@@ -105,7 +106,7 @@
     margin: 0;
 }
 .texto{
-    font-size: 0.9em;
+    font-size: 1em;
 }
 .subTitulo{
     font-size: 2em;

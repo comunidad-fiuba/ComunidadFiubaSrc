@@ -175,7 +175,6 @@ export function Home({archivosSubidos, postsLikes,
 
     const logOut = () =>{
         auth.signOut().then(res =>navigate("/login"))
-
     }
     return(
         <div className={styles.container}>
@@ -198,7 +197,7 @@ export function Home({archivosSubidos, postsLikes,
                         <ion-icon name="log-out-outline" ></ion-icon>
                         <p>Salir</p>
                     </Link>:
-                    <Link to="/" className={styles.linkContainer} onClick={logOut}>
+                    <Link to="/login" className={styles.linkContainer} onClick={logOut}>
                         <ion-icon name="log-in-outline"></ion-icon>
                         <p>Entrar</p>
                     </Link>}
