@@ -28,8 +28,9 @@ export function LoginNuevo({auth}){
 
     //iniciar sesion en google con firebase
     const signInWithGoogle = () =>{
-        //fix desesperado
+        /*fix desesperado
         return
+         */
         //proveedor de inicio de sesion de google
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.setCustomParameters({
@@ -67,7 +68,7 @@ export function LoginNuevo({auth}){
         <div className={styles.mainContainer}>
             <div className={styles.columna}>
                 <h1>Comunidad Fiuba</h1>
-                <h3>Un lugar, todo el material necesario</h3>
+                <h3>Un lugar, todo el material.</h3>
                 <h2 onClick={scrollDown} className={styles.subTitulo}>Sumate a compartir</h2>
             </div>
             <div className={styles.columna}>
@@ -81,12 +82,12 @@ export function LoginNuevo({auth}){
                         <div className={`${styles.flecha} ${styles.disabled}`} ref={flechaDer}>
                             <BsChevronRight size={24}></BsChevronRight>
                         </div>
-                        <button onClick={signInWithGoogle} ref={botonLogIn}><FcGoogle style={{opacity:"0.4"}} size={48}/><p>Iniciar Sesión</p></button>
+                        <button onClick={signInWithGoogle} ref={botonLogIn}><FcGoogle size={48}/><p>Iniciar Sesión</p></button>
                         <div className={`${styles.flecha} ${styles.disabled}`} ref={flechaIzq}>
                             <BsChevronLeft size={24} ></BsChevronLeft>
                         </div>
                     </div>
-                    <p className={styles.texto}>Inicio de sesión <strong>Desactivado</strong> temporalmente<br/> y con esto las funciones de subir, perfil y likear. <br/>Disculpen las molestias.</p>
+                    <p className={styles.texto}>Inicio de sesión seguro con Google</p>
                 </div>
             </div>
             <div className={styles.arrowDownContainer}>
