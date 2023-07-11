@@ -39,14 +39,14 @@
     border: none;
     color: var(--fondo);
     transition: opacity 0.4s ease-in-out;
-    opacity: 1;
+    opacity: 0.4;
 }
 .mainContainer button *{
     position: relative;
     margin: 0;
 }
 .mainContainer button:hover{
-    opacity: 0.8;
+    opacity: 0.4;
 }
 .botonWrap{
     display: flex;
