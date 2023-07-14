@@ -10,11 +10,12 @@ firebase.initializeApp(FIREBASECONFIG)
 
 
 export default function App(){
+    /*
     //fix desesperado
     const auth = {currentUser:null}
     const loading = false;
+     */
     //inicializar autenticacion y usuario
-    /*
     const auth = firebase.auth()
     const [user,loading,error] = useAuthState(auth)
     //redireccion desde 404.html, permite que la pagina funcione en github
@@ -22,7 +23,6 @@ export default function App(){
     if(user && !user.email.includes("@fi.uba.ar")){
         auth.signOut();
     }
-     */
     if(loading){
         return <LoadingPage/>
     }

@@ -28,8 +28,10 @@ export function LoginNuevo({auth}){
 
     //iniciar sesion en google con firebase
     const signInWithGoogle = () =>{
+        /*
         //fix desesperado
         return
+         */
         //proveedor de inicio de sesion de google
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.setCustomParameters({
