@@ -212,10 +212,14 @@ export function Home({archivosSubidos, postsLikes,
                     window.location.reload()}}>Comunidad Fiuba</h1>
                 <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Esta página <b>no</b> es oficial, su contenido es manejado por alumnos de la FIUBA, <b>valoralo</b> y sumate a compartir</h3>
                 <div className={styles.subrrayado}></div>
-                <Link to="/subir" className={styles.subir}>
-                    <ion-icon name="cloud-upload-outline"></ion-icon>
-                    <p>Subir</p>
-                </Link>
+                <div className={styles.publicar}>
+                    <div className={styles.publicarLineaIzq}></div>
+                    <Link to="/subir" className={styles.subir}>
+                        <p>PUBLICAR</p>
+                    </Link>
+                    <div className={styles.publicarLineaDer}></div>
+                </div>
+                
             </div>
             <div className={styles.filterWrapper} id="contenido">
                 <div className={styles.selectContainer}>

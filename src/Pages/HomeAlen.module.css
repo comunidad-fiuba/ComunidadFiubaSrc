@@ -111,32 +111,50 @@
 .subir{
     display: flex;
     align-items: center;
-    gap: 5px;
+    margin: 3em 0;
     background: url('waveStack.svg') center;
-    border-radius: 20px;
-    padding: 5px 10px;
-    color: white;
-    text-decoration: none;
-    margin: 1em;
-    font-size: 1.5rem;
     letter-spacing: 2px;
     transition: transform 0.2s ease-in-out;
-    animation: expand 1s ease-in-out 0s infinite alternate;
+    background-color: rgb(0,51,47);
+    border: 2px solid rgb(0,51,47);
+    border-radius: 30px;
+    box-shadow: rgb(0,51,47) 4px 4px 0 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    z-index: 200;
 }
-@keyframes expand {
-    0%{
-        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
-    }
-    100%{
-        box-shadow: 0 0 3px 2px rgb(255, 255, 255);
 
-    }
-}
 .subir p{
     margin: 0;
+    font-weight: 400;
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 2px rgb(0,51,47);
 }
+
 .subir:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
+}
+
+.publicar{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.publicarLineaIzq, .publicarLineaDer{
+    transform: translateY(50%);
+    width: 16%;
+    max-width: 500px;
+    border-top: 2px solid rgb(0,51,47);
 }
 
 .arriba {
