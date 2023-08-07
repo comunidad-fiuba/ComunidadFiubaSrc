@@ -49,6 +49,7 @@ export function LoginNuevo({auth}){
             }
         })
     }
+    // <p className={styles.texto}>Inicio de sesión <strong>Desactivado</strong> temporalmente<br/> y con esto las funciones de subir, perfil y likear. <br/>Disculpen las molestias.</p>
     const scrollDown = () =>{
         const height= window.screen.height || window.innerHeight|| document.documentElement.clientHeight||
             document.body.clientHeight
@@ -83,13 +84,14 @@ export function LoginNuevo({auth}){
                         <div className={`${styles.flecha} ${styles.disabled}`} ref={flechaDer}>
                             <BsChevronRight size={24}></BsChevronRight>
                         </div>
-                        <button onClick={signInWithGoogle} ref={botonLogIn}><FcGoogle style={{opacity:"0.4"}} size={48}/><p>Iniciar Sesión</p></button>
+                        <button onClick={signInWithGoogle} ref={botonLogIn}><FcGoogle size={48}/><p>Iniciar Sesión</p></button>
                         <div className={`${styles.flecha} ${styles.disabled}`} ref={flechaIzq}>
                             <BsChevronLeft size={24} ></BsChevronLeft>
                         </div>
                     </div>
-                    <p className={styles.texto}>Inicio de sesión <strong>Desactivado</strong> temporalmente<br/> y con esto las funciones de subir, perfil y likear. <br/>Disculpen las molestias.</p>
-                </div>
+
+
+                    </div>
             </div>
             <div className={styles.arrowDownContainer}>
                 <div onClick={scrollDown} className={styles.arrowDown}>
