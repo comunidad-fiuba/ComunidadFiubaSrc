@@ -210,7 +210,7 @@ export function Home({archivosSubidos, postsLikes,
                 <h1 className={styles.mainTitulo}
                     onClick={e =>{ navigate("/")
                     window.location.reload()}}>Comunidad Fiuba</h1>
-                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Esta página <b>no</b> es oficial, su contenido es manejado por alumnos de la FIUBA, <b>valoralo</b> y sumate a compartir</h3>
+                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Tu aporte ayuda a todos, <b>sumate a compartir</b> y ser parte de esta comunidad. Página FIUBA <b>no oficial</b>.</h3>
                 <div className={styles.subrrayado}></div>
                 <div className={styles.publicar}>
                     <div className={styles.publicarLineaIzq}></div>
@@ -284,9 +284,11 @@ export function Home({archivosSubidos, postsLikes,
                 <p style={{width:"50%", textAlign:"center", userSelect:"all", overflow:"hidden"}}>andres.d.melnik@gmail.com</p>
                 <p style={{width:"50%", textAlign:"center", userSelect:"all"}}>montialen@gmail.com</p>
             </footer>
-            <div id="recomendados" style={{width:"95%", display:"flex",marginLeft:"5%",  gap:"10px"}}>
+            <div id="recomendados" style={{width:"95%", display:"flex",flexWrap:"wrap",marginLeft:"5%",  gap:"10px"}}>
                 <p style={{display:"inline"}}>Clases con:</p>
                 <a href={"https://linktr.ee/lapizarraonline"} target="_blank" className={styles.pizarraLogo}></a>
+                <div style={{width:"90%", height:"1px",backgroundColor:"white"}}></div>
+                <p style={{width:"90%", fontSize:"0.75em"}}>Comunidad Fiuba es una página web diseñada y manejada por alumnos de la facultad de ingenieria de la universidad de Buenos Aires , con el proposito de mejorar la cursada de todos los alumnos. En Comunidad Fiuba se pueden encontrar resumenes, examenes resueltos, parciales resueltos, finales resueltos y mas, de las materias analisis matematico 2, algebra 2, fisica 1, fisica 2, quimica y mas, el material didactico es util para todas las carreras de la facultad, ingenieria informatica, licenciatura en sistemas, ingenieria civil, ingenieria eletronica y mas. Podés compartir Comunidad Fiuba por los grupos de whatsapp FIUBA y cualquier otro medio. No se comparten archivos o material didactico del CBC o UBA XXI. Se puede subir contenido perteneciente al Campus Fiuba o Campusgrado Fiuba, siempre que el autor del contenido permita compartirlo. Otras herramientas recomendadas son el <a style={{color:"white"}} href="https://fede.dm/FIUBA-Map/">FIUBA Map</a>, <a style={{color:"white"}} href="https://fede.dm/FIUBA-Plan/">FIUBA Plan</a> y <a style={{color:"white"}} href="https://dollyfiuba.com/">Dolly Fiuba</a>.</p>
             </div>
         </div>
     )
