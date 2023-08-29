@@ -21,6 +21,7 @@ export default function Main({auth}) {
     const [userData, setUserData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [postsLikes, setPostsLikes] = useState([])
+    const [caughtError, setCaughtError] = useState(null)
     const filtrarMaterias = (archivos) =>{
         for(let index in archivos){
             const indexReemplazo = MATERIASREMPLAZABLES.indexOf(archivos[index].materia)
@@ -48,10 +49,10 @@ export default function Main({auth}) {
                 setArchivosSubidos(filtrarMaterias(resJson))
             }).catch(e =>{
                 //error en el json, no deberia entrar nunca
-                alert(e)
+                setCaughtError(e)
             })).catch(e => {
                 //error en el fetch, servidor caido o error no captado en el servidor
-                alert(e)
+                setCaughtError(e)
             })
         }
         //realizar el fetch para obtener todos los datos y dejar de mostrar el icono de carga
@@ -86,19 +87,19 @@ export default function Main({auth}) {
                                                 //guardar la info del usuario nuevo
                                                 setUserData(resJson)})
                                             //error en el json, no deberia entrar nunca
-                                            .catch(e =>alert(e))
+                                            .catch(e =>setCaughtError(e))
                                     //error en el fetch, servidor caido o error no captado en el servidor
-                                ).catch(e =>alert(e))
+                                ).catch(e =>setCaughtError(e))
                             }else{
                                 //no deberia entrar nunca aca, pero por las dudas
-                                alert(resJson.error)
+                                setCaughtError(resJson?.error)
                             }
                         }
                     })
                     //error en el json, no deberia entrar nunca
-                    .catch(e =>alert(e))
+                    .catch(e =>setCaughtError(e))
                 //error en el fetch, servidor caido o error no captado en el servidor
-            ).catch(e =>alert(e))
+            ).catch(e =>setCaughtError(e))
             //estos errores se alertan porque provocarian que no funcione la app
         }else{
                 setUserData(null)
@@ -119,12 +120,12 @@ export default function Main({auth}) {
                     <Route path="/changeUser" element={auth.currentUser?
                         <CambiarUsername userData={userData} setUserData={setUserData} auth={auth}/>:<Navigate replace to="/login" />}/>
                     <Route exact path="/post/:postSlug" element={<DetallesArchivo isLoading={isLoading} archivosSubidos={archivosSubidos}  postsLikes={postsLikes}
-                                                                                userData={userData} setPostsLikes={setPostsLikes}/>}/>
+                                                                                userData={userData} setPostsLikes={setPostsLikes} caughtError={caughtError}/>}/>
                     <Route path="/practicar" element={<Practicar/>} />
                     <Route path="/login" element={<LoginNuevo auth={auth}/> }/>
 
                     <Route path="/" element={<Home archivosSubidos={archivosSubidos} isLoading={isLoading}  postsLikes={postsLikes}
-                                                   auth={auth}  setPostsLikes={setPostsLikes} userData={userData}/>}/>
+                                                   auth={auth}  setPostsLikes={setPostsLikes} userData={userData} caughtError={caughtError}/>}/>
                     <Route path="*" element={<Navigate replace to="/" />}/>
                 </Routes>
             </main>

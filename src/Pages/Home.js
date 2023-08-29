@@ -15,10 +15,11 @@ import {Alerts} from "../Components/Alerts";
 import {CargandoArchivos} from "../Components/CargandoArchivos";
 import {ArchivosPorMateria} from "../Components/ArchivosPorMateria";
 import {IoIosClose} from "react-icons/io";
+import { Cofi } from "../Components/Cofi";
 
 
 export function Home({archivosSubidos, postsLikes,
-                         isLoading, auth, userData, setPostsLikes}){
+                         isLoading, auth, userData, setPostsLikes , caughtError}){
     //obtener la query desde el link
     const query = new URLSearchParams(useLocation().search);
     //declarar variables
@@ -229,14 +230,14 @@ export function Home({archivosSubidos, postsLikes,
                         </div>
                         : <ion-icon name="chevron-down-outline"></ion-icon>}
 
-                    <input id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria}  className={styles.filterInput} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}/>
+                    <input disabled={isLoading} id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria}  className={styles.filterInput} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}/>
                         <datalist id="materias">
                             {MATERIAS.map(materia =>(<option key={materia + "filter"} value ={materia}/>))}
                         </datalist>
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
-                    <select id="tipo" name="tipo" title="tipo" form="formArchivo" onChange={changeTipo} className={styles.filterInput} style={tipoElegido? {background:"rgb(0,139,130)"} : {}}>
+                    <select disabled={isLoading} id="tipo" name="tipo" title="tipo" form="formArchivo" onChange={changeTipo} className={styles.filterInput} style={tipoElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Tipo</option>
                         <option value="Resumen">Resumen</option>
                         <option value="Final">Final</option>
@@ -248,7 +249,7 @@ export function Home({archivosSubidos, postsLikes,
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
-                    <select id="anio" onChange={changeAnio} className={styles.filterInput} style={anioElegido? {background:"rgb(0,139,130)"} : {}}>
+                    <select disabled={isLoading} id="anio" onChange={changeAnio} className={styles.filterInput} style={anioElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Año</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
@@ -259,12 +260,12 @@ export function Home({archivosSubidos, postsLikes,
                     </select>
                 </div>
                 <div className={styles.selectContainer + " " + styles.c1C2}>
-                    <button onClick={ordenarLikes}><FcLike size={16}/></button>
-                    <button onClick={ordenarFecha}><MdDateRange size={16}/></button>
+                    <button disabled={isLoading} onClick={ordenarLikes}><FcLike size={16}/></button>
+                    <button disabled={isLoading} onClick={ordenarFecha}><MdDateRange size={16}/></button>
                 </div>
                 <div className={styles.buscador}>
                     <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" id="search" onChange={changeTitulo} placeholder="Buscar por titulo..."/>
+                    <input disabled={isLoading} type="text" id="search" onChange={changeTitulo} placeholder="Buscar por titulo..."/>
                 </div>
             </div>
              <div>
@@ -273,10 +274,11 @@ export function Home({archivosSubidos, postsLikes,
                         ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData}
                                     showAlert={showAlert} auth={auth} postsLikes={postsLikes}
                                     />
-                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{"No hay resultados!, intentá reajustar los filtros"}</p></div>
+                        : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{!caughtError?"No hay resultados!, intentá reajustar los filtros":"Hubo un error!, intentá reiniciando la página o contactanos."}</p></div>
                     :<CargandoArchivos size={60} />}
             </div>
             <Top archivos={archivosSubidos}/>
+            <Cofi/>
             <footer id="top" className={styles.footer}>
                 <p style={{width:"50%", textAlign:"center"}}>&copy; 2023. Todos los derechos reservados.</p>
                 <p style={{width:"50%", textAlign:"center"}}>Creado por Andres Melnik y Alen Monti <i
@@ -284,7 +286,7 @@ export function Home({archivosSubidos, postsLikes,
                 <p style={{width:"50%", textAlign:"center", userSelect:"all", overflow:"hidden"}}>andres.d.melnik@gmail.com</p>
                 <p style={{width:"50%", textAlign:"center", userSelect:"all"}}>montialen@gmail.com</p>
             </footer>
-            <div id="recomendados" style={{width:"95%", display:"flex",flexWrap:"wrap",marginLeft:"5%",  gap:"10px"}}>
+            <div id="recomendados" style={{width:"95%", display:"flex",flexWrap:"wrap",marginLeft:"5%", alignItems:"center"}}>
                 <p style={{display:"inline"}}>Clases con:</p>
                 <a href={"https://linktr.ee/lapizarraonline"} target="_blank" className={styles.pizarraLogo}></a>
                 <div style={{width:"90%", height:"1px",backgroundColor:"white"}}></div>

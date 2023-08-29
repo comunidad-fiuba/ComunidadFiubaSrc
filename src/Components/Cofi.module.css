@@ -1,0 +1,200 @@
+*{
+    --light: #674736;
+    --medium:#533b2a;
+    --dark:#4E3524;
+}
+
+.cofiContainer{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 128px;
+    background-color: #303841;
+}
+
+.cofi,.cofi2{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%,0);
+}
+.cofi{
+    margin-top: 38px;
+    height: 82px;
+    cursor: pointer;
+}
+.cofi2{
+    display: none;
+    height: 128px;
+    pointer-events: none;
+}
+.cofi:hover + .cofi2{
+    display: block;
+}
+.animated{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;;
+    background-color:var(--medium);
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+}
+.animated::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background:url("./cafe.png");
+    background-size: 50px 50px;
+    opacity: 0.5;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1001;
+}
+.animated::after{
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background:radial-gradient(var(--dark) 5px, transparent 6px);
+    background-size: 50px 50px;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+}
+
+.animateNow{
+    display: block !important;
+    animation: 7s ease-in-out;
+    animation-name: animate;
+}
+@keyframes animate{
+    0%{
+        top:100%
+    }
+    25%{
+        top:0;
+    }
+    75%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.cofiText,.comunidadFiuba{
+    font-size: 5em;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2.5em;
+    transform: translate(0,-50%);
+    text-align: center;
+    z-index: 2000;
+}
+.comunidadFiuba{
+    opacity: 0;
+    animation: 3s 4s ease-in-out;
+    animation-name: appear;
+}
+@keyframes appear{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.comunidad{
+    position: relative;
+    display: inline-block;
+}
+.co{
+    position: relative;
+    animation: 5s 2s ease-in-out;
+    animation-name: expand;
+    left:50%
+}
+@keyframes expand{
+    0%{
+        left:50%
+    }
+    40%{
+        left:0;
+    }
+    100%{
+        left:0;
+    }
+}
+.fiuba{
+    position: relative;
+    display: inline-block; 
+}
+.fi{
+    position: relative;
+    animation: 5s 2s ease-in-out;
+    animation-name: expand2;
+    left:-50%
+}
+@keyframes expand2{
+    0%{
+        left:-50%
+    }
+    40%{
+        left:0;
+    }
+    100%{
+        left: 0;
+    }
+}
+.cofiText{
+    color: var(--fondo-light);
+    filter: brightness(1.2);
+}
+.hiddenText{
+    color: transparent;
+}
+@media (max-width: 480px) {
+    .fi{
+        position: relative;
+        animation: 5s 2s ease-in-out;
+        animation-name: expand2;
+        left: calc(50% - 1ch);
+    }
+    @keyframes expand2{
+        0%{
+            left: calc(50% - 1ch);
+        }
+        40%{
+            left:0;
+        }
+        100%{
+            left: 0;
+        }
+    }
+    .co{
+        position: relative;
+        animation: 5s 2s ease-in-out;
+        animation-name: expand;
+        left: calc(50% - 1.5ch);
+    }
+    @keyframes expand{
+        0%{
+            left: calc(50% - 1.5ch);
+        }
+        40%{
+            left:0;
+        }
+        100%{
+            left:0;
+        }
+    }
+}

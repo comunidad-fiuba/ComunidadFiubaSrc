@@ -6,7 +6,7 @@ import {FaRegCommentDots} from "react-icons/fa";
 import {DetallesComentarios} from "./DetallesComentarios";
 import {ImSpinner8} from "react-icons/im";
 
-export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes}){
+export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes, caughtError}){
     //obtener el slug del archivo pasado por el link
     const {postSlug} = useParams();
     const navigate = useNavigate();
@@ -70,8 +70,8 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
                     setTimeout(() => {
                         setDisabledButton(false);
                     }, 300);
-                }).catch(e=>alert(e))
-        ).catch(e =>alert(e))
+                }).catch(e=>alert("Error desconocido,Intenta reiniciar la pagina o contactar a un administrador"))
+        ).catch(e =>alert("Error desconocido,Intenta reiniciar la pagina o contactar a un administrador"))
     }
     useEffect(() =>{
         if(isLoading){
@@ -88,11 +88,18 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
     //no cargaron los archivos
     if(archivosSubidos.length === 0){
         //NOTA cambiar el spinner por algo mejor
-        return(
-            <div>
-                <ImSpinner8 size={60} className={styles.spinner}/>
-            </div>
-        )
+        if(caughtError){
+            return (<div>
+                ERROR INESPERADO, REINICIAR LA PAGINA
+            </div>)
+        }else{
+            return(
+                <div>
+                    <ImSpinner8 size={60} className={styles.spinner}/>
+                </div>
+            )
+        }
+        
     }
     if(!archivo){
         return(
