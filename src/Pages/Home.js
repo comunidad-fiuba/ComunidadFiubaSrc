@@ -211,7 +211,7 @@ export function Home({archivosSubidos, postsLikes,
                 <h1 className={styles.mainTitulo}
                     onClick={e =>{ navigate("/")
                     window.location.reload()}}>Comunidad Fiuba</h1>
-                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Tu aporte ayuda a todos, <b>sumate a compartir</b> y ser parte de esta comunidad. Página FIUBA <b>no oficial</b>.</h3>
+                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Te ayudamos a aprobar, <b>sumate a compartir</b> para ser parte de la comunidad. Página FIUBA <b>no oficial</b>.</h3>
                 <div className={styles.subrrayado}></div>
                 <div className={styles.publicar}>
                     <div className={styles.publicarLineaIzq}></div>
