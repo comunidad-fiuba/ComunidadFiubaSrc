@@ -71,8 +71,8 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
     return (
         <div className={styles.modalWrapper} id="materias-modal-wrap" style={{ display: isOpen ? "flex" : "none" }} onClick={closeOnClickOutside}>
             <div className={styles.modal}  onClick ={closeOnClickOutside}>
-                <button className={styles.closeButton} onClick={close}><ion-icon name="arrow-forward-outline"></ion-icon></button>
-                <button className={styles.removeButton} onClick={clearAndClose}><ion-icon name="close-outline" ></ion-icon></button>
+                <button className={styles.closeButton} onClick={close}><ion-icon name="checkmark-outline"></ion-icon></button>
+                <button className={styles.removeButton} onClick={clearAndClose}><ion-icon name="refresh-outline" ></ion-icon></button>
                 <h1 className={styles.titulo}>Materias</h1>
                 <div className={styles.filterWrap}>
                 <input type="text" onChange={debouncedFilter} className={styles.inputMateria} id="materias-input" placeholder="Buscar materia"/>

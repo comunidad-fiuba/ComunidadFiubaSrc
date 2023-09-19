@@ -54,7 +54,7 @@ export function Home({archivosSubidos, postsLikes,
     useEffect(() =>{
         //si hay query poner esos valores en los filtros
         document.getElementById("tipo").value = tipoElegido?tipoElegido.charAt(0).toUpperCase() + tipoElegido.slice(1):""
-        document.getElementById("materia").innerHTML = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):"Materias"
+        document.getElementById("materia").innerHTML = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):"Materia"
         document.getElementById("anio").value = anioElegido?anioElegido:""
         document.getElementById("search").value = tituloElegido?tituloElegido:""
     },[])
@@ -75,7 +75,7 @@ export function Home({archivosSubidos, postsLikes,
     }
     const closeMateriaOnClick = (e) =>{
         const materiaInput = document.getElementById("materia");
-        materiaInput.innerHTML = "Materias"
+        materiaInput.innerHTML = "Materia"
         query.delete("materia")
         setMateriaElegida(materiaInput.value)
         navigate("/?" + query)
@@ -232,7 +232,7 @@ export function Home({archivosSubidos, postsLikes,
                         </div>
                         : <ion-icon name="chevron-down-outline"></ion-icon>}
 
-                    <button onClick={openMateriasModal} disabled={isLoading} className={styles.materiasButton} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}><span id="materia" className={styles.oneLine}>{materiaElegida?materiaElegida:"Materias"}</span></button>
+                    <button onClick={openMateriasModal} disabled={isLoading} className={styles.materiasButton} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}><span id="materia" className={styles.oneLine}>{materiaElegida?materiaElegida:"Materia"}</span></button>
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
