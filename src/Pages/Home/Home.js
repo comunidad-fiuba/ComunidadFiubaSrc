@@ -24,7 +24,7 @@ export function Home({archivosSubidos, postsLikes,
     const [archivosFiltered, setArchivosFiltered] = useState([])
     const [tipoElegido, setTipoElegido] = useState(query.get("tipo"))
     const [materiaElegida, setMateriaElegida] = useState("")
-    const [anioElegido, setAnioElegido] = useState("")
+    const [anioElegido, setAnioElegido] = useState(query.get("año"))
     const [tituloElegido, setTituloElegido] = useState("")
     const [reset, setReset] = useState(false)
     const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
