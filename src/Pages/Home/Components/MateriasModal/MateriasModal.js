@@ -68,6 +68,12 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
         closeMateriaOnClick()
         close()
     }
+    const changeAndClose = (e) =>{
+        changeMateriaElegida(e)
+        setTimeout(() => {
+            close()
+        }, 150);
+    }
     return (
         <div className={styles.modalWrapper} id="materias-modal-wrap" style={{ display: isOpen ? "flex" : "none" }} onClick={closeOnClickOutside}>
             <div className={styles.modal}  onClick ={closeOnClickOutside}>
@@ -82,7 +88,7 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
                     {materiasList.length>0?materiasList.map(materia => {
                         return (<div key={materia + "filter"}>
                             <label className={styles.labelRadio}>
-                                <input className={styles.hiddenRadio} onChange={changeMateriaElegida} type="radio" id={materia + "radio"} name="materias-radio" value={materia} checked={materia===materiaElegida?true:false}/>{materia}
+                                <input className={styles.hiddenRadio} onChange={changeAndClose} type="radio" id={materia + "radio"} name="materias-radio" value={materia} checked={materia===materiaElegida?true:false}/>{materia}
                                 <i></i>
                             </label>
                         </div>)
