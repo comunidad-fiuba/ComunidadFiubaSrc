@@ -83,6 +83,9 @@
     scale: 1.15;
 }
 
+.materiasList p{
+    font-size: 1.25em;
+}
 .materiasList {
     position: relative;
     overflow-y: scroll;
