@@ -70,6 +70,18 @@
 .clear:hover{
     color:white;
 }
+.clearRecientes{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    line-height: 0;
+    font-size: 1em;
+    cursor: pointer;
+}
+.clearRecientes:hover{
+    scale: 1.15;
+}
 
 .materiasList {
     position: relative;
@@ -143,10 +155,6 @@
     opacity: 0.15;
 }
 
-.materiasList button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-}
 .closeButton,.removeButton{
     position: absolute;
     top: 5px;

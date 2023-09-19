@@ -2,11 +2,25 @@ import styles from "./MateriasModal.module.css"
 import { MATERIAS } from "../../../../Utilidad/Constantes";
 import {useEffect, useState} from "react";
 
+function cargarRecientes(){
+    const recientes = localStorage.getItem("recientes")
+    if(recientes){
+        return JSON.parse(recientes)
+    }
+    return []
+}
+function cargarTodas(recientes){
+    return MATERIAS.filter(materia => recientes.indexOf(materia) === -1)
+}
+
 export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateriaElegida,closeMateriaOnClick }) {
-    const [materiasList, setMateriasList] = useState(MATERIAS)
+    let recientesList = cargarRecientes()
+    const [materiasList, setMateriasList] = useState(cargarTodas(recientesList))
     const close = () => {
         setIsOpen(false)
         document.documentElement.style.overflow = "unset"
+        document.getElementById("materias-input").value = ""
+        filterMaterias()
     }
     const debounceFn = (func, interval) => {
         if (typeof func !== "function" || typeof interval !== "number") throw new TypeError("Arguments should be of type (function, number)")
@@ -23,6 +37,10 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
         const numeros = ["4", "3", "2", "1"]
         const romanos = ["iv", "iii", "ii", "i"]
         text = text.toLowerCase().split(" ")
+        if(text.length === 0 || text[0] === ""){
+            setMateriasList(cargarTodas(recientesList))
+            return
+        }
         setMateriasList(MATERIAS.filter(materia => {
             const materiaPalabras =  materia.split(" ");
             for(let word of text){
@@ -62,17 +80,49 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
     }
     const clearFilter = () =>{
         document.getElementById("materias-input").value = ""
-        setMateriasList(MATERIAS)
+        setMateriasList(cargarTodas(recientesList))
     }
     const clearAndClose = () =>{
         closeMateriaOnClick()
         close()
     }
     const changeAndClose = (e) =>{
+        if(recientesList.length >= 7){
+            recientesList.pop()
+        }
+        if(recientesList.indexOf(e.target.value) !== -1){
+            recientesList.splice(recientesList.indexOf(e.target.value),1)
+        }
+        recientesList.unshift(e.target.value)
+        localStorage.setItem("recientes",JSON.stringify(recientesList))
         changeMateriaElegida(e)
         setTimeout(() => {
             close()
         }, 150);
+    }
+
+    const shouldShowRecientes = () =>{
+        const materiasInput = document.getElementById("materias-input");
+        if(!materiasInput){
+            return true
+        }
+        return materiasInput.value === ""
+    }
+
+    const mapRecientes = () =>{
+        return recientesList.map(materia => {
+            return (<div key={materia + "filter"}>
+                <label className={styles.labelRadio}>
+                    <input className={styles.hiddenRadio} onChange={changeAndClose} type="radio" id={materia + "radio"} name="materias-radio" value={materia} checked={materia===materiaElegida?true:false}/>{materia}
+                    <i></i>
+                </label>
+            </div>)
+        })
+    }
+    const clearRecientes = () =>{
+        localStorage.removeItem("recientes")
+        recientesList = []
+        setMateriasList(cargarTodas(recientesList))
     }
     return (
         <div className={styles.modalWrapper} id="materias-modal-wrap" style={{ display: isOpen ? "flex" : "none" }} onClick={closeOnClickOutside}>
@@ -85,6 +135,9 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
                 <button onClick={clearFilter} className={styles.clear}><ion-icon name="close-outline" ></ion-icon></button>
                 </div>
                 <div className={styles.materiasList}>
+                    {recientesList.length>0 && shouldShowRecientes()?<p>Recientes <button onClick={clearRecientes} className={styles.clearRecientes}><ion-icon name="trash-outline" ></ion-icon></button></p>:""}
+                    {shouldShowRecientes()?mapRecientes():""}
+                    {recientesList.length>0  && shouldShowRecientes()?<p>Otras</p>:""}
                     {materiasList.length>0?materiasList.map(materia => {
                         return (<div key={materia + "filter"}>
                             <label className={styles.labelRadio}>
