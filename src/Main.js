@@ -5,16 +5,15 @@ import {
     Routes,
     Route, Navigate,
 } from "react-router-dom";
-import {Subir} from "./Pages/Subir";
-import {Home} from "./Pages/Home";
-import {Perfil} from "./Pages/Perfil";
-import {CambiarUsername} from "./Pages/CambiarUsername";
+import {Subir} from "./Pages/Subir/Subir";
+import {Home} from "./Pages/Home/Home";
+import {Perfil} from "./Pages/Perfil/Perfil";
+import {CambiarUsername} from "./Pages/CambiarUsername/CambiarUsername";
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
-import {DetallesArchivo} from "./Pages/DetallesArchivo";
-import {Practicar} from "./Pages/Practicar";
+import {DetallesArchivo} from "./Pages/DetallesArchivo/DetallesArchivo";
 import {MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "./Utilidad/Constantes";
-import {LoginNuevo} from "./Pages/LoginNuevo";
+import {LoginNuevo} from "./Pages/Login/Login";
 export default function Main({auth}) {
     //declarar los datos importantes
     const [archivosSubidos, setArchivosSubidos] = useState([])
@@ -121,7 +120,6 @@ export default function Main({auth}) {
                         <CambiarUsername userData={userData} setUserData={setUserData} auth={auth}/>:<Navigate replace to="/login" />}/>
                     <Route exact path="/post/:postSlug" element={<DetallesArchivo isLoading={isLoading} archivosSubidos={archivosSubidos}  postsLikes={postsLikes}
                                                                                 userData={userData} setPostsLikes={setPostsLikes} caughtError={caughtError}/>}/>
-                    <Route path="/practicar" element={<Practicar/>} />
                     <Route path="/login" element={<LoginNuevo auth={auth}/> }/>
 
                     <Route path="/" element={<Home archivosSubidos={archivosSubidos} isLoading={isLoading}  postsLikes={postsLikes}

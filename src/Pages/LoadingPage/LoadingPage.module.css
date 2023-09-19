@@ -1,0 +1,41 @@
+.fondoCarga{
+    background: url('../SharedAssets/waveStack.svg') center;
+    background-size: cover;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: white;
+}
+
+.mainTitulo {
+    text-align: center;
+    font-size: 5em;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 3px var(--fondo-dark);
+    width: 100%;
+    animation: expand 4s linear infinite;
+    transform: scale(1);
+}
+@keyframes expand {
+    0%{transform: scale(1)}
+    25%{
+        transform: scale(1.05);
+    }
+    50%{
+        transform: scale(1);
+    }
+    75%{
+        transform: scale(0.95);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 749px) {
+    .mainTitulo {
+        font-size: 3em;
+    }
+}

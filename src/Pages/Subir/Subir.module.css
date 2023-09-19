@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+.mainDiv *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url("../SharedAssets/fiubaRojo.jpg") center;
+    background-size: cover;
+}
+
+.dragArea{
+    border: 2px dashed #fff;
+    padding: 1em 0;
+    height: fit-content;
+    min-height: 90vh;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 10;
+    color: #fff;
+}
+.dragArea.active{
+    border: 2px solid #fff;
+}
+.dragArea .icon{
+    font-size: 100px;
+    color: #fff;
+    pointer-events: none;
+}
+.dragArea header{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    color: #fff;
+}
+.dragArea p{
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    margin: 10px 0 15px 0;
+}
+
+.dragArea button{
+    padding: 10px 25px;
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(0,80,75,0.5);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.dragArea button:hover{
+    background-color: rgba(2, 96, 90, 0.7);
+
+}
+.listaSinOrden li {
+    text-align: center;
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none;
+    color:#ffffff;
+}
+
+.listaSinOrden {
+    margin: 5px 0;
+    font-size: 16px;
+    color:#ffffff;
+    background-color: rgba(0,80,75,0.5);
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.submit {
+    position: relative;
+    display: none;
+    padding: 5px 15px 5px 15px;
+    border-radius: 3px;
+    border: 1px solid white;
+    background: transparent;
+    width: 90%;
+    left: 50%;
+    transform: translate(-50%,0);
+    letter-spacing: 3px;
+    font-size: 2em;
+    color:#fff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.submit.visible {
+    display: inline-block;
+}
+
+.submit.visible:hover {
+    background-color: rgba(0,80,75,0.5);
+    letter-spacing: 10px;
+}
+.submit.disabled{
+    display: inline-block;
+    background: rgba(96, 96, 96, 0.4);
+    border: 1px solid gray;
+    color:gray;
+    cursor: default;
+}
+
+.form #archivoCargado {
+    display: none;
+}
+
+.form ::placeholder {
+    color: rgb(196, 239, 237);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.formAndList {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 380px;
+    backdrop-filter: blur(7px);
+    background-color: rgba(0,80,75,0.03);
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.form [type="text"]{
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    padding-left: 5px;
+    font-size: 1em;
+    color: #fff;
+}
+
+.form select {
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid white;
+    font-size: 1em;
+    color: #fff;
+}
+
+.form option {
+    color:rgb(49, 49, 49);
+}
+
+
+.titulo{
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    margin-top: 0px;
+    letter-spacing: 2px;
+}
+
+.descripcion {
+    position: relative;
+    color: var(--blanco);
+    text-align: center;
+    width: 90%;
+    font-size: 1.3em;
+    margin: 0;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+
+.descripcionTiny {
+    position: relative;
+    color: var(--blanco);
+    text-align: center;
+    width: 80%;
+    font-size: 0.9em;
+    margin: 0;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+
+.spinner{
+    position: relative;
+    transform: translate(0,15%);
+    animation: rotate 1s linear infinite
+}
+
+@keyframes rotate {
+    100%   {transform: translate(0,15%) rotate(360deg)}
+}
+
+.conversor{
+    color: white;
+    border-radius: 6px;
+    background-color: rgba(0,80,75,0.5);
+    font-size: 1.4rem;
+    border:1px solid white;
+    padding: 2px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+.conversor:hover{
+    background-color: rgba(2, 96, 90, 0.7);
+}
+.linkContainer{
+    display: grid;
+    place-content: center;
+    grid-template-columns: repeat(1,100%);
+}
+.compresorContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 0 4px;
+}

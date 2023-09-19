@@ -1,0 +1,198 @@
+.contentWrap{
+    position: relative;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #303841;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.destacado{
+    outline: 1px solid red;
+}
+.textoDestacado{
+    color: red;
+    flex-grow: 1;
+    margin: auto;
+    text-align: center;
+}
+.anioContainer{
+    display: flex;
+    user-select: none;
+}
+.contentWrap:hover{
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+}
+
+.archivosContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 1400px;
+    margin: auto;
+}
+.archivo{
+    height: 225px;
+    width: 300px;
+    overflow: hidden;
+    margin-bottom: -7px;
+}
+
+.iframeBottom{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 95px;
+    font-size: 12px;
+    padding: 0 10px 4px;
+    background-color: rgb(0,51,47);
+}
+.displayTitle{
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px #1e1e1e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.411);
+    color: white;
+}
+
+.der{
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr min-content;
+    column-gap: 6px;
+}
+.izq{
+    width: 180px;
+    overflow: hidden;
+}
+
+.contentWrap p {
+    margin: 0;
+}
+
+.like{
+    border-color: transparent;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.like:hover .toLike{
+    opacity: 0.8;
+}
+.like:hover .liked{
+    opacity: 0.4;
+}
+
+.toLike{
+    opacity: 0.4;
+}
+
+.like:disabled{
+    cursor: progress;
+}
+.pagination{
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+}
+.paginationPage{
+    width: 2.5rem;
+    cursor: pointer;
+    border-right: 1px solid var(--blanco);
+    user-select: none;
+    text-align: center;
+}
+
+
+.pagination li a {
+    padding: 0.1rem 0.9rem;
+    color: white;
+    min-width: 32px;
+}
+
+.fastMove{
+    cursor: pointer;
+    padding: 0.1rem 0rem;
+    border-right: 1px solid var(--blanco);
+    user-select: none;
+}
+.fastMove:last-of-type{
+    border-right: none;
+}
+
+.activePage{
+    background-color: var(--fondo-light);
+}
+
+.confirmationBox{
+    color: black;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    padding: 2px 4px 6px;
+    width: 200px;
+    z-index: 10;
+}
+
+.confirmationBox button{
+    width: 91px;
+    cursor: pointer;
+    border: 1px solid lightslategray;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+.confirmationBox .cancelButton{
+    background-color:rgb(255,120,120);
+}
+.confirmationBox .confirmationButton:hover{
+    background-color: white;
+}
+.confirmationBox .cancelButton:hover{
+    background-color:rgb(255,150,150);
+}
+
+.loadingRow{
+}
+.loadBackground{
+    width:200%;
+    background:linear-gradient(90deg, #dedede, var(--fondo-dark), #dedede);
+    height:10px;
+    transform: translate(-25%,0);
+    animation: loadRow 1.5s linear infinite;
+}
+
+
+@keyframes loadRow {
+    0%{
+        transform: translate(-25%,0);
+    }
+    25%{
+        transform: translate(-50%,0);
+    }
+    50%{
+        transform: translate(-25%,0);
+    }
+    75%{
+        transform: translate(0,0);
+    }
+    100%{
+        transform: translate(-25%,0);
+    }
+}

@@ -1,0 +1,179 @@
+.mainContainer{
+    display: flex;
+    place-content: center;
+    flex-wrap: wrap;
+    background: url("../SharedAssets/fiubaRojo.jpg") center;
+    background-size: cover;
+}
+
+.columna{
+    display: grid;
+    place-content: center;
+    text-align: center;
+    grid-template-columns: repeat(1,100%);
+    height: 100dvh;
+    color: white;
+}
+.columna:nth-child(1){
+    width: 57.5%;
+    border-right: 0.5vw solid white;
+}
+.columna:nth-child(2){
+    background: url("../SharedAssets/waveStack.svg");
+    background-size: cover;
+    padding: 0 1%;
+    width: 40%;
+    box-shadow:inset 4px 0 20px rgba(30, 30, 30, 0.87);
+}
+.mainContainer button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 60%;
+    margin: auto;
+    border-radius: 40px;
+    position: relative;
+    background-color: var(--blanco);
+    border: none;
+    color: var(--fondo);
+    transition: opacity 0.4s ease-in-out;
+}
+.mainContainer button *{
+    position: relative;
+    margin: 0;
+}
+.mainContainer button:hover{
+    opacity: 0.4;
+}
+.botonWrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.flecha{
+    width: 20%;
+    display: grid;
+    place-content: center;
+    opacity: 0;
+}
+.clickmeRight{
+    animation: clickme-r 1.5s ease-in-out 0s 2;
+}
+.clickmeLeft{
+    animation: clickme-l 1.5s ease-in-out 0s 2;
+}
+@keyframes clickme-r {
+    0%{
+        transform: translate(0,0);
+        opacity: 1;
+    }
+    100%{
+        transform: translate(35%,0);
+        opacity: 0;
+    }
+}
+@keyframes clickme-l {
+    0%{
+        transform: translate(0,0);
+        opacity: 1;
+    }
+    100%{
+        transform: translate(-35%,0);
+        opacity: 0;
+    }
+}
+.mainContainer h2{
+    font-weight: lighter;
+    margin: 0 0 1em;
+}
+.mainContainer h1,h3{
+    margin: 0;
+}
+.mainContainer h3{
+    font-family: Helvetica, serif;
+    font-weight: normal;
+    padding-top: 0.1em;
+}
+.mainContainer h1{
+    font-size: 3em;
+}
+.tituloLogIn{
+    font-size: 2em;
+    font-weight: bolder !important;
+    margin: 0;
+}
+.texto{
+    font-size: 1em;
+}
+.subTitulo{
+    font-size: 2em;
+    font-weight: bolder;
+    background-color: white;
+    color: black;
+    mix-blend-mode: screen;
+    width: 80%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    cursor: pointer;
+    margin: 1em 0 !important;
+    padding: 0 2%;
+}
+.animated{
+    animation: scaleme 0.5s ease-in-out 0s 1;
+}
+@keyframes scaleme {
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.05;
+    }
+    100%{
+        scale: 1;
+    }
+}
+.arrowDown{
+    color: white;
+    animation: goDown 2s ease-in-out 0s infinite;
+    cursor: pointer;
+
+}
+.arrowDownContainer{
+    display: flex;
+    place-items: end;
+    overflow: hidden;
+    position: absolute;
+    height: 100dvh;
+    visibility: hidden;
+}
+@keyframes goDown {
+    0%{
+        transform: translate(0,0);
+        opacity: 1;
+    }
+    100%{
+        transform: translate(0,50%);
+        opacity: 0;
+    }
+
+}
+@media (max-width: 860px) {
+    .columna{
+        width: 100% !important;
+    }
+    .columna:nth-child(1){
+        border:none;
+    }
+    .columna:nth-child(2){
+        box-shadow: none;
+    }
+    .arrowDownContainer{
+        visibility: visible;
+    }
+    .subTitulo{
+        font-size: 1.8em !important;
+    }
+}

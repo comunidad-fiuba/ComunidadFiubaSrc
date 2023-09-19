@@ -4,7 +4,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import Main from "./Main";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {LoadingPage} from "./Pages/LoadingPage";
+import {LoadingPage} from "./Pages/LoadingPage/LoadingPage";
 firebase.initializeApp(FIREBASECONFIG)
 
 

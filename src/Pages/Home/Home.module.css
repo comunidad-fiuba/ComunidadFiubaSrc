@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Roboto+Condensed:ital,wght@1,700&display=swap');
+
+:root {
+    --fondo: rgb(0,80,75);
+    --fondo-dark: rgb(0,71,67);
+    --fondo-light: rgb(0,90,84);
+    
+    --blanco: #f1f1f1;
+    --shadow: rgba(26, 26, 26, 0.6);
+}
+
+
+
+.container {
+    font-family:'Poppins', sans-serif;
+    background: url('../SharedAssets/waveStack.svg') center;
+    background-size: cover;
+    color: var(--blanco);
+    
+}
+
+.container * {
+    box-sizing: border-box;
+}
+
+.fiubaImagen{
+    width: 100%;
+    height: 400px;
+    background: url('./Assets/fiubaH3.png') center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.headerDescripcion{
+    display: inline-block;
+    text-align: center;
+    width: 80%;
+}
+
+.container nav {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    top: 10px;
+    left: 0;
+    width: 100%;
+}
+
+.container nav a {
+    text-decoration: none;
+    color: var(--blanco);
+    font-size: 0.9em;
+}
+
+.container nav .izq {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0px 10px 10px;
+    text-shadow: 2px 2px 2px var(--shadow);
+}
+
+.container nav .izq a:hover {
+    border-bottom: 1px solid var(--blanco);
+}
+
+.container nav .der {
+    display: flex;
+    gap: 15px;
+    margin: 10px;
+    margin-left: 0px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.container nav .der a{
+    transition: transform 0.2s ease-in-out;
+}
+
+.container nav .der a:hover{
+    background-color: var(--fondo-dark);
+}
+
+.container nav .der a:hover{
+    transform: translate(0, -2px) scale(1.1);
+}
+
+.container nav .der p{
+    margin:0;
+    text-shadow: none;
+}
+
+.container nav ion-icon {
+    font-size: 1.3em;
+}
+
+.linkContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: url('../SharedAssets/waveStack.svg') center;
+    background-color: var(--fondo);
+    border-radius: 20px;
+    padding: 5px 10px;
+    box-shadow: 2px 2px rgb(0 41 38);
+}
+
+.subir{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 3em 0;
+    letter-spacing: 2px;
+    transition: transform 0.2s ease-in-out;
+    background: url('../SharedAssets/waveStack.svg') center;
+    background-color: rgb(0,51,47);
+    border: 2px solid rgb(0,51,47);
+    border-radius: 30px;
+    box-shadow: rgb(0,51,47) 4px 4px 0 0;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    z-index: 200;
+}
+
+.subir p{
+    margin: 0;
+    font-weight: 400;
+    color: white;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 2px rgb(0,51,47);
+}
+
+.subir:hover{
+    transform: scale(1.05);
+}
+
+.publicar{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.publicarLineaIzq, .publicarLineaDer{
+    transform: translateY(50%);
+    width: 16%;
+    max-width: 500px;
+    border-top: 2px solid rgb(0,51,47);
+}
+
+.arriba {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--fondo-light);
+    color: var(--blanco);
+    font-size: 2em;
+    box-shadow: 0 0 8px var(--shadow);
+    z-index: 100;
+}
+
+
+.subrrayado {
+    border-bottom: 1px solid var(--blanco);
+    width: 0vw;
+    margin-top: -10px;
+}
+
+.mainTitulo {
+    text-align: center;
+    margin-bottom: -10px;
+    font-size: 5em;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 3px var(--fondo-dark);
+    cursor: pointer;
+}
+
+.filterWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    gap: 10px;
+}
+
+.container select {
+    width: 100%;
+    color: var(--blanco);
+    background-color: var(--fondo);
+    outline: none;
+    border: none;
+    appearance: none;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px var(--shadow);
+    cursor: pointer;
+    padding: 10px 30px 10px 10px;
+}
+
+.filterInput{
+    width: 100%;
+    max-width: 100px;
+    color: var(--blanco);
+    background: url('../SharedAssets/waveStack.svg') center;
+    outline: none;
+    border: none;
+    appearance: none;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px var(--shadow);
+}
+
+.filterInput:hover{
+    background-color: var(--fondo-dark);
+}
+
+.container input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+.container select:hover {
+    background-color: var(--fondo-dark);
+}
+
+.selectContainer:hover button {
+    transform: translateY(2px);
+}
+.icono{
+    position: relative;
+    color: var(--blanco);
+    font-size: 1.2em;
+    transition: transform 0.3s ease-in-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.borrarIcono{
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+.borrarIcono:hover{
+    background-color: red;
+}
+
+.selectContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100px;
+}
+
+.container option {
+    font-size: 1.3em;
+}
+
+.buscador {
+    display: flex;
+    position: relative;
+    width: 500px;
+    max-width: 85vw;
+    align-items: center;
+}
+
+.buscador input {
+    color: var(--blanco);
+    background: url('../SharedAssets/waveStack.svg') center;
+    outline: none;
+    border: 1px solid var(--blanco);
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px var(--shadow);
+    width: 100%;
+}
+
+.container ::placeholder {
+    color: var(--blanco);
+}
+
+.materiaElegida {
+    background-color: var(--fondo-light);
+}
+
+.c1C2 {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.c1C2 > button {
+    width: 50%;
+    background-color: var(--fondo);
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: var(--blanco);
+    box-shadow: 0 5px 10px var(--shadow);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.c1C2 > button:hover {
+    background-color: var(--fondo-dark);
+}
+
+.selectedButton{
+    background-color: var(--fondo-dark) !important;
+    z-index: 1 !important;
+}
+
+.c1C2 > button:nth-child(1){
+    border-radius: 20px 0 0 20px;
+}
+.c1C2 > button:nth-child(2){
+    border-radius: 0 20px 20px 0;
+}
+
+.filterWrapper ion-icon, .borrarIcono{
+    pointer-events: none;
+    position: absolute;
+    right: 6px;
+    color: var(--blanco);
+    font-size: 1.2em;
+    transition: transform 0.3s ease-in-out;
+}
+
+.closeMateria {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+    position: absolute;
+    right: 6px;
+    z-index: 200;
+    cursor: pointer;
+}
+
+.closeMateria ion-icon {
+    position: relative;
+    right: 0;
+}
+
+.content {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 8px 8px 6px 1px var(--shadow);
+}
+
+
+.topSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 90vh;
+    padding: 0 2rem;
+    background: #303841;
+}
+
+
+.topSectionHeader > h2 {
+    font-size: 4em;
+    margin: 0;
+    border-bottom: 2px solid var(--fondo);
+}
+
+
+.topList {
+    font-size: 1.5em;
+    text-shadow: var(--fondo) 2px 2px;
+    padding: 0;
+}
+
+.topList > li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin: 20px;
+
+}
+
+.footer {
+    font-weight: 300;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0.5rem;
+    background: #303841;
+    border-top: 4px solid var(--fondo);
+    flex-wrap: wrap;
+}
+
+.footer > p {
+    margin: 1.2rem 0;
+}
+
+.footer > a {
+    text-decoration: none;
+    color: var(--blanco);
+}
+
+.spinner{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    animation: rotate 2s linear infinite;
+    color: var(--blanco);
+}
+
+.filtroVacio{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+
+.likeTop{
+    position:relative;
+    transform:translate(0,10%);
+    color:green;
+}
+
+.previewButton{
+    border-radius: 15px;
+    border:none;
+    background-color: var(--fondo-light);
+    box-shadow: 0 5px 10px var(--shadow);
+    cursor: pointer;
+    color: var(--blanco);
+    display: flex;
+}
+.previewButton:hover{
+    background-color: var(--fondo-dark);
+}
+
+@keyframes rotate {
+    0%   {transform: translate(-50%,-50%) rotate(360deg)}
+}
+
+.pizarraLogo{
+    position: relative;
+    display: inline;
+    width: 10%;
+    height: 80px;
+    background: url('./Assets/laPizarraOnline.png') no-repeat center;
+    background-size: contain;
+    margin: 0;
+}
+
+:disabled{
+    opacity: 0.6;
+    cursor: default !important;
+    transform: translate(0,0) !important;
+}
+
+@media (max-width: 749px) {
+    .container{
+        font-size:  65%;
+    }
+
+    .filterWrapper {
+        transform: translateY(-25%);
+    }
+
+    .selectContainer {
+        width: 75px;
+    }
+
+    .container nav > .der {
+        gap: 5px;
+    }
+
+    .arriba {
+        width: 40px;
+        height: 40px;
+    }
+
+    .container footer {
+        padding-right: 50px;
+        justify-content: flex-start;
+    }
+}
+
