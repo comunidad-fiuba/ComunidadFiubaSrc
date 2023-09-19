@@ -1,6 +1,6 @@
 import styles from "./Home.module.css"
 import {useEffect, useState} from "react";
-import {Archivos} from "./Components/Archivos/ListaArchivos";
+import {ListaArchivos} from "./Components/Archivos/ListaArchivos";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {MATERIAS, MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "../../Utilidad/Constantes";
 import {MdDateRange, MdFilterAlt} from "react-icons/md";
@@ -9,7 +9,7 @@ import {useDebounce} from "../../hooks/useDebounce";
 import {FcLike} from "react-icons/fc";
 import {Alert} from "../SharedComponents/Alert";
 import {Alerts} from "../SharedComponents/Alerts";
-import {CargandoArchivos} from "./Components/Archivos/ListArchivosCargando";
+import {ListaArchivosCargando} from "./Components/Archivos/ListArchivosCargando";
 import { Cofi } from "./Components/Cofi";
 
 
@@ -266,11 +266,11 @@ export function Home({archivosSubidos, postsLikes,
              <div>
                 {!isLoading
                     ? archivosFiltered.length>0
-                        ? <Archivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData}
+                        ? <ListaArchivos archivosSubidos={archivosFiltered} setPostsLikes={setPostsLikes} userData={userData}
                                     showAlert={showAlert} auth={auth} postsLikes={postsLikes}
                                     />
                         : <div><MdFilterAlt className={styles.filtroVacio} size={35}/><p style={{textAlign:"center"}}>{!caughtError?"No hay resultados!, intentá reajustar los filtros":"Hubo un error!, intentá reiniciando la página o contactanos."}</p></div>
-                    :<CargandoArchivos size={60} />}
+                    :<ListaArchivosCargando size={60} />}
             </div>
             <Top archivos={archivosSubidos}/>
             <Cofi/>

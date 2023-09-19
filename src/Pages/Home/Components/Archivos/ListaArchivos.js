@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Archivo} from "./Archivo";
 import {POSTDESTACADO} from "../../../../Utilidad/Constantes";
-export function Archivos({archivosSubidos,showAlert, postsLikes, setPostsLikes, userData}){
+export function ListaArchivos({archivosSubidos,showAlert, postsLikes, setPostsLikes, userData}){
     const archivosPorPagina = 16;
     const [disabledButton, setDisabledButton] = useState(false);
     const navigate = useNavigate();

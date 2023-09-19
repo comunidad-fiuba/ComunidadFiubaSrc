@@ -1,6 +1,6 @@
 import styles from "./Archivos.module.css"
 import {ArchivoCarga} from "./ArchivoCarga";
-export function CargandoArchivos({preview}){
+export function ListaArchivosCargando({preview}){
     const cantidad = preview?12:16
     const archivos = () =>{
         const lista = Array.apply(null, Array(cantidad)).map(()=>{})

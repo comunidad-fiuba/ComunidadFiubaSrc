@@ -2,16 +2,16 @@ import styles from "./HomeAlen.module.css"
 import {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {STORAGE} from "../Utilidad/Storage";
-import {MATERIAS, MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "../Utilidad/Constantes";
+import {MATERIAS, MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "../../../../Utilidad/Constantes";
 import {MdDateRange, MdFilterAlt} from "react-icons/md";
 import {Top} from "./Top";
-import {useDebounce} from "../hooks/useDebounce";
+import {useDebounce} from "../../../../hooks/useDebounce";
 import {FcLike} from "react-icons/fc";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import {Alert} from "../Components/Alert";
 import {Alerts} from "../Components/Alerts";
-import {CargandoArchivos} from "../Components/CargandoArchivos";
-import {ArchivosPorMateria} from "../Components/ArchivosPorMateria";
+import {ListaArchivosCargando} from "./ListArchivosCargando";
+import {ArchivosPorMateria} from "./ArchivosPorMateria";
 import {Archivos} from "../Components/Archivos";
 
 
