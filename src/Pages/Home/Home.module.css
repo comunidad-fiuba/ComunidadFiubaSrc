@@ -213,7 +213,7 @@
     padding: 10px 30px 10px 10px;
 }
 
-.filterInput{
+.filterInput,.materiasButton{
     width: 100%;
     max-width: 100px;
     color: var(--blanco);
@@ -226,8 +226,19 @@
     box-shadow: 0 5px 10px var(--shadow);
 }
 
-.filterInput:hover{
-    background-color: var(--fondo-dark);
+.filterInput:hover,.materiasButton:hover{
+    filter: brightness(0.9);
+}
+.materiasButton{
+    text-align: left;
+    cursor: pointer;
+}
+.oneLine{
+    overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
 }
 
 .container input::-webkit-calendar-picker-indicator {
@@ -238,9 +249,6 @@
     background-color: var(--fondo-dark);
 }
 
-.selectContainer:hover button {
-    transform: translateY(2px);
-}
 .icono{
     position: relative;
     color: var(--blanco);
@@ -339,6 +347,7 @@
     color: var(--blanco);
     font-size: 1.2em;
     transition: transform 0.3s ease-in-out;
+    z-index: 1000;
 }
 
 .closeMateria {
@@ -440,19 +449,6 @@
     position:relative;
     transform:translate(0,10%);
     color:green;
-}
-
-.previewButton{
-    border-radius: 15px;
-    border:none;
-    background-color: var(--fondo-light);
-    box-shadow: 0 5px 10px var(--shadow);
-    cursor: pointer;
-    color: var(--blanco);
-    display: flex;
-}
-.previewButton:hover{
-    background-color: var(--fondo-dark);
 }
 
 @keyframes rotate {

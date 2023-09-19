@@ -11,6 +11,7 @@ import {Alert} from "../SharedComponents/Alert";
 import {Alerts} from "../SharedComponents/Alerts";
 import {ListaArchivosCargando} from "./Components/Archivos/ListArchivosCargando";
 import { Cofi } from "./Components/Cofi";
+import { MateriasModal } from "./Components/MateriasModal/MateriasModal";
 
 
 export function Home({archivosSubidos, postsLikes,
@@ -27,6 +28,7 @@ export function Home({archivosSubidos, postsLikes,
     const [tituloElegido, setTituloElegido] = useState("")
     const [reset, setReset] = useState(false)
     const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
+    const [isOpen, setIsOpen] = useState(false)
     //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
     const debounceMateriaElegida = useDebounce(materiaElegida,400)
     const debounceTituloElegido = useDebounce(tituloElegido,400)
@@ -52,7 +54,7 @@ export function Home({archivosSubidos, postsLikes,
     useEffect(() =>{
         //si hay query poner esos valores en los filtros
         document.getElementById("tipo").value = tipoElegido?tipoElegido.charAt(0).toUpperCase() + tipoElegido.slice(1):""
-        document.getElementById("materia").value = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):""
+        document.getElementById("materia").innerHTML = materiaElegida?materiaElegida.charAt(0).toUpperCase() + materiaElegida.slice(1):"Materias"
         document.getElementById("anio").value = anioElegido?anioElegido:""
         document.getElementById("search").value = tituloElegido?tituloElegido:""
     },[])
@@ -73,7 +75,7 @@ export function Home({archivosSubidos, postsLikes,
     }
     const closeMateriaOnClick = (e) =>{
         const materiaInput = document.getElementById("materia");
-        materiaInput.value = ""
+        materiaInput.innerHTML = "Materias"
         query.delete("materia")
         setMateriaElegida(materiaInput.value)
         navigate("/?" + query)
@@ -172,11 +174,16 @@ export function Home({archivosSubidos, postsLikes,
     const logOut = () =>{
         auth.signOut().then(res =>navigate("/login"))
     }
+    const openMateriasModal = () =>{
+        setIsOpen(true)
+        document.documentElement.style.overflow = "hidden"
+    }
     return(
         <div className={styles.container}>
             <Alerts>
                 <Alert tipo="neutral" texto="Link del post copiado" setShowAlert={setShowAlert}/>
             </Alerts>
+            <MateriasModal isOpen={isOpen} setIsOpen={setIsOpen} materiaElegida={materiaElegida} changeMateriaElegida={changeMateria} closeMateriaOnClick={closeMateriaOnClick}/>
             <nav>
                 <div className={styles.izq}>
                     <a href="#inicio">Inicio</a>
@@ -225,10 +232,7 @@ export function Home({archivosSubidos, postsLikes,
                         </div>
                         : <ion-icon name="chevron-down-outline"></ion-icon>}
 
-                    <input disabled={isLoading} id="materia" type="text" list="materias" placeholder="Materia" onChange={changeMateria}  className={styles.filterInput} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}/>
-                        <datalist id="materias">
-                            {MATERIAS.map(materia =>(<option key={materia + "filter"} value ={materia}/>))}
-                        </datalist>
+                    <button onClick={openMateriasModal} disabled={isLoading} className={styles.materiasButton} style={materiaElegida? {background:"rgb(0,139,130)"} : {}}><span id="materia" className={styles.oneLine}>{materiaElegida?materiaElegida:"Materias"}</span></button>
                 </div>
                 <div className={styles.selectContainer}>
                     <ion-icon name="chevron-down-outline"></ion-icon>
