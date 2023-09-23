@@ -9,11 +9,10 @@ export const httpPostArchive = (form, callback, auth, username) =>{
     fr.readAsArrayBuffer(file);
     fr.onload = f => {
         //archivo cargado
-        const hijos = form.children;
         const url = APPURL;
         //parametros para subir el archivo
-        const qs = new URLSearchParams({filename: form.filename.value || file.name, tipo:hijos[5].value,
-            materia: hijos[2].value, anio:hijos[4].children[0].value, cuatri:"",
+        const qs = new URLSearchParams({filename: form.filename.value || file.name, tipo:form.elements["tipo"].value,
+            materia: form.materias.value, anio:form.elements["anio"].value, cuatri:"",
             mimeType: file.type, mail:auth.currentUser.email, userName:username});
         //subir el archivo a drive
         fetch(`${url}?${qs}`, {method: "POST", body: JSON.stringify([...new Int8Array(f.target.result)])})

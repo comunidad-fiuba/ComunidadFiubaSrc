@@ -1,5 +1,5 @@
 import styles from "./MateriasModal.module.css"
-import { MATERIAS } from "../../../../Utilidad/Constantes";
+import { MATERIAS } from "../../../Utilidad/Constantes";
 import {useEffect, useState} from "react";
 
 function cargarRecientes(){
@@ -66,7 +66,7 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
     const debouncedFilter = debounceFn(filterMaterias, 300)
 
     useEffect(() => {
-        if(materiaElegida){
+        if(materiaElegida && materiaElegida !== "Materia"){
             document.getElementById(materiaElegida + "radio").checked = true
         }
     },[materiaElegida])

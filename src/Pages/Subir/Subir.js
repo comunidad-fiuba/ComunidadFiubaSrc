@@ -6,6 +6,7 @@ import {Alerts} from "../SharedComponents/Alerts";
 import {Alert} from "../SharedComponents/Alert";
 import {Link} from "react-router-dom";
 import {LoadingBar} from "./Components/LoadingBar";
+import { MateriasModal } from "../SharedComponents/MateriasModal/MateriasModal";
 
 
 export function Subir({auth, user, setArchivosSubidos}){
@@ -21,9 +22,14 @@ export function Subir({auth, user, setArchivosSubidos}){
     const [showBadSubjectAlert, setShowBadSubjectAlert] = useState(null)
     //arrastrando archivo sobre la dropbox
     const [arrastrando, setArrastrando] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [materiaElegida, setMateriaElegida] = useState("Materia")
     const randomIntFromInterval = (min, max) =>{ // min and max included
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
+    useEffect(() => {
+        document.getElementById("materias-btn-subir").value = "Materia"
+    },[])
     const startLoading = () =>{
         //desactivar el boton para que el usuario no toque dos veces
         setLoading(true)
@@ -164,20 +170,19 @@ export function Subir({auth, user, setArchivosSubidos}){
                 showNiceAlert()
                 //crear un objecto de informacion de archivo
                 const file = form.file.files[0];
-                const hijos = form.children;
                 let fileUrl = e.fileUrl
                 if(fileUrl.includes("view?usp=drivesdk")){
                     fileUrl = fileUrl.replace("view?usp=drivesdk","preview")
                 }
                 let newFileObject = {
-                    materia:hijos[2].value,
-                    tipo:hijos[5].value,
+                    materia:form.materias.value,
+                    tipo:form.elements["tipo"].value,
                     titulo:form.filename.value || file.name,
                     uid:user.uid,
                     token:user.token,
                     url:fileUrl,
                     usuario:user.name,
-                    year:Number(hijos[4].children[0].value),
+                    year:Number(form.elements["anio"].value),
                 }
                 //subir la info del archivo a la base de datos
                 fetch(process.env.REACT_APP_POST,{
@@ -218,6 +223,23 @@ export function Subir({auth, user, setArchivosSubidos}){
         fileInput.click();
     }
 
+    const changeMateriaElegida = (e) =>{
+        const materia = e.target.value
+        document.getElementById("materias-btn-subir").value = materia
+        setIsOpen(false)
+    }
+
+    const closeMateriaOnClick = () =>{
+        document.getElementById("materias-btn-subir").value = "Materia"
+        setMateriaElegida("Materia")
+    }
+
+    const openMateriasModal = () =>{
+        setIsOpen(true)
+        document.documentElement.style.overflow = "hidden"
+    }
+
+
     return(
         <div className={styles.mainDiv}>
             <Alerts>
@@ -225,6 +247,7 @@ export function Subir({auth, user, setArchivosSubidos}){
                 <Alert tipo="mala" texto="Error al subir el archivo" setShowAlert={setShowBadAlert}/>
                 <Alert tipo="mala" texto="Selecciona una materia de la lista" setShowAlert={setShowBadSubjectAlert}/>
             </Alerts>
+            <MateriasModal isOpen={isOpen} setIsOpen={setIsOpen} materiaElegida={materiaElegida} changeMateriaElegida={changeMateriaElegida} closeMateriaOnClick={closeMateriaOnClick}/>
             {!arrastrando
                 ?<div className={styles.dragArea} id ="dragArea" onDragOver={dragoverArea}
                       onDragLeave={dragleaveArea} onDrop={dropOnArea}>
@@ -265,12 +288,8 @@ export function Subir({auth, user, setArchivosSubidos}){
                 <input name="file" type="file" style={{color:"white"}} accept={ACCEPTEDFILES.join(", ")}
                        id="archivoCargado" onChange={fileChange} ref={node =>setFileInput(node)} required/>
                 <input name="filename" id="filename" type="text" placeholder="Titulo" maxLength={71} required/>
-                <input type="text"  name="materias" list="materias" placeholder="Materia" required/>
-                <datalist id="materias">
-                    {MATERIAS.map(materia =>(<option key={materia} value ={materia}/>))}
-                </datalist>
-                <div style={{display:"flex", justifyContent:"space-evenly"}}>
-                    <select style={{width:"100%"}} id="año" required>
+                <input type="button" name="materias" onChange={(e) =>{setMateriaElegida(e.target.value)}} onClick={openMateriasModal} id="materias-btn-subir"/>
+                <select style={{width:"100%"}} id="año" name="anio" required>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
@@ -278,7 +297,6 @@ export function Subir({auth, user, setArchivosSubidos}){
                         <option value="2019">2019</option>
                         <option value="2018">2018</option>
                     </select>
-                </div>
 
                 <select id="tipo" name="tipo" title="tipo" form="formArchivo" required>
                     <option value="Resumen">Resumen</option>

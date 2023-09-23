@@ -465,7 +465,7 @@
     margin: 0;
 }
 
-:disabled{
+.container :disabled{
     opacity: 0.6;
     cursor: default !important;
     transform: translate(0,0) !important;

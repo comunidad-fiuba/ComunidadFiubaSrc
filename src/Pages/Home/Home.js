@@ -11,7 +11,7 @@ import {Alert} from "../SharedComponents/Alert";
 import {Alerts} from "../SharedComponents/Alerts";
 import {ListaArchivosCargando} from "./Components/Archivos/ListArchivosCargando";
 import { Cofi } from "./Components/Cofi";
-import { MateriasModal } from "./Components/MateriasModal/MateriasModal";
+import { MateriasModal } from "../SharedComponents/MateriasModal/MateriasModal";
 
 
 export function Home({archivosSubidos, postsLikes,
