@@ -60,6 +60,14 @@ export function Subir({auth, user, setArchivosSubidos}){
         }
         setTimer()
     }
+
+    const years = () => {
+        let years = []
+        for(let year = new Date().getFullYear(); year > 2017; year--){
+            years.push(year)
+        }
+        return years
+    }
     const stopLoading = () =>{
         //detener la carga, primero mostrando el 100
         setBarWidth(100)
@@ -290,13 +298,7 @@ export function Subir({auth, user, setArchivosSubidos}){
                 <input name="filename" id="filename" type="text" placeholder="Titulo" maxLength={71} required/>
                 <input type="button" name="materias" onChange={(e) =>{setMateriaElegida(e.target.value)}} onClick={openMateriasModal} id="materias-btn-subir"/>
                 <select style={{width:"100%"}} id="año" name="anio" required>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
+                        {years().map(year =><option key={year} value={year}>{year}</option>)}
                     </select>
 
                 <select id="tipo" name="tipo" title="tipo" form="formArchivo" required>

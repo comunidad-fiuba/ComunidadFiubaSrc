@@ -178,6 +178,14 @@ export function Home({archivosSubidos, postsLikes,
         setIsOpen(true)
         document.documentElement.style.overflow = "hidden"
     }
+
+    const years = () => {
+        let years = []
+        for(let year = new Date().getFullYear(); year > 2017; year--){
+            years.push(year)
+        }
+        return years
+    }
     return(
         <div className={styles.container}>
             <Alerts>
@@ -250,13 +258,7 @@ export function Home({archivosSubidos, postsLikes,
                     <ion-icon name="chevron-down-outline"></ion-icon>
                     <select disabled={isLoading} id="anio" onChange={changeAnio} className={styles.filterInput} style={anioElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Año</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
+                        {years().map((year) => <option key={year} value={year}>{year}</option>)}
                     </select>
                 </div>
                 <div className={styles.selectContainer + " " + styles.c1C2}>
