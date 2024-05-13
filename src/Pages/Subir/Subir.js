@@ -290,6 +290,7 @@ export function Subir({auth, user, setArchivosSubidos}){
                 <input name="filename" id="filename" type="text" placeholder="Titulo" maxLength={71} required/>
                 <input type="button" name="materias" onChange={(e) =>{setMateriaElegida(e.target.value)}} onClick={openMateriasModal} id="materias-btn-subir"/>
                 <select style={{width:"100%"}} id="año" name="anio" required>
+                        <option value="2024">2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>

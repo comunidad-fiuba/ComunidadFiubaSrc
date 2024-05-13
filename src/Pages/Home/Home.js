@@ -213,7 +213,7 @@ export function Home({archivosSubidos, postsLikes,
                 <h1 className={styles.mainTitulo}
                     onClick={e =>{ navigate("/")
                     window.location.reload()}}>Comunidad Fiuba</h1>
-                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Te ayudamos a aprobar, <b>sumate a compartir</b> para ser parte de la comunidad. Página FIUBA <b>no oficial</b>.</h3>
+                <h3 style={{position:"relative",fontWeight:"lighter", margin:"0px", textAlign:"center"}}>Sumate a <b>compartir</b> para ser parte de la comunidad. Página FIUBA <b>no oficial</b>.</h3>
                 <div className={styles.subrrayado}></div>
                 <div className={styles.publicar}>
                     <div className={styles.publicarLineaIzq}></div>
@@ -250,6 +250,7 @@ export function Home({archivosSubidos, postsLikes,
                     <ion-icon name="chevron-down-outline"></ion-icon>
                     <select disabled={isLoading} id="anio" onChange={changeAnio} className={styles.filterInput} style={anioElegido? {background:"rgb(0,139,130)"} : {}}>
                         <option value="">Año</option>
+                        <option value="2024">2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
                         <option value="2021">2021</option>
