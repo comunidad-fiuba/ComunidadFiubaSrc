@@ -35,10 +35,10 @@
     cursor: pointer;
 }
 .botonIcon{
-    opacity: 0.5;
+    opacity: 1;
 }
 .boton:hover > .botonIcon{
-    opacity: 1 !important;
+    opacity: 0.5 !important;
 }
 
 .contentWrap{
@@ -65,6 +65,18 @@
     animation: rotate 2s linear infinite;
     color: var(--blanco);
 }
+.download{
+    color: white;
+    display:flex;
+    align-items:center;
+    font-size: 2em;
+    padding: 0 0.15em;
+    height: 44px;
+    width: 44px;
+}
+.download:hover{
+    opacity: 0.5;
+}
 @keyframes rotate {
     0%   {transform: translate(-50%,-50%) rotate(360deg)}
 }
@@ -72,5 +84,11 @@
 @media (max-width: 649px) {
     .navBar{
         font-size: 12px;
+    }
+}
+
+@media (max-width: 349px) {
+    .colapsable{
+        display: none !important;
     }
 }

@@ -1,27 +1,23 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import styles from "./DetallesArchivo.module.css";
-import {BiHeart} from "react-icons/bi";
+import {BiHeart, BiDownload} from "react-icons/bi";
 import {ImSpinner8} from "react-icons/im";
 
 export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData, setPostsLikes, caughtError}){
     //obtener el slug del archivo pasado por el link
     const {postSlug} = useParams();
     const navigate = useNavigate();
-    
     //obtener el id usando el slug
     const postId = archivosSubidos.find(post => post.slug===postSlug)?.id
     //declarar variables
     const [archivo, setArchivo] = useState(null)
     const [disabledButton, setDisabledButton] = useState(false)
-    const [verComentarios, setVerComentarios] = useState(false)
     const titulo = archivo?.title
     const url = archivo?.url
     const likes = archivo?.likes
-    const comentarios = archivo?.comentarios?.length
-    if(postId==12){
-        console.log("12")
-    }
+    const driveId = archivo?.url.split("/")[5]
+    const downloadLink = `https://drive.usercontent.google.com/u/0/uc?id=${driveId}&export=download`
     document.title = `${(postSlug.charAt(0).toUpperCase() + postSlug.slice(1)).replace(/-/g, " ")} - Comunidad Fiuba`;
     const likePost = (postId) =>{
         if(!userData){
@@ -117,8 +113,9 @@ export function DetallesArchivo({archivosSubidos,isLoading, postsLikes, userData
                 </div>
                 <span style={{overflow:"hidden", width:"50%"}}>{titulo}</span>
                 <div style={{color: "white", width:"25%",overflow:"hidden", display:"flex"}}>
-                    <span style={{display:"flex", alignItems:"center"}}>{likes}</span>
-                    <button className={styles.boton} disabled={disabledButton} onClick={() =>likePost(postId)}><BiHeart className={styles.botonIcon} style={{color:disabledButton?"lightblue":"rgb(255,60,60)",transform:"translate(0,10%)", opacity:postsLikes.indexOf(postId)>-1?1:0.5}}/></button>
+                    <span className={styles.colapsable} style={{display:"flex", alignItems:"center"}}>{likes}</span>
+                    <button className={styles.boton} disabled={disabledButton} onClick={() =>likePost(postId)}><BiHeart className={styles.botonIcon} style={{color:disabledButton?"lightblue":postsLikes.indexOf(postId)>-1?"rgb(255,60,60)":"white",transform:"translate(0,10%)"}}/></button>
+                    <Link className={styles.download} to={downloadLink}><BiDownload  style={{transform:"translate(0,-5%)"}} /></Link>
                 </div>
             </div>
             <embed id={titulo+"embed"} className={styles.archivo} src={url}/>
