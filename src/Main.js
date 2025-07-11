@@ -16,11 +16,31 @@ import {MATERIASREMPLAZABLES, MATERIASREMPLAZO} from "./Utilidad/Constantes";
 import {LoginNuevo} from "./Pages/Login/Login";
 export default function Main({auth}) {
     //declarar los datos importantes
-    const [archivosSubidos, setArchivosSubidos] = useState([])
+    const [archivosSubidos, setArchivosSubidos] = useState(() => {
+        // Try to load from sessionStorage
+        const cached = sessionStorage.getItem('archivosSubidos');
+        return cached ? JSON.parse(cached) : [];
+    })
     const [userData, setUserData] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [postsLikes, setPostsLikes] = useState([])
     const [caughtError, setCaughtError] = useState(null)
+    
+    // Cache duration in milliseconds (30 minutes)
+    const CACHE_DURATION = 30 * 60 * 1000;
+    
+    const isCacheValid = () => {
+        const cacheTimestamp = sessionStorage.getItem('archivosSubidos_timestamp');
+        if (!cacheTimestamp) return false;
+        const now = Date.now();
+        return (now - parseInt(cacheTimestamp)) < CACHE_DURATION;
+    }
+    
+    const setCachedArchivos = (archivos) => {
+        setArchivosSubidos(archivos);
+        sessionStorage.setItem('archivosSubidos', JSON.stringify(archivos));
+        sessionStorage.setItem('archivosSubidos_timestamp', Date.now().toString());
+    }
     const filtrarMaterias = (archivos) =>{
         for(let index in archivos){
             const indexReemplazo = MATERIASREMPLAZABLES.indexOf(archivos[index].materia)
@@ -39,13 +59,20 @@ export default function Main({auth}) {
 
     useEffect(() =>{
         const fetchData = async () =>{
+            // Check if we have cached data and it's still valid
+            if (archivosSubidos.length > 0 && isCacheValid()) {
+                setIsLoading(false);
+                return;
+            }
+            
             //fetch a la api que da info del usuario
             //fetch a la api que da los posts
             await fetch(process.env.REACT_APP_POSTS,{
                 method:"GET"
             }).then(result=>result.json().then(resJson=>{
                 //guardar los posts
-                setArchivosSubidos(filtrarMaterias(resJson))
+                const filteredArchivos = filtrarMaterias(resJson);
+                setCachedArchivos(filteredArchivos);
             }).catch(e =>{
                 //error en el json, no deberia entrar nunca
                 setCaughtError(e)
@@ -112,7 +139,7 @@ export default function Main({auth}) {
             <main>
                 <Routes>
                     <Route path="/subir" element={auth.currentUser?
-                        <Subir user={userData} setArchivosSubidos={setArchivosSubidos} auth={auth}/>:
+                        <Subir user={userData} setArchivosSubidos={setCachedArchivos} auth={auth}/>:
                         <Navigate replace to="/login" />}/>
                     <Route path="/perfil" element={auth.currentUser?<Perfil archivosSubidos={archivosSubidos} setArchivosSubidos={setArchivosSubidos} auth={auth} userData={userData}
                                                            isLoading={isLoading} />:<Navigate replace to="/login" /> }/>

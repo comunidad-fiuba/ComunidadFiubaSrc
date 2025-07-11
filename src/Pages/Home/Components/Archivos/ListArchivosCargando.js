@@ -14,7 +14,9 @@ export function ListaArchivosCargando({preview}){
             <div className={styles.archivosContainer}>
                 {archivos()}
             </div>
-            <div style={{height:"60px"}}></div>
+            <div style={{height:"60px", width:"100%", display:"flex", justifyContent:"center", alignItems:"center"}}>
+                Es probable que los archivos tarden un poco en aparecer, por favor espere.
+            </div>
         </div>
 
 
