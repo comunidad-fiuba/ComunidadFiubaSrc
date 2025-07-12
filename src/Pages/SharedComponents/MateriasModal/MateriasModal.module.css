@@ -26,14 +26,26 @@
     border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.titulo {
-    position: relative;
-    text-align: center;
-    padding: 0.5em 0;
-    margin: 0;
+/* Modal Header */
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    border-radius: 10px 10px 0 0;
+    position: relative;
     z-index: 1000;
-    color:white;
+}
+
+.titulo {
+    text-align: center;
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    flex-grow: 1;
 }
 
 .inputMateria{
@@ -41,64 +53,87 @@
     box-sizing: border-box;
     z-index: 1000;
     outline: none;
-    border: none;
-    width: 85%;
-    margin: 0 7.5%;
-    margin-bottom: 5px;
-    padding: 0.5em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.15);
     color: white;
-    font-size: 1.25em;
-}
-.inputMateria::placeholder{
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
+.inputMateria:focus {
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.inputMateria::placeholder{
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Filter Section */
 .filterWrap{
     width: 100%;
     position: relative;
+    padding: 1rem;
 }
-.clear{
-    position: absolute;
-    right: 7.5%;
-    top: 0;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.5);
-    height: calc(100% - 5px);
-    font-size: 1.5em;
-    background-color: transparent;
-    line-height: 0;
+
+.recientesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0.5rem 0;
 }
-.clear:hover{
-    color:white;
+
+.recientesHeader p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 500;
 }
+
 .clearRecientes{
     background-color: transparent;
     border: none;
     outline: none;
-    color: white;
-    line-height: 0;
-    font-size: 1em;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 4px;
+    font-size: 1.5rem;
     cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .clearRecientes:hover{
-    scale: 1.15;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
 }
 
 .materiasList p{
-    font-size: 1.25em;
+    font-size: 1.1rem;
     color: white;
+    font-weight: 500;
+    margin: 1rem 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.materiasList p:first-child {
+    margin-top: 0;
 }
 .materiasList {
     position: relative;
-    overflow-y: scroll;
+    overflow-y: auto;
     z-index: 1000;
-    width: 85%;
-    margin: 0 7.5%;
-    margin-bottom: 1em;
+    width: 100%;
+    padding: 1rem;
     flex-grow: 1;
 }
 
@@ -165,30 +200,31 @@
     opacity: 0.15;
 }
 
-.closeButton,.removeButton{
-    position: absolute;
-    top: 5px;
-    background-color: transparent;
-    border-radius: 2px;
-    border: none;
+/* Header Buttons */
+.closeButton {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px;
     cursor: pointer;
     outline: none;
-    z-index: 10000; 
-}
-.closeButton {
-    right: 5px;
-}
-.removeButton{
-    left: 5px;
-}
-
-.closeButton:hover,.removeButton:hover {
-    scale: 1.15;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
 }
 
-.closeButton ion-icon,.removeButton ion-icon {
+.closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.closeButton ion-icon {
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .modal::before {
@@ -206,12 +242,86 @@
     pointer-events: none;
 }
 
+/* Deselect Option */
+.deselectOption {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.deselectOption .labelRadio {
+    border-bottom: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deselectOption .labelRadio:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.deselectOption .labelRadio .hiddenRadio:checked + .deselectText + i {
+    background-color: rgba(117, 224, 194, 0.3);
+}
+
+.deselectOption .labelRadio:has(.hiddenRadio:checked) {
+    background-color: rgba(117, 224, 194, 0.2);
+    border-color: rgba(117, 224, 194, 0.4);
+    color: white;
+}
+
+.deselectText {
+    font-weight: 500;
+}
+
 @media (max-width:750px) {
-    .modalWrapper .closeButton ion-icon {
-        color: white;
-        font-size: 1.75rem !important;
+    .modalHeader {
+        padding: 0.75rem;
     }
+    
+    .titulo {
+        font-size: 1.25rem;
+    }
+    
+    .closeButton {
+        min-width: 36px;
+        height: 36px;
+        padding: 6px;
+    }
+    
+    .closeButton ion-icon {
+        font-size: 1.25rem;
+    }
+    
+    .filterWrap {
+        padding: 0.75rem;
+    }
+    
+    .inputMateria {
+        padding: 10px;
+        font-size: 1rem;
+    }
+    
+    .materiasList {
+        padding: 0.75rem;
+    }
+    
     .materiasList .labelRadio{
-        margin-right: 0.5em;
+        margin-right: 0.5rem;
+        font-size: 1.1rem;
     }
 }

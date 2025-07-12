@@ -127,15 +127,34 @@ export function MateriasModal({ isOpen, setIsOpen, materiaElegida, changeMateria
     return (
         <div className={styles.modalWrapper} id="materias-modal-wrap" style={{ display: isOpen ? "flex" : "none" }} onClick={closeOnClickOutside}>
             <div className={styles.modal}  onClick ={closeOnClickOutside}>
-                <button className={styles.closeButton} onClick={close}><ion-icon name="checkmark-outline"></ion-icon></button>
-                <button className={styles.removeButton} onClick={clearAndClose}><ion-icon name="refresh-outline" ></ion-icon></button>
-                <h1 className={styles.titulo}>Materias</h1>
+                <div className={styles.modalHeader}>
+                    <h1 className={styles.titulo}>Materias</h1>
+                    <button className={styles.closeButton} onClick={close} title="Cerrar">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </button>
+                </div>
                 <div className={styles.filterWrap}>
-                <input type="text" onChange={debouncedFilter} className={styles.inputMateria} id="materias-input" placeholder="Buscar materia"/>
-                <button onClick={clearFilter} className={styles.clear}><ion-icon name="close-outline" ></ion-icon></button>
+                    <input type="text" onChange={debouncedFilter} className={styles.inputMateria} id="materias-input" placeholder="Buscar materia"/>
                 </div>
                 <div className={styles.materiasList}>
-                    {recientesList.length>0 && shouldShowRecientes()?<p>Recientes <button onClick={clearRecientes} className={styles.clearRecientes}><ion-icon name="trash-outline" ></ion-icon></button></p>:""}
+                    {materiaElegida && materiaElegida !== "Materia" && (
+                        <div className={styles.deselectOption}>
+                            <label className={styles.labelRadio}>
+                                <input className={styles.hiddenRadio} onChange={clearAndClose} type="radio" id="ninguna-radio" name="materias-radio" value="" checked={false}/>
+                                <span className={styles.deselectText}>Quitar filtro</span>
+                                <i></i>
+                            </label>
+                        </div>
+                    )}
+                    
+                    {recientesList.length>0 && shouldShowRecientes()?
+                        <div className={styles.recientesHeader}>
+                            <p>Recientes</p>
+                            <button onClick={clearRecientes} className={styles.clearRecientes} title="Limpiar recientes">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                        </div>
+                    :""}
                     {shouldShowRecientes()?mapRecientes():""}
                     {recientesList.length>0  && shouldShowRecientes()?<p>Otras</p>:""}
                     {materiasList.length>0?materiasList.map(materia => {
