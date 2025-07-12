@@ -120,28 +120,68 @@
     flex-direction: column;
     align-items: flex-start;
     width: 80%;
-    height: 80%;
+    height: 60vh;
+    max-height: 400px;
     gap: 9px;
     padding: 0;
     list-style: none;
     color: white;
     overflow-y: auto;
     margin: 0;
+    padding-right: 10px;
 }
 
 .listaMisArchivos li {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 5px;
-    padding-left: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding: 18px 20px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    width: 100%;
 }
 
 .listaMisArchivos li:hover {
-    background-color: rgba(0,80,75,0.5);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fileInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.fileInfo a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.fileMetadata {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9em;
+    gap: 5px;
 }
 
 .listaMisArchivos .icono {
@@ -166,57 +206,45 @@
 @keyframes rotate {
     0%   {transform: translate(-50%,0) rotate(360deg)}
 }
-.arrowButton{
-    background-color: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-.arrowButton:hover{
-    background-color: rgba(255, 255, 255, 0.19);
-}
 .listaMisArchivos::-webkit-scrollbar {
-    width: 0;
+    width: 8px;
 }
-.deleteButton{
+
+.listaMisArchivos::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.listaMisArchivos::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.listaMisArchivos::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+.deleteButton {
     background-color: transparent;
     border: none;
     color: var(--blanco);
     cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
 }
-.deleteButton:hover{
-    color: #15012c;
-}
-
-.confirmacion{
-    position: fixed;
-    display: none;
-    left: 50%;
-    top:50%;
-    transform: translate(-50%,-50%);
-    z-index: 10;
-    background-color: white;
-    border-radius: 6px;
-    flex-direction: column;
-    padding: 10px;
-    gap:2px;
-    border: 1px solid lightgray;
-}
-.confirmacion button{
-    cursor: pointer;
-    border: 1px solid lightslategray;
-    border-radius: 6px;
+.deleteButton:hover {
+    background-color: rgba(255, 77, 77, 0.2);
+    color: #ff4d4d;
+    transform: scale(1.1);
 }
 
-.confirmacion .cancelarButton{
-    background-color: rgb(220,100,100);
-}
-.confirmacion .cancelarButton:hover{
-    background-color: rgb(240,130,130);
-}
-.confirmacion .confirmacionButton:hover{
-    background-color: white;
-}
+
 
 .linkCambiarUsername{
     margin-top: -10px;
@@ -227,3 +255,395 @@
 .linkCambiarUsername:hover{
     text-decoration: underline;
 }
+
+.filterControls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+    animation: filterSlideIn 0.5s ease-out;
+}
+
+@keyframes filterSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.searchContainer:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.searchContainer.loading {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(100, 149, 237, 0.5);
+}
+
+.searchContainer.loading::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #6495ED;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+.searchInput {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: white;
+    flex: 1;
+    font-size: 16px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.filterRow {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    padding: 0;
+    border: none;
+    transition: none;
+}
+
+.filterSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filterLabel {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5px;
+}
+
+.materiaSelect {
+    padding: 12px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    min-width: 160px;
+}
+
+.materiaSelect:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.materiaSelect:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.3);
+}
+
+.materiaSelect option {
+    background: rgba(0, 80, 75, 0.9);
+    color: white;
+    padding: 8px;
+}
+
+.sortButtonsContainer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sortButton {
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sortButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sortButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(100, 149, 237, 0.3);
+}
+
+.sortButton.active {
+    background: var(--fondo);
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(100, 149, 237, 0.3);
+}
+
+.sortButton.active:hover {
+    background: var(--fondo-light);
+    transform: translateY(-2px);
+}
+
+.resultsCount {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    text-align: center;
+    padding: 8px 16px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.resultsCount.updated {
+    animation: pulse 0.6s ease-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+
+
+/* Backdrop overlay for modal */
+.confirmacionBackdrop {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 999;
+    animation: backdropFadeIn 0.3s ease-out;
+}
+
+@keyframes backdropFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.confirmacion{
+    display: none;
+    z-index: 1000;
+    min-width: 320px;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.confirmacion::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+.confirmacion p {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+    line-height: 1.4;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: 1;
+}
+
+.confirmacion button {
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.confirmacion .cancelarButton {
+    background: rgba(255, 107, 107, 0.2);
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.4);
+}
+
+.confirmacion .cancelarButton:hover {
+    background: rgba(255, 107, 107, 0.3);
+    border-color: rgba(255, 107, 107, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.confirmacion .confirmacionButton {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.confirmacion .confirmacionButton:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.confirmacionButtons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Add icon to delete button */
+.confirmacionButton::before {
+    content: "🗑️";
+    margin-right: 8px;
+}
+
+.cancelarButton::before {
+    content: "✕";
+    margin-right: 8px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .filterControls {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .searchContainer {
+        padding: 10px 14px;
+    }
+    
+    .filterRow {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .materiaSelect {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .sortButtonsContainer {
+        justify-content: center;
+        gap: 6px;
+    }
+    
+    .sortButton {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .contenedor {
+        max-width: 95%;
+        margin: 5vh 0;
+        height: auto;
+        min-height: 80vh;
+    }
+    
+    .listaMisArchivos {
+        max-height: 40vh;
+    }
+    
+    .listaMisArchivos li {
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .deleteButton {
+        align-self: flex-end;
+        margin-top: 5px;
+    }
+}
+
+
