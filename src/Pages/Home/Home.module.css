@@ -198,6 +198,8 @@
     justify-content: center;
     transform: translateY(-50%);
     gap: 10px;
+    padding: 10px;
+    max-width: 100%;
 }
 
 .container select {
@@ -224,14 +226,18 @@
     padding: 10px;
     border-radius: 20px;
     box-shadow: 0 5px 10px var(--shadow);
+    transition: all 0.3s ease;
 }
 
 .filterInput:hover,.materiasButton:hover{
     filter: brightness(0.9);
 }
+
 .materiasButton{
     text-align: left;
     cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
 }
 .oneLine{
     overflow: hidden;
@@ -272,6 +278,7 @@
     align-items: center;
     position: relative;
     width: 100px;
+    min-width: 100px;
 }
 
 .container option {
@@ -322,6 +329,71 @@
     box-shadow: 0 5px 10px var(--shadow);
     cursor: pointer;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.buttonText {
+    font-size: 0.7em;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sortButtonsContainer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sortButton {
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background-color: var(--fondo);
+    color: var(--blanco);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 5px 10px var(--shadow);
+}
+
+.sortButton:hover {
+    background-color: var(--fondo-dark);
+    transform: translateY(-2px);
+}
+
+.sortButton:focus {
+    outline: none;
+}
+
+.sortButton.active {
+    background-color: rgb(0,139,130);
+    font-weight: 600;
+}
+
+.sortButton.active:hover {
+    background-color: rgb(0,139,130);
+}
+
+.sortButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.sortButton:disabled:hover {
+    background-color: var(--fondo);
+    transform: none;
 }
 
 .c1C2 > button:hover {
@@ -471,17 +543,161 @@
     transform: translate(0,0) !important;
 }
 
+@media (max-width: 1024px) and (min-width: 750px) {
+    .filterWrapper {
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .selectContainer {
+        width: 120px;
+        min-width: 120px;
+    }
+
+    .selectContainer:first-child {
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .materiasButton {
+        max-width: 200px;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .filterInput {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .buscador {
+        width: 80%;
+    }
+
+    .sortButtonsContainer {
+        width: 100%;
+        justify-content: center;
+        margin-top: 5px;
+    }
+
+    .sortButton {
+        padding: 10px 14px;
+        font-size: 13px;
+        min-width: 75px;
+    }
+}
+
 @media (max-width: 749px) {
     .container{
         font-size:  65%;
     }
 
     .filterWrapper {
-        transform: translateY(-25%);
+        transform: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 20px 15px;
+        width: 100%;
+        max-width: 100%;
     }
 
-    .selectContainer {
-        width: 75px;
+    /* Row 1: Materia button - full width */
+    .selectContainer:first-child {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .materiasButton {
+        width: 100%;
+        max-width: 100%;
+        padding: 16px;
+        font-size: 16px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    /* Row 2: Tipo and Año side by side */
+    .selectContainer:nth-child(2) {
+        grid-column: 1 / 2;
+        grid-row: 2;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .selectContainer:nth-child(3) {
+        grid-column: 2 / 3;
+        grid-row: 2;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .filterInput {
+        width: 100%;
+        max-width: 100%;
+        padding: 14px;
+        font-size: 15px;
+        text-align: center;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+
+    /* Row 3: Sort buttons - full width */
+    .sortButtonsContainer {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 0;
+    }
+
+    .sortButton {
+        padding: 12px 14px;
+        font-size: 15px;
+        gap: 4px;
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .sortButton svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Row 4: Search input - full width */
+    .buscador {
+        grid-column: 1 / -1;
+        grid-row: 4;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0;
+    }
+
+    .buscador ion-icon {
+        font-size: 1.5em;
+        position: absolute;
+        left: 15px;
+        color: var(--blanco);
+        z-index: 1000;
+    }
+
+    .buscador input {
+        padding: 16px 16px 16px 50px;
+        font-size: 16px;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
     }
 
     .container nav > .der {
@@ -496,6 +712,39 @@
     .container footer {
         padding-right: 50px;
         justify-content: flex-start;
+    }
+
+    /* Show dropdown arrows for select elements */
+    .selectContainer:nth-child(2) ion-icon,
+    .selectContainer:nth-child(3) ion-icon {
+        display: block;
+        pointer-events: none;
+        position: absolute;
+        right: 10px;
+        color: var(--blanco);
+        font-size: 1.2em;
+        z-index: 1000;
+    }
+
+    /* Hide other icons but keep select arrows */
+    .selectContainer:first-child ion-icon:not(.closeMateria ion-icon) {
+        display: none;
+    }
+
+    .closeMateria {
+        width: 30px;
+        right: 10px;
+    }
+
+    .closeMateria ion-icon {
+        font-size: 1.5em;
+        display: block;
+    }
+
+    /* Base overrides for mobile */
+    .selectContainer {
+        min-width: 0;
+        position: relative;
     }
 }
 

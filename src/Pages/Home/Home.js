@@ -29,6 +29,8 @@ export function Home({archivosSubidos, postsLikes,
     const [reset, setReset] = useState(false)
     const [archivosOrdenados, setArchivosOrdenados] = useState(archivosSubidos)
     const [isOpen, setIsOpen] = useState(false)
+    const [sortBy, setSortBy] = useState("likes") // track current sorting method
+    const [sortOrder, setSortOrder] = useState("desc") // track sort order: asc or desc
     //los debounce hacen que al escribir una busqueda, se espere a que el usuario haya dejado de escribir para buscar
     const debounceMateriaElegida = useDebounce(materiaElegida,400)
     const debounceTituloElegido = useDebounce(tituloElegido,400)
@@ -112,13 +114,25 @@ export function Home({archivosSubidos, postsLikes,
     }
 
     const ordenarLikes = (e) =>{
-        setArchivosOrdenados(prevState => prevState.sort((a, b) => b.likes - a.likes))
-        setReset(true)
-
+        const newOrder = sortBy === "likes" ? (sortOrder === "desc" ? "asc" : "desc") : "desc";
+        const sortedArchivos = [...archivosOrdenados].sort((a, b) => {
+            return newOrder === "desc" ? b.likes - a.likes : a.likes - b.likes;
+        });
+        setArchivosOrdenados(sortedArchivos);
+        setSortBy("likes");
+        setSortOrder(newOrder);
+        setReset(true);
     }
+    
     const ordenarFecha = (e) =>{
-        setArchivosOrdenados(prevState => prevState.sort((a, b) => b.id - a.id))
-        setReset(true)
+        const newOrder = sortBy === "date" ? (sortOrder === "desc" ? "asc" : "desc") : "desc";
+        const sortedArchivos = [...archivosOrdenados].sort((a, b) => {
+            return newOrder === "desc" ? b.id - a.id : a.id - b.id;
+        });
+        setArchivosOrdenados(sortedArchivos);
+        setSortBy("date");
+        setSortOrder(newOrder);
+        setReset(true);
     }
 
     const changeTitulo = (e) =>{
@@ -261,9 +275,25 @@ export function Home({archivosSubidos, postsLikes,
                         {years().map((year) => <option key={year} value={year}>{year}</option>)}
                     </select>
                 </div>
-                <div className={styles.selectContainer + " " + styles.c1C2}>
-                    <button disabled={isLoading} onClick={ordenarLikes}><FcLike size={16}/></button>
-                    <button disabled={isLoading} onClick={ordenarFecha}><MdDateRange size={16}/></button>
+                <div className={styles.sortButtonsContainer}>
+                    <button 
+                        disabled={isLoading} 
+                        onClick={ordenarLikes} 
+                        className={`${styles.sortButton} ${sortBy === "likes" ? styles.active : ""}`}
+                        title="Ordenar por likes (más populares primero)"
+                    >
+                        <FcLike size={16}/>
+                        Likes {sortBy === "likes" && (sortOrder === "asc" ? "↑" : "↓")}
+                    </button>
+                    <button 
+                        disabled={isLoading} 
+                        onClick={ordenarFecha} 
+                        className={`${styles.sortButton} ${sortBy === "date" ? styles.active : ""}`}
+                        title="Ordenar por fecha (más recientes primero)"
+                    >
+                        <MdDateRange size={16}/>
+                        Fecha {sortBy === "date" && (sortOrder === "asc" ? "↑" : "↓")}
+                    </button>
                 </div>
                 <div className={styles.buscador}>
                     <ion-icon name="search-outline"></ion-icon>
